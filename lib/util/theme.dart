@@ -4,11 +4,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 //CLARO
 ThemeData light = ThemeData(
     brightness: Brightness.light,
-    primaryColor: Color(0xFFE2E2EE),
+    primaryColor: Color(0xFFE2E2EF),
     accentColor: Color(0xFF2969BB),
     scaffoldBackgroundColor: Color(0xFFF9F9FF),
     cardTheme: CardTheme(
-      color: Color(0xFFF1F1F7),
+      color: Color(0xFFF1F1F8),
     ),
     dialogTheme: DialogTheme(
       backgroundColor: Color(0xFFF9F9FF),
@@ -16,18 +16,18 @@ ThemeData light = ThemeData(
     popupMenuTheme: PopupMenuThemeData(
       color: Color(0xFFE1E1E7),
     ),
-    bottomAppBarColor: Color(0xFFE2E2EE),
+    bottomAppBarColor: Color(0xFFE2E2EF),
     bottomSheetTheme:
-        BottomSheetThemeData(modalBackgroundColor: Color(0xFFE2E2EE)));
+        BottomSheetThemeData(modalBackgroundColor: Color(0xFFE2E2EF)));
 
 //ESCURO
 ThemeData dark = ThemeData(
     brightness: Brightness.dark,
-    primaryColor: Color(0xFF1C1C1F),//0xFF212125
+    primaryColor: Color(0xFF2C2F33),
     accentColor: Color(0xFF2969BB),
-    scaffoldBackgroundColor: Color(0xFF222225),
+    scaffoldBackgroundColor: Color(0xFF393C3F),//0xFF3C3F43 cza keep
     cardTheme: CardTheme(
-      color: Color(0xFF28282B),
+      color: Color(0xFF393D3F),
     ),
     dialogTheme: DialogTheme(
       backgroundColor: Color(0xFF202124),
@@ -37,9 +37,9 @@ ThemeData dark = ThemeData(
       color: Color(0xFF37373A),
     ),
 
-    bottomAppBarColor: Color(0xFF18181B),
+    bottomAppBarColor: Color(0xFF2C2F33),
     bottomSheetTheme:
-        BottomSheetThemeData(modalBackgroundColor: Color(0xFF18181B)));
+        BottomSheetThemeData(modalBackgroundColor: Color(0xFF2C2F33)));
 
 class ThemeNotifier extends ChangeNotifier {
   final String key = 'valorTema';

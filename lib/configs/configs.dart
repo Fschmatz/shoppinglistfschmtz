@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../configs/about.dart';
 import '../configs/changelog.dart';
 import '../util/theme.dart';
-import '../util/versaoNomeChangelog.dart';
+import '../util/nameChangelog.dart';
 import 'package:provider/provider.dart';
 
 class Configs extends StatefulWidget {
@@ -31,9 +31,7 @@ class _ConfigsState extends State<Configs> {
           elevation: 0,
         ),
 
-        body: Stack(
-        children: <Widget>[
-        SingleChildScrollView(
+        body: SingleChildScrollView(
           padding: const EdgeInsets.all(17.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,13 +39,13 @@ class _ConfigsState extends State<Configs> {
               Card(
                 elevation: 0,
                 margin: const EdgeInsets.all(2.0),
-                color: Colors.deepOrangeAccent,
+                color: Colors.green,
                 child: ListTile(
                   title: Text(
                     "Flutter " +
-                        versaoNomeChangelog.nomeApp +
+                        NameChangelog.appName +
                         " " +
-                        versaoNomeChangelog.versaoApp,
+                        NameChangelog.appVersion,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 18, color: Colors.black),
                   ),
@@ -58,74 +56,72 @@ class _ConfigsState extends State<Configs> {
                 height: 40.0,
               ),
 
-              Column(
-                children: <Widget>[
-
-                  Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      side: BorderSide(
-                        color: Colors.grey.withOpacity(0.3),
-                        width: 1,
-                      ),
-                    ),
-                    child: ListTile(
-                      leading: Icon(Icons.text_snippet_outlined),
-                      trailing: Icon(Icons.keyboard_arrow_right),
-                      title: Text(
-                        "About",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => About()),
-                        );
-                      },
-                    ),
+              Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  side: BorderSide(
+                    color: Colors.grey.withOpacity(0.3),
+                    width: 1,
                   ),
-                  SizedBox(height: 10,),
+                ),
+                child: ListTile(
+                  leading: Icon(Icons.text_snippet_outlined),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                  title: Text(
+                    "About",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => About()),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(height: 10,),
 
-                  Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      side: BorderSide(
-                        color: Colors.grey.withOpacity(0.3),
-                        width: 1,
-                      ),
-                    ),
-                    child: ListTile(
-                      leading: Icon(Icons.text_snippet_outlined),
-                      trailing: Icon(Icons.keyboard_arrow_right),
-                      title: Text(
-                        "Changelog",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Changelog()),
-                        );
-                      },
-                    ),
-                  )
-                ],
+              Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  side: BorderSide(
+                    color: Colors.grey.withOpacity(0.3),
+                    width: 1,
+                  ),
+                ),
+                child: ListTile(
+                  leading: Icon(Icons.text_snippet_outlined),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                  title: Text(
+                    "Changelog",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Changelog()),
+                    );
+                  },
+                ),
               ),
               SizedBox(
                 height: 40.0,
               ),
-              Text(
-                "Options: ",
-                style: TextStyle(fontSize: 21),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                child: Text(
+                  "Options: ",
+                  style: TextStyle(fontSize: 21),
+                ),
               ),
               SizedBox(
                 height: 15.0,
               ),
 
               ListTile(
-                contentPadding: const EdgeInsets.all(0),
+                contentPadding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                 title: Text(
                   "Dark Theme",
                   style: TextStyle(fontSize: 18),
@@ -146,8 +142,6 @@ class _ConfigsState extends State<Configs> {
               ),
             ],
           ),
-        )
-      ],
-    ));
+        ));
   }
 }

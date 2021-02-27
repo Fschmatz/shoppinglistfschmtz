@@ -1,60 +1,69 @@
-class versaoNomeChangelog{
+class NameChangelog{
 
-  //se mudar o nome do App não esquecer de alterar, no manifesto
-  static String versaoApp = "1.3";
-  static String nomeApp = "ShopList Fschmtz";
+  static String appVersion = "0.3.1";
+  static String appName = "ShopList Fschmtz";
 
-  //1 espaço acima, nenhum embaixo
-  static String changelogUltimaVersao = '''  
+  static String changelogCurrent = '''  
   
-1.3
+0.3.1
+- Colors Changes
 - Fixes
 ''';
 
-  static String changelogsAntigos = '''
+  static String changelogsOld = '''
 
-1.2
+0.3.0
+- Logic Changes
+- New Classes
+
+0.2.0
+- Edit/New Pages Separated
+
+0.1.4
+- Fixes
+
+0.1.3
 - Remake Edit/Delete Logic
 
-1.1
+0.1.2
 - Remake Edit/Delete Logic
 - Unique Key for ShopLists
 
-1.0
+0.1.1
 - Fixes
 - Db Trigger on Delete
 
-0.9
+0.1.0
 - Edit ShopList
 - Delete ShopList
 - New Card Layout
 - Fixes
 
-0.8
+0.0.8
 - Home Changes
 - Fixes
 
-0.7
+0.0.7
 - Add New List 
 - Color Picker
 - Save List
 
-0.6
+0.0.6
 - Ui Start
 
-0.5
+0.0.5
 - Db Fixes
 
-0.4
+0.0.4
 - Db 
 
-0.3
+0.0.3
 - Cards
 
-0.2
+0.0.2
 - Home
 
-0.1
+0.0.1
 - Project Start                                  
 
       (ಠ‿ಠ)  

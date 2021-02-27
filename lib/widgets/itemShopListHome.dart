@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
 
-class ContainerItemShopListView extends StatefulWidget {
+class ItemShopListHome extends StatefulWidget {
   @override
-  _ContainerItemShopListViewState createState() => _ContainerItemShopListViewState();
+  _ItemShopListHomeState createState() => _ItemShopListHomeState();
 
   Item item;
 
-  ContainerItemShopListView({Key key, this.item})
+  ItemShopListHome({Key key, this.item})
       : super(key: key);
 }
 
-class _ContainerItemShopListViewState extends State<ContainerItemShopListView> {
+class _ItemShopListHomeState extends State<ItemShopListHome> {
   bool value = false;
 
   @override
@@ -19,11 +19,6 @@ class _ContainerItemShopListViewState extends State<ContainerItemShopListView> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
       child: ListTile(
-        leading: Text(
-          widget.item.quantity.toString(),
-          style: TextStyle(fontSize: 17,),
-          textAlign: TextAlign.center,
-        ),
         title: Text(
           widget.item.nome,
           style: TextStyle(fontSize: 17),

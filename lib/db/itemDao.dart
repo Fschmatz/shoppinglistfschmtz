@@ -11,7 +11,6 @@ class itemDao {
   static final table = 'items';
   static final columnId = 'id';
   static final columnNome = 'nome';
-  static final columnQuantity = 'quantity';
   static final columnEstado = 'estado'; // 0 or 1
   static final columnIdShopList = 'idShopList';
 
@@ -53,6 +52,26 @@ class itemDao {
     
         SELECT * FROM $table 
         WHERE idShopList=$idShopLista     
+        
+        ''');
+  }
+
+  Future<List<Map<String, dynamic>>> getItemsShopListDo(int idShopLista) async {
+    Database db = await instance.database;
+    return await db.rawQuery('''
+    
+        SELECT * FROM $table 
+        WHERE idShopList=$idShopLista AND estado=0    
+        
+        ''');
+  }
+
+  Future<List<Map<String, dynamic>>> getItemsShopListDone(int idShopLista) async {
+    Database db = await instance.database;
+    return await db.rawQuery('''
+    
+        SELECT * FROM $table 
+        WHERE idShopList=$idShopLista AND estado=1      
         
         ''');
   }

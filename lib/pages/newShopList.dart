@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/classes/shopList.dart';
 import 'package:shoppinglistfschmtz/db/shopListDao.dart';
-import 'package:shoppinglistfschmtz/pages/list/containerItemEditShopList.dart';
-import '../util/block_pickerAlterado.dart';
+import 'package:shoppinglistfschmtz/widgets/itemShopList.dart';
+import '../util/block_pickerAlt.dart';
 import 'package:shoppinglistfschmtz/db/itemDao.dart';
 
 class NewShopList extends StatefulWidget {
@@ -27,7 +27,7 @@ class _NewShopListState extends State<NewShopList> {
   @override
   void initState() {
     super.initState();
-    getItemsShopList();
+    //getItemsShopList();
   }
 
   Future<void> getItemsShopList() async {
@@ -57,7 +57,6 @@ class _NewShopListState extends State<NewShopList> {
     Map<String, dynamic> row = {
       itemDao.columnNome: "",
       itemDao.columnEstado: 0,
-      itemDao.columnQuantity : 0,
       itemDao.columnIdShopList: widget.shopList.id,
     };
     final id = await dbItems.insert(row);
@@ -187,44 +186,44 @@ class _NewShopListState extends State<NewShopList> {
             SizedBox(
               height: 15,
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-
-                    minLines: 1,
-                    maxLength: 25,
-                    maxLengthEnforced: true,
-                    textCapitalization: TextCapitalization.sentences,
-                    keyboardType: TextInputType.name,
-                    controller: customControllerNome,
-                    //autofocus: true,
-                    decoration: InputDecoration(
-                        fillColor: Theme.of(context).inputDecorationTheme.focusColor,
-                        prefixIcon: Icon(Icons.view_list_outlined),
-                        hintText: "Shopping List Name",
-                        contentPadding:
-                            new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-                        filled: true,
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(),
-                            borderRadius: BorderRadius.circular(8.0)),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(),
-                            borderRadius: BorderRadius.circular(8.0))),
-                    style: TextStyle(
-                      fontSize: 19,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      minLines: 1,
+                      maxLength: 30,
+                      maxLengthEnforced: true,
+                      textCapitalization: TextCapitalization.sentences,
+                      keyboardType: TextInputType.name,
+                      controller: customControllerNome,
+                      decoration: InputDecoration(
+                          counterText: "",
+                          hintText: "Shopping List Name",
+                          contentPadding:
+                          new EdgeInsets.symmetric(vertical: 17.0, horizontal: 12.0),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black.withOpacity(0.5),),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black.withOpacity(0.5),),
+                              borderRadius: BorderRadius.circular(8.0)),
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black.withOpacity(0.5),),
+                              borderRadius: BorderRadius.circular(8.0))),
+                      style: TextStyle(
+                        fontSize: 19,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(width: 15,),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 21),
-                  child: MaterialButton(
+                  SizedBox(width: 15,),
+                  MaterialButton(
                     minWidth: 20,
-                    height: 47,
+                    height: 56,
                     child:
-                    Icon(Icons.color_lens_rounded),
+                    Icon(Icons.color_lens_rounded,color: Colors.grey[800],size: 30,),
                     shape: CircleBorder(),
                     elevation: 2,
                     color: currentColor,
@@ -232,49 +231,31 @@ class _NewShopListState extends State<NewShopList> {
                       createAlert(context);
                     },
                   ),
-                ),
-              ],
-            ),
-
-          //LIST TEST
-            const SizedBox(height: 15,),
-            Card(
-              color: Theme.of(context).inputDecorationTheme.focusColor,
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              elevation: 1,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                side: BorderSide(
-                  //color: Theme.of(context).inputDecorationTheme.focusedBorder.borderSide.color,
-                  //width: 1.8,
-                ),
-              ),
-              child: Column(
-                children: [
-                  ListView.separated(
-                      separatorBuilder: (BuildContext context, int index) =>
-                         SizedBox(height: 8,),
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        return ContainerItemEditShopList(
-                          item: new Item(
-                            id: items[index]['id'],
-                            nome: items[index]['nome'],
-                            quantity: items[index]['quantity'],
-                            estado: items[index]['estado'],
-                            idShopList: items[index]['idShopList'],
-                          ),
-                        );
-
-                      }),
-                  const SizedBox(height: 15,),
                 ],
               ),
             ),
-            const SizedBox(height: 25,),
 
+            //LIST TEST
+            const SizedBox(height: 50,),
+            ListView.separated(
+                separatorBuilder: (BuildContext context, int index) =>
+                    SizedBox(height: 12,),
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return ItemShopList(
+                    item: new Item(
+                      id: items[index]['id'],
+                      nome: items[index]['nome'],
+                      estado: items[index]['estado'],
+                      idShopList: items[index]['idShopList'],
+                    ),
+                    getItemsShopList: getItemsShopList,
+                  );
+
+                }),
+            const SizedBox(height: 25,),
           ],
         ),
       ),

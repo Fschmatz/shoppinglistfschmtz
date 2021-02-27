@@ -3,22 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/classes/shopList.dart';
 import 'package:shoppinglistfschmtz/pages/editShopList.dart';
-import 'package:shoppinglistfschmtz/pages/list/containerItemShopListView.dart';
 import 'package:shoppinglistfschmtz/db/itemDao.dart';
-import 'package:shoppinglistfschmtz/pages/newShopList.dart';
+import 'package:shoppinglistfschmtz/widgets/itemShopListHome.dart';
 
-class ContainerShopList extends StatefulWidget {
+class ShopListHome extends StatefulWidget {
   @override
-  _ContainerShopListState createState() => _ContainerShopListState();
+  _ShopListHomeState createState() => _ShopListHomeState();
 
   ShopList shopList;
   Function() refreshShopLists;
 
-  ContainerShopList({Key key, this.shopList, this.refreshShopLists})
+  ShopListHome({Key key, this.shopList, this.refreshShopLists})
       : super(key: key);
 }
 
-class _ContainerShopListState extends State<ContainerShopList> {
+class _ShopListHomeState extends State<ShopListHome> {
   List<Map<String, dynamic>> items = [];
 
   @override
@@ -48,7 +47,7 @@ class _ContainerShopListState extends State<ContainerShopList> {
         borderRadius: BorderRadius.all(Radius.circular(15)),
         side: BorderSide(
           color: Color(int.parse(widget.shopList.cor.substring(6, 16)))
-              .withOpacity(0.7),
+              .withOpacity(0.9),
           width: 1.8,
         ),
       ),
@@ -91,11 +90,10 @@ class _ContainerShopListState extends State<ContainerShopList> {
                 shrinkWrap: true,
                 itemCount: items.length,
                 itemBuilder: (context, index) {
-                  return ContainerItemShopListView(
+                  return ItemShopListHome(
                     item: new Item(
                       id: items[index]['id'],
                       nome: items[index]['nome'],
-                      quantity: items[index]['quantity'],
                       estado: items[index]['estado'],
                       idShopList: items[index]['idShopList'],
                     ),

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shoppinglistfschmtz/classes/shopList.dart';
 import 'package:shoppinglistfschmtz/db/shopListDao.dart';
-import 'package:shoppinglistfschmtz/pages/list/containerShopList.dart';
 import 'package:shoppinglistfschmtz/pages/newShopList.dart';
+import 'package:shoppinglistfschmtz/widgets/shopListHome.dart';
 import '../configs/configs.dart';
 
 class Home extends StatefulWidget {
@@ -15,7 +15,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  //bool carregando = true;
   List<Map<String, dynamic>> shopLists = [];
 
   @override
@@ -42,26 +41,29 @@ class _HomeState extends State<Home> {
       extendBody: true,
       resizeToAvoidBottomPadding: false,
       body: ListView(children: <Widget>[
-              const SizedBox(
-                height: 8,
+        const SizedBox(
+          height: 8,
+        ),
+        ListView.builder(
+          physics: ScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: shopLists.length,
+          itemBuilder: (context, index) {
+            return ShopListHome(
+              refreshShopLists: refreshShopLists,
+              key: UniqueKey(), //USADO pro REFRESH GERAL
+              shopList: new ShopList(
+                id: shopLists[index]['id'],
+                nome: shopLists[index]['nome'],
+                cor: shopLists[index]['cor'],
               ),
-              ListView.builder(
-                physics: ScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: shopLists.length,
-                itemBuilder: (context, index) {
-                  return ContainerShopList(
-                    refreshShopLists: refreshShopLists,
-                    key: UniqueKey(), //USADO pro REFRESH GERAL
-                    shopList: new ShopList(
-                      id: shopLists[index]['id'],
-                      nome: shopLists[index]['nome'],
-                      cor: shopLists[index]['cor'],
-                    ),
-                  );
-                },
-              ),
-            ]),
+            );
+          },
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+      ]),
 
       //BOTTOMBAR
       floatingActionButton: Container(
@@ -81,7 +83,7 @@ class _HomeState extends State<Home> {
             },
             child: Icon(
               Icons.playlist_add,
-              size:28,
+              size: 28,
               color: Colors.white,
             ),
           ),
@@ -94,26 +96,26 @@ class _HomeState extends State<Home> {
           //notchMargin: 10,
 
           child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0), //24
-                child: IconButton(
-                    icon: Icon(
-                      Icons.settings,
-                      size: 24,
-                    ),
-                    tooltip: "Settings",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) => Configs(),
-                            fullscreenDialog: true,
-                          ));
-                    }),
-              ),
-            ],
-          )),
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0), //24
+            child: IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  size: 24,
+                ),
+                tooltip: "Settings",
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => Configs(),
+                        fullscreenDialog: true,
+                      ));
+                }),
+          ),
+        ],
+      )),
     );
   }
 }
