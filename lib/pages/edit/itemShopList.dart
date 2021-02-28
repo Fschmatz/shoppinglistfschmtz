@@ -3,17 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/db/itemDao.dart';
 
-class ItemShopList extends StatefulWidget {
+class ItemEditShopList extends StatefulWidget {
   @override
-  _ItemShopListState createState() => _ItemShopListState();
+  _ItemEditShopListState createState() => _ItemEditShopListState();
 
   Item item;
   Function() getItemsShopList;
 
-  ItemShopList({Key key, this.item, this.getItemsShopList}) : super(key: key);
+  ItemEditShopList({Key key, this.item, this.getItemsShopList}) : super(key: key);
 }
 
-class _ItemShopListState extends State<ItemShopList> {
+class _ItemEditShopListState extends State<ItemEditShopList> {
   bool value = false;
 
   TextEditingController customControllerNome = TextEditingController();
@@ -21,6 +21,15 @@ class _ItemShopListState extends State<ItemShopList> {
   void _deletar() async {
     final dbItem = itemDao.instance;
     final deletado = await dbItem.delete(widget.item.id);
+  }
+
+  void _updateEstadoItem(bool state) async {
+    final dbShopList = itemDao.instance;
+    Map<String, dynamic> row = {
+      itemDao.columnId: widget.item.id,
+      itemDao.columnEstado: state ? 1:0,
+    };
+    final update = await dbShopList.update(row);
   }
 
   @override
@@ -37,13 +46,21 @@ class _ItemShopListState extends State<ItemShopList> {
         borderRadius: BorderRadius.all(Radius.circular(8)),
         side: BorderSide(
           width: 1,
-          color: widget.item.estado == 0 ? Colors.black.withOpacity(0.6):Colors.black.withOpacity(0.3),
+          color: widget.item.estado == 0
+              ? Colors.black.withOpacity(0.6)
+              : Colors.black.withOpacity(0.3),
         ),
       ),
       child: Row(
         children: [
           IconButton(
-              icon: Icon(Icons.clear,size: 18,),
+              icon: Icon(
+                Icons.clear,
+                size: 18,
+                color: widget.item.estado == 1
+                    ? Theme.of(context).disabledColor
+                    : Theme.of(context).textTheme.headline6.color,
+              ),
               onPressed: () {
                 _deletar();
                 widget.getItemsShopList();
@@ -58,16 +75,19 @@ class _ItemShopListState extends State<ItemShopList> {
               controller: customControllerNome,
               decoration: InputDecoration(
                   hintText: "Item Name",
-                  contentPadding:
-                  new EdgeInsets.symmetric(vertical: 18.0, horizontal: 10.0),
+                  contentPadding: new EdgeInsets.symmetric(
+                      vertical: 18.0, horizontal: 10.0),
                   border: InputBorder.none,
                   counterStyle: TextStyle(
                     height: double.minPositive,
                   ),
                   counterText: "" // hide maxlength counter
-              ),
+                  ),
               style: TextStyle(
                 fontSize: 18,
+                color: widget.item.estado == 1
+                    ? Theme.of(context).disabledColor
+                    : Theme.of(context).textTheme.headline6.color,
               ),
             ),
           ),
@@ -75,11 +95,13 @@ class _ItemShopListState extends State<ItemShopList> {
             width: 5,
           ),
           Checkbox(
-            activeColor: Theme.of(context).accentColor,
+            activeColor: Theme.of(context).accentColor.withOpacity(0.6),
             value: widget.item.estado == 0 ? false : true,
             onChanged: (bool v) {
               setState(() {
-                value = v;
+                //value = v;
+                _updateEstadoItem(v);
+                widget.getItemsShopList();
               });
             },
           ),
@@ -88,4 +110,3 @@ class _ItemShopListState extends State<ItemShopList> {
     );
   }
 }
-

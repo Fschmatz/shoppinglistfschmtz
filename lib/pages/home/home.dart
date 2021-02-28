@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shoppinglistfschmtz/classes/shopList.dart';
 import 'package:shoppinglistfschmtz/db/shopListDao.dart';
-import 'package:shoppinglistfschmtz/pages/newShopList.dart';
-import 'package:shoppinglistfschmtz/widgets/shopListHome.dart';
-import '../configs/configs.dart';
+import 'package:shoppinglistfschmtz/pages/home/shopListHome.dart';
+import 'package:shoppinglistfschmtz/pages/new/newShopList.dart';
+import '../../configs/configs.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -16,10 +16,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Map<String, dynamic>> shopLists = [];
+  int lastId;
 
   @override
   void initState() {
     getShopLists();
+    getLastId();
     super.initState();
   }
 
@@ -29,6 +31,15 @@ class _HomeState extends State<Home> {
     setState(() {
       shopLists = resposta;
     });
+  }
+
+  Future<void> getLastId() async {
+    final dbShopList = shopListDao.instance;
+    var resposta = await dbShopList.getLastId();
+    setState(() {
+      lastId = resposta[0]['id'];
+    });
+    print(lastId.toString());
   }
 
   void refreshShopLists() {
@@ -70,16 +81,17 @@ class _HomeState extends State<Home> {
         child: FittedBox(
           child: FloatingActionButton(
             backgroundColor: Theme.of(context).accentColor,
-            elevation: 6,
+            elevation: 0,
             onPressed: () {
               Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext context) => NewShopList(
                       refreshShopLists: refreshShopLists,
+                      lastId: lastId,
                     ),
                     fullscreenDialog: true,
-                  ));
+                  )).then((value) => getLastId());
             },
             child: Icon(
               Icons.playlist_add,

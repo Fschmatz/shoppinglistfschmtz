@@ -46,6 +46,12 @@ class itemDao {
     return await db.delete(table, where: '$columnId = ?', whereArgs: [id]);
   }
 
+  Future<int> update(Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    int id = row[columnId];
+    return await db.update(table, row, where: '$columnId = ?', whereArgs: [id]);
+  }
+
   Future<List<Map<String, dynamic>>> getItemsShopList(int idShopLista) async {
     Database db = await instance.database;
     return await db.rawQuery('''

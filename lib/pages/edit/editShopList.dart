@@ -2,42 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/classes/shopList.dart';
 import 'package:shoppinglistfschmtz/db/shopListDao.dart';
-import 'package:shoppinglistfschmtz/widgets/itemShopList.dart';
-import '../util/block_pickerAlt.dart';
+import 'package:shoppinglistfschmtz/pages/edit/itemShopList.dart';
+import '../../util/block_pickerAlt.dart';
 import 'package:shoppinglistfschmtz/db/itemDao.dart';
 
-class NewShopList extends StatefulWidget {
+class EditShopList extends StatefulWidget {
   @override
-  _NewShopListState createState() => _NewShopListState();
+  _EditShopListState createState() => _EditShopListState();
 
   Function() refreshShopLists;
   ShopList shopList;
 
-  NewShopList({Key key, this.refreshShopLists, this.shopList})
+  EditShopList({Key key, this.refreshShopLists, this.shopList})
       : super(key: key);
 }
 
-class _NewShopListState extends State<NewShopList> {
+class _EditShopListState extends State<EditShopList> {
   TextEditingController customControllerNome = TextEditingController();
   TextEditingController customControllerCor = TextEditingController();
-  List<Map<String, dynamic>> items = [];
+  List<Map<String, dynamic>> itemsDo = [];
+  List<Map<String, dynamic>> itemsDone = [];
 
   String corAtual = "Color(0xFF607D8B)";
 
   @override
   void initState() {
     super.initState();
-    //getItemsShopList();
+    getItemsShopList();
+
+    customControllerNome.text = widget.shopList.nome;
+    currentColor = Color(int.parse(widget.shopList.cor.substring(6, 16)));
+    corAtual = widget.shopList.cor;
   }
 
   Future<void> getItemsShopList() async {
     final dbItems = itemDao.instance;
-    var resposta = await dbItems.getItemsShopList(widget.shopList.id);
+    //var resposta = await dbItems.getItemsShopList(widget.shopList.id);
+    var listDo = await dbItems.getItemsShopListDo(widget.shopList.id);
+    var listDone = await dbItems.getItemsShopListDone(widget.shopList.id);
 
     //SetState error call, use if mounted
     if (mounted) {
       setState(() {
-        items = resposta;
+        //items = resposta;
+        itemsDo = listDo;
+        itemsDone = listDone;
       });
     }
   }
@@ -52,6 +61,23 @@ class _NewShopListState extends State<NewShopList> {
     final id = await dbShopList.insert(row);
   }
 
+  void _updateShopList() async {
+    final dbShopList = shopListDao.instance;
+    Map<String, dynamic> row = {
+      shopListDao.columnId: widget.shopList.id,
+      shopListDao.columnNome: customControllerNome.text,
+      shopListDao.columnCor: corAtual.toString(),
+    };
+    final update = await dbShopList.update(row);
+  }
+
+  Future<void> _deleteShopList() async {
+    final dbShopList = shopListDao.instance;
+    print("id deletado -> " + widget.shopList.id.toString());
+    var resp = await dbShopList.delete(widget.shopList.id);
+  }
+
+  //DAO ITEMS
   void _addEmptyItemToShopList() async {
     final dbItems = itemDao.instance;
     Map<String, dynamic> row = {
@@ -68,12 +94,49 @@ class _NewShopListState extends State<NewShopList> {
     if (customControllerNome.text.isEmpty) {
       erros += "Enter a name\n";
     }
-    if (customControllerNome.text.length > 200) {
+    if (customControllerNome.text.length > 30) {
       erros += "Name too long\n";
     }
     return erros;
   }
 
+  showAlertDialogOkDelete(BuildContext context) {
+    Widget okButton = FlatButton(
+      child: Text(
+        "Yes",
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      onPressed: () {
+        _deleteShopList();
+        widget.refreshShopLists();
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      elevation: 3.0,
+      title: Text(
+        "Confirmation ", //
+        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+      ),
+      content: Text(
+        "\nDelete Shopping List ?",
+        style: TextStyle(
+          fontSize: 18,
+        ),
+      ),
+      actions: [
+        okButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   showAlertDialogErros(BuildContext context) {
     Widget okButton = FlatButton(
@@ -157,6 +220,17 @@ class _NewShopListState extends State<NewShopList> {
       appBar: AppBar(
         actions: [
           Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 14, 0),
+            child: IconButton(
+              icon: Icon(
+                Icons.delete_outline_outlined,
+              ),
+              onPressed: () {
+                showAlertDialogOkDelete(context);
+              },
+            ),
+          ),
+          Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 13, 0),
             child: IconButton(
               icon: Icon(
@@ -164,7 +238,8 @@ class _NewShopListState extends State<NewShopList> {
               ),
               onPressed: () {
                 if (checkErrors().isEmpty) {
-                  _saveShopList();
+                  _updateShopList();
+
                   widget.refreshShopLists();
                   Navigator.of(context).pop();
                 } else {
@@ -175,7 +250,7 @@ class _NewShopListState extends State<NewShopList> {
           )
         ],
         elevation: 0,
-        title: Text('New Shopping List'),
+        title: Text('Edit Shopping List'),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -201,31 +276,42 @@ class _NewShopListState extends State<NewShopList> {
                       decoration: InputDecoration(
                           counterText: "",
                           hintText: "Shopping List Name",
-                          contentPadding:
-                          new EdgeInsets.symmetric(vertical: 17.0, horizontal: 12.0),
+                          contentPadding: new EdgeInsets.symmetric(
+                              vertical: 17.0, horizontal: 12.0),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black.withOpacity(0.5),),
+                            borderSide: BorderSide(
+                              color: Colors.black.withOpacity(0.5),
+                            ),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black.withOpacity(0.5),),
+                              borderSide: BorderSide(
+                                color: Colors.black.withOpacity(0.5),
+                              ),
                               borderRadius: BorderRadius.circular(8.0)),
                           border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black.withOpacity(0.5),),
+                              borderSide: BorderSide(
+                                color: Colors.black.withOpacity(0.5),
+                              ),
                               borderRadius: BorderRadius.circular(8.0))),
                       style: TextStyle(
                         fontSize: 19,
                       ),
                     ),
                   ),
-                  SizedBox(width: 15,),
+                  SizedBox(
+                    width: 15,
+                  ),
                   MaterialButton(
                     minWidth: 20,
-                    height: 56,
-                    child:
-                    Icon(Icons.color_lens_rounded,color: Colors.grey[800],size: 30,),
+                    height: 45,
+                    child: Icon(
+                      Icons.color_lens_rounded,
+                      color: Colors.grey[800],
+                      size: 26,
+                    ),
                     shape: CircleBorder(),
-                    elevation: 2,
+                    elevation: 1,
                     color: currentColor,
                     onPressed: () {
                       createAlert(context);
@@ -235,27 +321,78 @@ class _NewShopListState extends State<NewShopList> {
               ),
             ),
 
-            //LIST TEST
-            const SizedBox(height: 50,),
+            //LIST
+            const SizedBox(
+              height: 50,
+            ),
             ListView.separated(
-                separatorBuilder: (BuildContext context, int index) =>
-                    SizedBox(height: 12,),
+                separatorBuilder: (BuildContext context, int index) => SizedBox(
+                      height: 12,
+                    ),
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: items.length,
+                itemCount: itemsDo.length,
                 itemBuilder: (context, index) {
-                  return ItemShopList(
-                    item: new Item(
-                      id: items[index]['id'],
-                      nome: items[index]['nome'],
-                      estado: items[index]['estado'],
-                      idShopList: items[index]['idShopList'],
-                    ),
-                    getItemsShopList: getItemsShopList,
-                  );
+
+                    return ItemEditShopList(
+                      item: new Item(
+                        id: itemsDo[index]['id'],
+                        nome: itemsDo[index]['nome'],
+                        estado: itemsDo[index]['estado'],
+                        idShopList: itemsDo[index]['idShopList'],
+                      ),
+                      getItemsShopList: getItemsShopList,
+                      key: UniqueKey(),
+                    );
 
                 }),
-            const SizedBox(height: 25,),
+
+            const SizedBox(
+              height: 30,
+            ),
+            Visibility(
+              visible: itemsDone.length > 0,
+              child: Divider(
+                thickness: 1.8,
+                indent: 6,
+                endIndent: 6,
+              ),
+            ),
+
+            Visibility(
+              visible: itemsDone.length > 0,
+              child: const SizedBox(
+                height: 30,
+              ),
+            ),
+
+            Visibility(
+              visible: itemsDone.length > 0,
+              child: ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) => SizedBox(
+                        height: 12,
+                      ),
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: itemsDone.length,
+                  itemBuilder: (context, index) {
+
+                      return ItemEditShopList(
+                        item: new Item(
+                          id: itemsDone[index]['id'],
+                          nome: itemsDone[index]['nome'],
+                          estado: itemsDone[index]['estado'],
+                          idShopList: itemsDone[index]['idShopList'],
+                        ),
+                        getItemsShopList: getItemsShopList,
+                        key: UniqueKey(),
+                      );
+
+                  }),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
           ],
         ),
       ),

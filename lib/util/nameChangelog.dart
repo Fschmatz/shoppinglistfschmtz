@@ -1,16 +1,27 @@
 class NameChangelog{
 
-  static String appVersion = "0.3.1";
+  static String appVersion = "0.3.4";
   static String appName = "ShopList Fschmtz";
 
   static String changelogCurrent = '''  
   
-0.3.1
-- Colors Changes
+0.3.4
+- Home/New/Edit with a package each
 - Fixes
 ''';
 
   static String changelogsOld = '''
+
+0.3.3
+- Visibility for ShopList Items
+- Fixes
+
+0.3.2
+- Fixes
+
+0.3.1
+- Colors Changes
+- Fixes
 
 0.3.0
 - Logic Changes

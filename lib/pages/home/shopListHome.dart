@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/classes/shopList.dart';
-import 'package:shoppinglistfschmtz/pages/editShopList.dart';
 import 'package:shoppinglistfschmtz/db/itemDao.dart';
-import 'package:shoppinglistfschmtz/widgets/itemShopListHome.dart';
+import 'package:shoppinglistfschmtz/pages/edit/editShopList.dart';
+import 'package:shoppinglistfschmtz/pages/home/itemShopListHome.dart';
 
 class ShopListHome extends StatefulWidget {
   @override
@@ -26,9 +26,11 @@ class _ShopListHomeState extends State<ShopListHome> {
     super.initState();
   }
 
+
+  // ONLY DO ITEMS
   Future<void> getItemsShopList() async {
     final dbItems = itemDao.instance;
-    var resposta = await dbItems.getItemsShopList(widget.shopList.id);
+    var resposta = await dbItems.getItemsShopListDo(widget.shopList.id);
 
     //SetState error call, use if mounted
     if (mounted) {
@@ -67,7 +69,7 @@ class _ShopListHomeState extends State<ShopListHome> {
                       shopList: widget.shopList,
                     ),
                 fullscreenDialog: true,
-              ));
+              )).then((value) => widget.refreshShopLists());
 
         },
         child: Column(
@@ -97,6 +99,8 @@ class _ShopListHomeState extends State<ShopListHome> {
                       estado: items[index]['estado'],
                       idShopList: items[index]['idShopList'],
                     ),
+                    refreshShopLists: widget.refreshShopLists,
+                    key: UniqueKey(),
                   );
                 }),
             const SizedBox(
