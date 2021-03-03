@@ -9,8 +9,10 @@ class ItemEditShopList extends StatefulWidget {
 
   Item item;
   Function() getItemsShopList;
+  Function(int, String, int) updateItem;
 
-  ItemEditShopList({Key key, this.item, this.getItemsShopList}) : super(key: key);
+  ItemEditShopList({Key key, this.item, this.getItemsShopList, this.updateItem})
+      : super(key: key);
 }
 
 class _ItemEditShopListState extends State<ItemEditShopList> {
@@ -27,7 +29,7 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
     final dbShopList = itemDao.instance;
     Map<String, dynamic> row = {
       itemDao.columnId: widget.item.id,
-      itemDao.columnEstado: state ? 1:0,
+      itemDao.columnEstado: state ? 1 : 0,
     };
     final update = await dbShopList.update(row);
   }
@@ -67,6 +69,8 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
               }),
           Expanded(
             child: TextField(
+              onChanged: (value) => widget.updateItem(widget.item.id,
+                  customControllerNome.text, widget.item.estado),
               minLines: 1,
               maxLines: 3,
               maxLength: 200,
@@ -99,7 +103,6 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
             value: widget.item.estado == 0 ? false : true,
             onChanged: (bool v) {
               setState(() {
-                //value = v;
                 _updateEstadoItem(v);
                 widget.getItemsShopList();
               });

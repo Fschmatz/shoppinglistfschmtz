@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
-import 'package:shoppinglistfschmtz/classes/shopList.dart';
 import 'package:shoppinglistfschmtz/db/shopListDao.dart';
+import 'package:shoppinglistfschmtz/db/itemDao.dart';
 import 'package:shoppinglistfschmtz/pages/new/itemNewShopList.dart';
 import '../../util/block_pickerAlt.dart';
 
@@ -9,58 +9,43 @@ class NewShopList extends StatefulWidget {
   @override
   _NewShopListState createState() => _NewShopListState();
 
-  Function() refreshShopLists;
-  ShopList shopList;
   int lastId;
+  Function() refreshShopLists;
 
-  NewShopList({Key key, this.refreshShopLists, this.shopList,this.lastId})
+  NewShopList({Key key, this.lastId,this.refreshShopLists})
       : super(key: key);
 }
 
 class _NewShopListState extends State<NewShopList> {
   TextEditingController customControllerNome = TextEditingController();
   TextEditingController customControllerCor = TextEditingController();
-  //List<Map<String, Item>> itemsDo = [];
-  //List<Map<String, Item>> itemsDone = [];
 
-  List<Item> itemsDo = [];
-  List<Item> itemsDone = [];
+  List<Item> items = [];
 
   String corAtual = "Color(0xFF607D8B)";
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
   void refreshList(){
-    setState(() {
-    });
+    setState(() {});
   }
 
-  //DAO SHOPLIST
-  void _saveShopList() async {
-    Map<String, dynamic> row = {
-      shopListDao.columnId: widget.lastId+1,
-      shopListDao.columnNome: customControllerNome.text,
-      shopListDao.columnCor: corAtual.toString(),
-    };
+  void updateItem(int idItem,String nome){
+      items[idItem].nome=nome;
   }
 
   void _addEmptyItemToShopList() async {
-    itemsDo.insert(itemsDo.length,
+    items.insert(items.length,
         new Item(
-      id: 55,
-      nome: "",
-      estado: 0,
-      idShopList: widget.lastId+1)
+            id: items.length,
+            nome: "",
+            estado: 0,
+            idShopList: widget.lastId+1)
     );
+    //print("items.length-> "+items.length.toString());
   }
 
-
-/*
   //DAO SHOPLIST
-  void _saveShopList() async {
+  Future<void> _saveShopList() async {
     final dbShopList = shopListDao.instance;
     Map<String, dynamic> row = {
       shopListDao.columnId: widget.lastId+1,
@@ -70,16 +55,17 @@ class _NewShopListState extends State<NewShopList> {
     final id = await dbShopList.insert(row);
   }
 
-  void _addEmptyItemToShopList() async {
+  Future<void> _saveItemsToShopList() async {
     final dbItems = itemDao.instance;
-    Map<String, dynamic> row = {
-      itemDao.columnNome: "",
-      itemDao.columnEstado: 0,
-      itemDao.columnIdShopList: widget.lastId+1,
-    };
-    final id = await dbItems.insert(row);
+    for(int i = 0; i < items.length ; i++) {
+      Map<String, dynamic> row = {
+        itemDao.columnNome:items[i].nome,
+        itemDao.columnEstado: 0,
+        itemDao.columnIdShopList: widget.lastId + 1,
+      };
+      final id = await dbItems.insert(row);
+    }
   }
-*/
 
   //CHECK ERROR NULL
   String checkErrors() {
@@ -87,7 +73,7 @@ class _NewShopListState extends State<NewShopList> {
     if (customControllerNome.text.isEmpty) {
       erros += "Enter a name\n";
     }
-    if (customControllerNome.text.length > 200) {
+    if (customControllerNome.text.length > 30) {
       erros += "Name too long\n";
     }
     return erros;
@@ -181,10 +167,11 @@ class _NewShopListState extends State<NewShopList> {
               icon: Icon(
                 Icons.save_outlined,
               ),
-              onPressed: () {
+              onPressed: () async {
                 if (checkErrors().isEmpty) {
-                  _saveShopList();
-                  widget.refreshShopLists();
+                  await _saveShopList();
+                  await _saveItemsToShopList();
+                  await widget.refreshShopLists();
                   Navigator.of(context).pop();
                 } else {
                   showAlertDialogErros(context);
@@ -221,7 +208,7 @@ class _NewShopListState extends State<NewShopList> {
                           counterText: "",
                           hintText: "Shopping List Name",
                           contentPadding: new EdgeInsets.symmetric(
-                              vertical: 17.0, horizontal: 12.0),
+                              vertical: 15.0, horizontal: 12.0),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.black.withOpacity(0.5),
@@ -252,7 +239,7 @@ class _NewShopListState extends State<NewShopList> {
                     child: Icon(
                       Icons.color_lens_rounded,
                       color: Colors.grey[800],
-                      size: 26,
+                      size: 24,
                     ),
                     shape: CircleBorder(),
                     elevation: 1,
@@ -275,65 +262,24 @@ class _NewShopListState extends State<NewShopList> {
                 ),
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: itemsDo.length,
+                itemCount: items.length,
                 itemBuilder: (context, index) {
 
                   return ItemNewShopList(
                     item: new Item(
-                      id: itemsDo[index].id,
-                      nome: itemsDo[index].nome,
-                      estado: itemsDo[index].estado,
-                      idShopList: itemsDo[index].idShopList,
+                      id: items[index].id,
+                      nome: items[index].nome,
+                      estado: items[index].estado,
+                      idShopList: items[index].idShopList,
                     ),
                     key: UniqueKey(),
+                    updateItem: updateItem,
                   );
 
                 }),
 
             const SizedBox(
-              height: 30,
-            ),
-            Visibility(
-              visible: itemsDone.length > 0,
-              child: Divider(
-                thickness: 1.8,
-                indent: 6,
-                endIndent: 6,
-              ),
-            ),
-
-            Visibility(
-              visible: itemsDone.length > 0,
-              child: const SizedBox(
-                height: 30,
-              ),
-            ),
-
-            Visibility(
-              visible: itemsDone.length > 0,
-              child: ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) => SizedBox(
-                    height: 12,
-                  ),
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: itemsDone.length,
-                  itemBuilder: (context, index) {
-
-                    return ItemNewShopList(
-                      item: new Item(
-                        id: itemsDone[index].id,
-                        nome: itemsDone[index].nome,
-                        estado: itemsDone[index].estado,
-                        idShopList: itemsDone[index].idShopList,
-                      ),
-                      key: UniqueKey(),
-                    );
-
-                  }),
-            ),
-            const SizedBox(
-              height: 25,
+              height: 100,
             ),
           ],
         ),

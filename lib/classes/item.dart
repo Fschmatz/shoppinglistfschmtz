@@ -1,8 +1,8 @@
 class Item{
-  final int id;
-  final String nome;
-  final int estado;  // 0 or 1
-  final int idShopList;
+   int id;
+   String nome;
+   int estado;  // 0 or 1
+   int idShopList;
 
   Item({this.id,this.nome,this.estado,this.idShopList});
 }

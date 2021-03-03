@@ -40,6 +40,18 @@ class _ShopListHomeState extends State<ShopListHome> {
     }
   }
 
+  Future<void> getItemsRefreshShopList(int idShopList) async {
+    final dbItems = itemDao.instance;
+    var resposta = await dbItems.getItemsShopListDo(idShopList);
+
+    //SetState error call, use if mounted
+    if (mounted) {
+      setState(() {
+        items = resposta;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -49,7 +61,7 @@ class _ShopListHomeState extends State<ShopListHome> {
         borderRadius: BorderRadius.all(Radius.circular(15)),
         side: BorderSide(
           color: Color(int.parse(widget.shopList.cor.substring(6, 16)))
-              .withOpacity(0.9),
+              .withOpacity(0.8),
           width: 1.8,
         ),
       ),
@@ -99,7 +111,8 @@ class _ShopListHomeState extends State<ShopListHome> {
                       estado: items[index]['estado'],
                       idShopList: items[index]['idShopList'],
                     ),
-                    refreshShopLists: widget.refreshShopLists,
+                    //refreshShopLists: widget.refreshShopLists,
+                    getItemsRefreshShopList: getItemsRefreshShopList,
                     key: UniqueKey(),
                   );
                 }),

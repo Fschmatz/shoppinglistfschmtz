@@ -8,29 +8,14 @@ class ItemNewShopList extends StatefulWidget {
   _ItemNewShopListState createState() => _ItemNewShopListState();
 
   Item item;
-
-
-  ItemNewShopList({Key key, this.item}) : super(key: key);
+  Function(int, String) updateItem;
+  ItemNewShopList({Key key, this.item, this.updateItem}) : super(key: key);
 }
 
 class _ItemNewShopListState extends State<ItemNewShopList> {
   bool value = false;
-
   TextEditingController customControllerNome = TextEditingController();
 
-  /*void _deletar() async {
-    final dbItem = itemDao.instance;
-    final deletado = await dbItem.delete(widget.item.id);
-  }
-
-  void _updateEstadoItem(bool state) async {
-    final dbShopList = itemDao.instance;
-    Map<String, dynamic> row = {
-      itemDao.columnId: widget.item.id,
-      itemDao.columnEstado: state ? 1:0,
-    };
-    final update = await dbShopList.update(row);
-  }*/
 
   @override
   void initState() {
@@ -46,27 +31,14 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
         borderRadius: BorderRadius.all(Radius.circular(8)),
         side: BorderSide(
           width: 1,
-          color: widget.item.estado == 0
-              ? Colors.black.withOpacity(0.6)
-              : Colors.black.withOpacity(0.3),
+          color: Colors.black.withOpacity(0.6),
         ),
       ),
       child: Row(
         children: [
-          IconButton(
-              icon: Icon(
-                Icons.clear,
-                size: 18,
-                color: widget.item.estado == 1
-                    ? Theme.of(context).disabledColor
-                    : Theme.of(context).textTheme.headline6.color,
-              ),
-              onPressed: () {
-                //_deletar();
-                //widget.getItemsShopList();
-              }),
           Expanded(
             child: TextField(
+              onChanged:(value)=> widget.updateItem(widget.item.id,customControllerNome.text),
               minLines: 1,
               maxLines: 3,
               maxLength: 200,
@@ -82,28 +54,11 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
                     height: double.minPositive,
                   ),
                   counterText: "" // hide maxlength counter
-                  ),
+              ),
               style: TextStyle(
                 fontSize: 18,
-                color: widget.item.estado == 1
-                    ? Theme.of(context).disabledColor
-                    : Theme.of(context).textTheme.headline6.color,
               ),
             ),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          Checkbox(
-            activeColor: Theme.of(context).accentColor.withOpacity(0.6),
-            value: widget.item.estado == 0 ? false : true,
-            onChanged: (bool v) {
-              setState(() {
-                //value = v;
-                //_updateEstadoItem(v);
-                //widget.getItemsShopList();
-              });
-            },
           ),
         ],
       ),

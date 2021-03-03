@@ -1,16 +1,33 @@
 class NameChangelog{
 
-  static String appVersion = "0.3.4";
+  static String appVersion = "0.5.0";
   static String appName = "ShopList Fschmtz";
 
   static String changelogCurrent = '''  
   
-0.3.4
-- Home/New/Edit with a package each
-- Fixes
+0.5.0
+- Technically Usable
+- Performance Improvements !
 ''';
 
   static String changelogsOld = '''
+
+0.4.2
+- Flashing Items on SetState Fixed
+- Fixes
+
+0.4.1
+- Edit only updates ShopList
+- Fixes
+
+0.4.0
+- Save new ShopList + Items
+- Edit+Save ShopList + Items
+- Fixes
+
+0.3.4
+- Home/New/Edit with a package each
+- Fixes
 
 0.3.3
 - Visibility for ShopList Items

@@ -34,17 +34,21 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> getLastId() async {
-    final dbShopList = shopListDao.instance;
-    var resposta = await dbShopList.getLastId();
-    setState(() {
-      lastId = resposta[0]['id'];
-    });
-    print(lastId.toString());
+      final dbShopList = shopListDao.instance;
+      var resposta = await dbShopList.getLastId();
+      setState(() {
+        if(resposta.isEmpty){
+          lastId = 0;
+        }
+        else{
+          lastId = resposta[0]['id'];
+        }
+      });
   }
 
-  void refreshShopLists() {
+  /*Future<void> refreshShopLists() {
     getShopLists();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +59,13 @@ class _HomeState extends State<Home> {
         const SizedBox(
           height: 8,
         ),
-        ListView.builder(
+        shopLists.isEmpty ? SizedBox.shrink() : ListView.builder(
           physics: ScrollPhysics(),
           shrinkWrap: true,
           itemCount: shopLists.length,
           itemBuilder: (context, index) {
             return ShopListHome(
-              refreshShopLists: refreshShopLists,
+              refreshShopLists: getShopLists,
               key: UniqueKey(), //USADO pro REFRESH GERAL
               shopList: new ShopList(
                 id: shopLists[index]['id'],
@@ -72,7 +76,7 @@ class _HomeState extends State<Home> {
           },
         ),
         const SizedBox(
-          height: 30,
+          height: 50,
         ),
       ]),
 
@@ -84,14 +88,15 @@ class _HomeState extends State<Home> {
             elevation: 0,
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => NewShopList(
-                      refreshShopLists: refreshShopLists,
-                      lastId: lastId,
-                    ),
-                    fullscreenDialog: true,
-                  )).then((value) => getLastId());
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => NewShopList(
+                          lastId: lastId,
+                          refreshShopLists: getShopLists,
+                        ),
+                        fullscreenDialog: true,
+                      ))
+                  .then((value) => getLastId());
             },
             child: Icon(
               Icons.playlist_add,
@@ -104,8 +109,6 @@ class _HomeState extends State<Home> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
 
       bottomNavigationBar: BottomAppBar(
-          //shape: CircularNotchedRectangle(),
-          //notchMargin: 10,
 
           child: Row(
         children: [

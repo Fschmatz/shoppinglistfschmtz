@@ -67,22 +67,11 @@ class criadorDb {
 
 
     Batch batch = db.batch();
-    batch.insert('shoplists', {'id': 1,'nome': 'Mercado','cor': 'Color(0xFF4CAF50)'});
-    batch.insert('shoplists', {'id': 2,'nome': 'Churrasco','cor': 'Color(0xFFFF5252)'});
-    batch.insert('shoplists', {'id': 3,'nome': 'Loja de Amendoim','cor': 'Color(0xFF82B1FF)'});
+    batch.insert('shoplists', {'id': 1,'nome': 'My ShopList','cor': 'Color(0xFF607D8B)'});
 
-    batch.insert('items', {'id': 1,'nome': 'Pão 3','estado': 0, 'idShopList':'1'});
-    batch.insert('items', {'id': 2,'nome': '5kgs Sal','estado': 1, 'idShopList':'1'});
+    batch.insert('items', {'id': 1,'nome': 'Steel','estado': 0, 'idShopList':'1'});
+    batch.insert('items', {'id': 2,'nome': 'Silver','estado': 0, 'idShopList':'1'});
 
-    batch.insert('items', {'id': 3,'nome': '10 kgs Carne','estado': 0, 'idShopList':'2'});
-    batch.insert('items', {'id': 4,'nome': '1 pct de Carvão','estado': 0, 'idShopList':'2'});
-    batch.insert('items', {'id': 5,'nome': '3 Espetos ?','estado': 1, 'idShopList':'2'});
-
-    batch.insert('items', {'id': 6,'nome': 'Agridoce','estado': 0, 'idShopList':'3'});
-    batch.insert('items', {'id': 7,'nome': 'Defumado','estado': 0, 'idShopList':'3'});
-    batch.insert('items', {'id': 8,'nome': 'Salgado','estado': 1, 'idShopList':'3'});
-    batch.insert('items', {'id': 9,'nome': 'Mostarda','estado': 1, 'idShopList':'3'});
-    batch.insert('items', {'id': 10,'nome': 'Acebolado','estado': 1, 'idShopList':'3'});
 
     await batch.commit(noResult: true);
 

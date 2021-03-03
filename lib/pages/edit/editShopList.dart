@@ -37,7 +37,6 @@ class _EditShopListState extends State<EditShopList> {
 
   Future<void> getItemsShopList() async {
     final dbItems = itemDao.instance;
-    //var resposta = await dbItems.getItemsShopList(widget.shopList.id);
     var listDo = await dbItems.getItemsShopListDo(widget.shopList.id);
     var listDone = await dbItems.getItemsShopListDone(widget.shopList.id);
 
@@ -52,20 +51,11 @@ class _EditShopListState extends State<EditShopList> {
   }
 
   //DAO SHOPLIST
-  void _saveShopList() async {
-    final dbShopList = shopListDao.instance;
-    Map<String, dynamic> row = {
-      shopListDao.columnNome: customControllerNome.text,
-      shopListDao.columnCor: corAtual.toString(),
-    };
-    final id = await dbShopList.insert(row);
-  }
-
   void _updateShopList() async {
     final dbShopList = shopListDao.instance;
     Map<String, dynamic> row = {
       shopListDao.columnId: widget.shopList.id,
-      shopListDao.columnNome: customControllerNome.text,
+      shopListDao.columnNome: customControllerNome.text.isEmpty ? "ShopList" : customControllerNome.text,
       shopListDao.columnCor: corAtual.toString(),
     };
     final update = await dbShopList.update(row);
@@ -87,6 +77,18 @@ class _EditShopListState extends State<EditShopList> {
     };
     final id = await dbItems.insert(row);
   }
+
+  void _updateItem(int id,String nome,int estado) async {
+    final dbItems = itemDao.instance;
+    Map<String, dynamic> row = {
+      itemDao.columnId: id,
+      itemDao.columnNome: nome,
+      itemDao.columnEstado: estado,
+      //itemDao.columnIdShopList: widget.shopList.id,
+    };
+    final update = await dbItems.update(row);
+  }
+
 
   //CHECK ERROR NULL
   String checkErrors() {
@@ -206,6 +208,7 @@ class _EditShopListState extends State<EditShopList> {
                     currentColor = pickerColor,
                     corAtual = pickerColor.toString()
                   });
+              _updateShopList();
               Navigator.of(context).pop();
             },
           ),
@@ -220,7 +223,7 @@ class _EditShopListState extends State<EditShopList> {
       appBar: AppBar(
         actions: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 14, 0),
+            padding: const EdgeInsets.fromLTRB(0, 0, 13, 0),//14
             child: IconButton(
               icon: Icon(
                 Icons.delete_outline_outlined,
@@ -230,24 +233,6 @@ class _EditShopListState extends State<EditShopList> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 13, 0),
-            child: IconButton(
-              icon: Icon(
-                Icons.save_outlined,
-              ),
-              onPressed: () {
-                if (checkErrors().isEmpty) {
-                  _updateShopList();
-
-                  widget.refreshShopLists();
-                  Navigator.of(context).pop();
-                } else {
-                  showAlertDialogErros(context);
-                }
-              },
-            ),
-          )
         ],
         elevation: 0,
         title: Text('Edit Shopping List'),
@@ -273,11 +258,12 @@ class _EditShopListState extends State<EditShopList> {
                       textCapitalization: TextCapitalization.sentences,
                       keyboardType: TextInputType.name,
                       controller: customControllerNome,
+                      onChanged: (value) => _updateShopList(),
                       decoration: InputDecoration(
                           counterText: "",
                           hintText: "Shopping List Name",
                           contentPadding: new EdgeInsets.symmetric(
-                              vertical: 17.0, horizontal: 12.0),
+                              vertical: 15.0, horizontal: 12.0),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.black.withOpacity(0.5),
@@ -308,7 +294,7 @@ class _EditShopListState extends State<EditShopList> {
                     child: Icon(
                       Icons.color_lens_rounded,
                       color: Colors.grey[800],
-                      size: 26,
+                      size: 24,
                     ),
                     shape: CircleBorder(),
                     elevation: 1,
@@ -343,6 +329,7 @@ class _EditShopListState extends State<EditShopList> {
                       ),
                       getItemsShopList: getItemsShopList,
                       key: UniqueKey(),
+                      updateItem: _updateItem,
                     );
 
                 }),
@@ -386,12 +373,13 @@ class _EditShopListState extends State<EditShopList> {
                         ),
                         getItemsShopList: getItemsShopList,
                         key: UniqueKey(),
+                        updateItem: _updateItem,
                       );
 
                   }),
             ),
             const SizedBox(
-              height: 25,
+              height: 100,
             ),
           ],
         ),

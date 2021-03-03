@@ -7,9 +7,10 @@ class ItemShopListHome extends StatefulWidget {
   _ItemShopListHomeState createState() => _ItemShopListHomeState();
 
   Item item;
-  Function() refreshShopLists;
+  //Function() refreshShopLists;
+  Function(int) getItemsRefreshShopList;
 
-  ItemShopListHome({Key key, this.item,this.refreshShopLists})
+  ItemShopListHome({Key key, this.item,this.getItemsRefreshShopList})
       : super(key: key);
 }
 
@@ -41,7 +42,8 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
             setState(() {
               //value = v;
               _updateEstadoItem(v);
-              widget.refreshShopLists();
+              widget.getItemsRefreshShopList(widget.item.idShopList);
+              //widget.refreshShopLists();
             });
           },
         ),
