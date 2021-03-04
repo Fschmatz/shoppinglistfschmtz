@@ -1,16 +1,21 @@
 class NameChangelog{
 
-  static String appVersion = "0.5.0";
+  static String appVersion = "0.5.1";
   static String appName = "ShopList Fschmtz";
 
   static String changelogCurrent = '''  
   
-0.5.0
-- Technically Usable
-- Performance Improvements !
+0.5.1
+- Small Fixes Everywhere
+- Ui Changes
+- Add Keyboard Visibility
 ''';
 
   static String changelogsOld = '''
+
+0.5.0
+- Technically Usable
+- Performance Improvements !
 
 0.4.2
 - Flashing Items on SetState Fixed

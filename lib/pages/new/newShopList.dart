@@ -41,7 +41,6 @@ class _NewShopListState extends State<NewShopList> {
             estado: 0,
             idShopList: widget.lastId+1)
     );
-    //print("items.length-> "+items.length.toString());
   }
 
   //DAO SHOPLIST
@@ -49,7 +48,7 @@ class _NewShopListState extends State<NewShopList> {
     final dbShopList = shopListDao.instance;
     Map<String, dynamic> row = {
       shopListDao.columnId: widget.lastId+1,
-      shopListDao.columnNome: customControllerNome.text,
+      shopListDao.columnNome: customControllerNome.text.isEmpty ? "ShopList" : customControllerNome.text,
       shopListDao.columnCor: corAtual.toString(),
     };
     final id = await dbShopList.insert(row);
@@ -67,53 +66,6 @@ class _NewShopListState extends State<NewShopList> {
     }
   }
 
-  //CHECK ERROR NULL
-  String checkErrors() {
-    String erros = "";
-    if (customControllerNome.text.isEmpty) {
-      erros += "Enter a name\n";
-    }
-    if (customControllerNome.text.length > 30) {
-      erros += "Name too long\n";
-    }
-    return erros;
-  }
-
-
-  showAlertDialogErros(BuildContext context) {
-    Widget okButton = FlatButton(
-      child: Text(
-        "Ok",
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
-    AlertDialog alert = AlertDialog(
-      elevation: 3.0,
-      title: Text(
-        "Error",
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-      content: Text(
-        checkErrors(),
-        style: TextStyle(
-          fontSize: 18,
-        ),
-      ),
-      actions: [
-        okButton,
-      ],
-    );
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
 
   Color pickerColor = Color(0xFF607D8B);
   Color currentColor = Color(0xFF607D8B);
@@ -162,20 +114,16 @@ class _NewShopListState extends State<NewShopList> {
       appBar: AppBar(
         actions: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 13, 0),
+            padding: const EdgeInsets.fromLTRB(0, 0, 3, 0),
             child: IconButton(
               icon: Icon(
                 Icons.save_outlined,
               ),
               onPressed: () async {
-                if (checkErrors().isEmpty) {
                   await _saveShopList();
                   await _saveItemsToShopList();
                   await widget.refreshShopLists();
                   Navigator.of(context).pop();
-                } else {
-                  showAlertDialogErros(context);
-                }
               },
             ),
           )
@@ -198,6 +146,7 @@ class _NewShopListState extends State<NewShopList> {
                 children: [
                   Expanded(
                     child: TextField(
+                      autofocus: false,
                       minLines: 1,
                       maxLength: 30,
                       maxLengthEnforced: true,

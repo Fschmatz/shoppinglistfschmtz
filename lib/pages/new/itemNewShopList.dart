@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
-import 'package:shoppinglistfschmtz/db/itemDao.dart';
 
 class ItemNewShopList extends StatefulWidget {
   @override
@@ -40,8 +39,10 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
             child: TextField(
               onChanged:(value)=> widget.updateItem(widget.item.id,customControllerNome.text),
               minLines: 1,
-              maxLines: 3,
+              maxLines: 4,
               maxLength: 200,
+              maxLengthEnforced: true,
+              autofocus: false,
               textCapitalization: TextCapitalization.sentences,
               keyboardType: TextInputType.name,
               controller: customControllerNome,

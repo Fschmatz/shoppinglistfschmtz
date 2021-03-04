@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/classes/shopList.dart';
 import 'package:shoppinglistfschmtz/db/shopListDao.dart';
-import 'package:shoppinglistfschmtz/pages/edit/itemShopList.dart';
+import 'package:shoppinglistfschmtz/pages/edit/itemEditShopList.dart';
 import '../../util/block_pickerAlt.dart';
 import 'package:shoppinglistfschmtz/db/itemDao.dart';
 
@@ -22,7 +22,6 @@ class _EditShopListState extends State<EditShopList> {
   TextEditingController customControllerCor = TextEditingController();
   List<Map<String, dynamic>> itemsDo = [];
   List<Map<String, dynamic>> itemsDone = [];
-
   String corAtual = "Color(0xFF607D8B)";
 
   @override
@@ -31,8 +30,9 @@ class _EditShopListState extends State<EditShopList> {
     getItemsShopList();
 
     customControllerNome.text = widget.shopList.nome;
-    currentColor = Color(int.parse(widget.shopList.cor.substring(6, 16)));
     corAtual = widget.shopList.cor;
+    currentColor = Color(int.parse(widget.shopList.cor.substring(6, 16)));
+    pickerColor = Color(int.parse(widget.shopList.cor.substring(6, 16)));
   }
 
   Future<void> getItemsShopList() async {
@@ -84,23 +84,10 @@ class _EditShopListState extends State<EditShopList> {
       itemDao.columnId: id,
       itemDao.columnNome: nome,
       itemDao.columnEstado: estado,
-      //itemDao.columnIdShopList: widget.shopList.id,
     };
     final update = await dbItems.update(row);
   }
 
-
-  //CHECK ERROR NULL
-  String checkErrors() {
-    String erros = "";
-    if (customControllerNome.text.isEmpty) {
-      erros += "Enter a name\n";
-    }
-    if (customControllerNome.text.length > 30) {
-      erros += "Name too long\n";
-    }
-    return erros;
-  }
 
   showAlertDialogOkDelete(BuildContext context) {
     Widget okButton = FlatButton(
@@ -140,41 +127,6 @@ class _EditShopListState extends State<EditShopList> {
     );
   }
 
-  showAlertDialogErros(BuildContext context) {
-    Widget okButton = FlatButton(
-      child: Text(
-        "Ok",
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
-    AlertDialog alert = AlertDialog(
-      elevation: 3.0,
-      title: Text(
-        "Error",
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-      content: Text(
-        checkErrors(),
-        style: TextStyle(
-          fontSize: 18,
-        ),
-      ),
-      actions: [
-        okButton,
-      ],
-    );
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
   Color pickerColor = Color(0xFF607D8B);
   Color currentColor = Color(0xFF607D8B);
 
@@ -182,7 +134,7 @@ class _EditShopListState extends State<EditShopList> {
     setState(() => pickerColor = color);
   }
 
-  createAlert(BuildContext context) {
+  createAlertSelectColor(BuildContext context) {
     return showDialog(
       context: context,
       child: AlertDialog(
@@ -219,11 +171,12 @@ class _EditShopListState extends State<EditShopList> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         actions: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 13, 0),//14
+            padding: const EdgeInsets.fromLTRB(0, 0, 3, 0),
             child: IconButton(
               icon: Icon(
                 Icons.delete_outline_outlined,
@@ -252,6 +205,7 @@ class _EditShopListState extends State<EditShopList> {
                 children: [
                   Expanded(
                     child: TextField(
+                      //autofocus: false,
                       minLines: 1,
                       maxLength: 30,
                       maxLengthEnforced: true,
@@ -300,7 +254,7 @@ class _EditShopListState extends State<EditShopList> {
                     elevation: 1,
                     color: currentColor,
                     onPressed: () {
-                      createAlert(context);
+                      createAlertSelectColor(context);
                     },
                   ),
                 ],
@@ -385,21 +339,20 @@ class _EditShopListState extends State<EditShopList> {
         ),
       ),
       floatingActionButton: Container(
-        child: FittedBox(
-          child: FloatingActionButton(
-            backgroundColor: Theme.of(context).accentColor,
-            elevation: 6,
-            onPressed: () {
-              _addEmptyItemToShopList();
-              getItemsShopList();
-            },
-            child: Icon(
-              Icons.add_shopping_cart_rounded,
-              color: Colors.white,
-            ),
+        child: FloatingActionButton(
+          backgroundColor: Theme.of(context).accentColor,
+          elevation: 6,
+          onPressed: () {
+            _addEmptyItemToShopList();
+            getItemsShopList();
+          },
+          child: Icon(
+            Icons.add_shopping_cart_rounded,
+            color: Colors.white,
           ),
         ),
       ),
     );
   }
 }
+//visible: MediaQuery.of(context).viewInsets.bottom == 0.0,

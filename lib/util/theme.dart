@@ -6,12 +6,12 @@ ThemeData light = ThemeData(
     brightness: Brightness.light,
     primaryColor: Color(0xFFE2E2EF),
     accentColor: Color(0xFF2969BB),
-    scaffoldBackgroundColor: Color(0xFFF9F9FF),
+    scaffoldBackgroundColor: Color(0xFFF1F1F9), //0xFFF9F9FF
     cardTheme: CardTheme(
-      color: Color(0xFFF1F1F8),
+      color: Color(0xFFF8F8FF), //0xFFF1F1F8
     ),
     dialogTheme: DialogTheme(
-      backgroundColor: Color(0xFFF9F9FF),
+      backgroundColor: Color(0xFFF8F8FF),
     ),
     popupMenuTheme: PopupMenuThemeData(
       color: Color(0xFFE1E1E7),
@@ -30,7 +30,7 @@ ThemeData dark = ThemeData(
       color: Color(0xFF353535),
     ),
     dialogTheme: DialogTheme(
-      backgroundColor: Color(0xFF202124),
+      backgroundColor: Color(0xFF353535),
     ),
 
     popupMenuTheme: PopupMenuThemeData(
