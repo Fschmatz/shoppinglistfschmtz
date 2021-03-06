@@ -156,8 +156,8 @@ class _NewShopListState extends State<NewShopList> {
         elevation: 0,
         title: Text('New Shopping List'),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -165,137 +165,162 @@ class _NewShopListState extends State<NewShopList> {
             SizedBox(
               height: 15,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      autofocus: false,
-                      minLines: 1,
-                      maxLength: 30,
-                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                      textCapitalization: TextCapitalization.sentences,
-                      keyboardType: TextInputType.name,
-                      controller: customControllerNome,
-                      decoration: InputDecoration(
-                          counterText: "",
-                          hintText: "Shopping List Name",
-                          contentPadding: new EdgeInsets.symmetric(
-                              vertical: 15.0, horizontal: 12.0),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black.withOpacity(0.5),
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          autofocus: false,
+                          minLines: 1,
+                          maxLength: 30,
+                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                          textCapitalization: TextCapitalization.sentences,
+                          keyboardType: TextInputType.name,
+                          controller: customControllerNome,
+                          decoration: InputDecoration(
+                              counterText: "",
+                              hintText: "Shopping List Name",
+                              contentPadding: new EdgeInsets.symmetric(
+                                  vertical: 15.0, horizontal: 12.0),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.black.withOpacity(0.5),
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black.withOpacity(0.5),
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0)),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black.withOpacity(0.5),
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0))),
+                          style: TextStyle(
+                            fontSize: 19,
                           ),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.5),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      MaterialButton(
+                        minWidth: 20,
+                        height: 45,
+                        child: Icon(
+                          Icons.color_lens_rounded,
+                          color: Colors.grey[800],
+                          size: 24,
+                        ),
+                        shape: CircleBorder(),
+                        elevation: 1,
+                        color: currentColor,
+                        onPressed: () {
+                          createAlertSelectColor(context);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 25,),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: Card(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          side: BorderSide(
+                            width: 1.8,
+                            color: currentColor.withOpacity(0.8),
+                          ),
+                        ),
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          minLines: 1,
+                          maxLines: 4,
+                          maxLength: 200,
+                          autofocus: false,
+                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                          textCapitalization: TextCapitalization.sentences,
+                          keyboardType: TextInputType.name,
+                          controller: customControllerAddNewItem,
+                          onSubmitted: (value) => {
+                            _addItemToShopList(),
+                            refreshList(),
+                            customControllerAddNewItem.text = ""
+                          },
+                          onEditingComplete: () {},
+                          decoration: InputDecoration(
+                              hintText: "Add New Item",
+                              contentPadding: new EdgeInsets.symmetric(
+                                  vertical: 18.0, horizontal: 10.0),
+                              border: InputBorder.none,
+                              counterStyle: TextStyle(
+                                height: double.minPositive,
                               ),
-                              borderRadius: BorderRadius.circular(8.0)),
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.5),
-                              ),
-                              borderRadius: BorderRadius.circular(8.0))),
-                      style: TextStyle(
-                        fontSize: 19,
+                              counterText: "" // hide maxlength counter
+                          ),
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Theme.of(context).textTheme.headline6.color,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  MaterialButton(
-                    minWidth: 20,
-                    height: 45,
-                    child: Icon(
-                      Icons.color_lens_rounded,
-                      color: Colors.grey[800],
-                      size: 24,
-                    ),
-                    shape: CircleBorder(),
-                    elevation: 1,
-                    color: currentColor,
-                    onPressed: () {
-                      createAlertSelectColor(context);
-                    },
-                  ),
-                ],
-              ),
+                  ],
+                ),
+                const SizedBox(height: 5,),
+              ],
             ),
 
             //LIST
-            const SizedBox(
-              height: 50,
-            ),
-            ListView.separated(
-                separatorBuilder: (BuildContext context, int index) => SizedBox(
-                      height: 12,
+            
+            Flexible(
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 25,
                     ),
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  return ItemNewShopList(
-                    key: UniqueKey(),
-                    item: new Item(
-                      id: items[index].id,
-                      nome: items[index].nome,
-                      estado: items[index].estado,
-                      idShopList: items[index].idShopList,
+                    ListView.separated(
+                        separatorBuilder: (BuildContext context, int index) => const SizedBox(
+                              height: 12,
+                            ),
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          return ItemNewShopList(
+                            key: UniqueKey(),
+                            item: new Item(
+                              id: items[index].id,
+                              nome: items[index].nome,
+                              estado: items[index].estado,
+                              idShopList: items[index].idShopList,
+                            ),
+                            updateItem: updateItem,
+                            deleteItem: _deleteItem,
+                          );
+                        }),
+                    const SizedBox(
+                      height: 50,
                     ),
-                    updateItem: updateItem,
-                    deleteItem: _deleteItem,
-                  );
-                }),
-
-            const SizedBox(
-              height: 200,
+                  ],
+                ),
+              ),
             ),
           ],
         ),
       ),
-      bottomSheet: Row(
-        children: [
-          Visibility(
-            visible: !editingItem,
-            child: Expanded(
-              child: TextField(
-                textAlign: TextAlign.center,
-                minLines: 1,
-                maxLines: 4,
-                maxLength: 200,
-                onSubmitted: (value) => {
-                  _addItemToShopList(),
-                  refreshList(),
-                  customControllerAddNewItem.text = ""
-                },
-                onEditingComplete: () {},
-                maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                textCapitalization: TextCapitalization.sentences,
-                keyboardType: TextInputType.name,
-                controller: customControllerAddNewItem,
-                decoration: InputDecoration(
-                    hintText: "Add New Item",
-                    contentPadding: new EdgeInsets.symmetric(
-                        vertical: 18.0, horizontal: 10.0),
-                    border: InputBorder.none,
-                    counterStyle: TextStyle(
-                      height: double.minPositive,
-                    ),
-                    counterText: "" // hide maxlength counter
-                ),
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Theme.of(context).textTheme.headline6.color,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+
     );
   }
 }

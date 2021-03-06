@@ -13,7 +13,7 @@ class ItemNewShopList extends StatefulWidget {
 }
 
 class _ItemNewShopListState extends State<ItemNewShopList> {
-  bool value = false;
+
   TextEditingController customControllerNome = TextEditingController();
 
   @override
@@ -21,8 +21,6 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
     super.initState();
     customControllerNome.text = widget.item.nome;
   }
-
-
 
   @override
   Widget build(BuildContext context) {

@@ -11,8 +11,9 @@ class ItemEditShopList extends StatefulWidget {
   Function() getItemsShopList;
   Function(int) deleteItem;
   Function(int, String, int) updateItem;
+  Color listAccent;
 
-  ItemEditShopList({Key key, this.item, this.getItemsShopList, this.updateItem,this.deleteItem})
+  ItemEditShopList({Key key, this.item, this.getItemsShopList, this.updateItem,this.deleteItem,this.listAccent})
       : super(key: key);
 }
 
@@ -97,7 +98,8 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
             width: 5,
           ),
           Checkbox(
-            activeColor: Theme.of(context).accentColor.withOpacity(0.6),
+            //activeColor: Theme.of(context).accentColor.withOpacity(0.6),
+            activeColor: widget.listAccent.withOpacity(0.6),
             value: widget.item.estado == 0 ? false : true,
             onChanged: (bool v) {
               setState(() {
