@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/classes/shopList.dart';
 import 'package:shoppinglistfschmtz/db/shopListDao.dart';
@@ -20,9 +21,12 @@ class EditShopList extends StatefulWidget {
 class _EditShopListState extends State<EditShopList> {
   TextEditingController customControllerNome = TextEditingController();
   TextEditingController customControllerCor = TextEditingController();
+  TextEditingController customControllerAddNewItem = TextEditingController();
   List<Map<String, dynamic>> itemsDo = [];
   List<Map<String, dynamic>> itemsDone = [];
   String corAtual = "Color(0xFF607D8B)";
+  bool editingItem = false;
+
 
   @override
   void initState() {
@@ -55,7 +59,9 @@ class _EditShopListState extends State<EditShopList> {
     final dbShopList = shopListDao.instance;
     Map<String, dynamic> row = {
       shopListDao.columnId: widget.shopList.id,
-      shopListDao.columnNome: customControllerNome.text.isEmpty ? "ShopList" : customControllerNome.text,
+      shopListDao.columnNome: customControllerNome.text.isEmpty
+          ? "ShopList"
+          : customControllerNome.text,
       shopListDao.columnCor: corAtual.toString(),
     };
     final update = await dbShopList.update(row);
@@ -67,18 +73,23 @@ class _EditShopListState extends State<EditShopList> {
     var resp = await dbShopList.delete(widget.shopList.id);
   }
 
+  void _deleteItem(int idItem) async {
+    final dbItem = itemDao.instance;
+    final deletado = await dbItem.delete(idItem);
+  }
+
   //DAO ITEMS
-  void _addEmptyItemToShopList() async {
+  void _addItemToShopList() async {
     final dbItems = itemDao.instance;
     Map<String, dynamic> row = {
-      itemDao.columnNome: "",
+      itemDao.columnNome: customControllerAddNewItem.text,
       itemDao.columnEstado: 0,
       itemDao.columnIdShopList: widget.shopList.id,
     };
     final id = await dbItems.insert(row);
   }
 
-  void _updateItem(int id,String nome,int estado) async {
+  void _updateItem(int id, String nome, int estado) async {
     final dbItems = itemDao.instance;
     Map<String, dynamic> row = {
       itemDao.columnId: id,
@@ -88,12 +99,12 @@ class _EditShopListState extends State<EditShopList> {
     final update = await dbItems.update(row);
   }
 
-
   showAlertDialogOkDelete(BuildContext context) {
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text(
         "Yes",
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,
+            color: Theme.of(context).textTheme.headline6.color),
       ),
       onPressed: () {
         _deleteShopList();
@@ -135,43 +146,47 @@ class _EditShopListState extends State<EditShopList> {
   }
 
   createAlertSelectColor(BuildContext context) {
-    return showDialog(
-      context: context,
-      child: AlertDialog(
-        title: const Text(
-          'Select Color :',
-          style: TextStyle(fontSize: 18),
-        ),
-        content: SingleChildScrollView(
-            child: BlockPicker(
-          pickerColor: currentColor,
-          onColorChanged: changeColor,
-        )),
-        actions: <Widget>[
-          FlatButton(
-            child: const Text(
-              'Ok',
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            onPressed: () {
-              setState(() => {
-                    currentColor = pickerColor,
-                    corAtual = pickerColor.toString()
-                  });
-              _updateShopList();
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
+    Widget okButton = TextButton(
+      child: Text(
+        "Ok",
+        style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).textTheme.headline6.color),
       ),
+      onPressed: () {
+        setState(() =>
+            {currentColor = pickerColor, corAtual = pickerColor.toString()});
+        _updateShopList();
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      elevation: 3.0,
+      title: Text(
+        "Select Color : ", //
+        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+      ),
+      content: SingleChildScrollView(
+          child: BlockPicker(
+        pickerColor: currentColor,
+        onColorChanged: changeColor,
+      )),
+      actions: [
+        okButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -205,10 +220,9 @@ class _EditShopListState extends State<EditShopList> {
                 children: [
                   Expanded(
                     child: TextField(
-                      //autofocus: false,
                       minLines: 1,
                       maxLength: 30,
-                      maxLengthEnforced: true,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
                       textCapitalization: TextCapitalization.sentences,
                       keyboardType: TextInputType.name,
                       controller: customControllerNome,
@@ -273,19 +287,18 @@ class _EditShopListState extends State<EditShopList> {
                 shrinkWrap: true,
                 itemCount: itemsDo.length,
                 itemBuilder: (context, index) {
-
-                    return ItemEditShopList(
-                      item: new Item(
-                        id: itemsDo[index]['id'],
-                        nome: itemsDo[index]['nome'],
-                        estado: itemsDo[index]['estado'],
-                        idShopList: itemsDo[index]['idShopList'],
-                      ),
-                      getItemsShopList: getItemsShopList,
-                      key: UniqueKey(),
-                      updateItem: _updateItem,
-                    );
-
+                  return ItemEditShopList(
+                    key: UniqueKey(),
+                    item: new Item(
+                      id: itemsDo[index]['id'],
+                      nome: itemsDo[index]['nome'],
+                      estado: itemsDo[index]['estado'],
+                      idShopList: itemsDo[index]['idShopList'],
+                    ),
+                    getItemsShopList: getItemsShopList,
+                    updateItem: _updateItem,
+                    deleteItem: _deleteItem,
+                  );
                 }),
 
             const SizedBox(
@@ -310,49 +323,77 @@ class _EditShopListState extends State<EditShopList> {
             Visibility(
               visible: itemsDone.length > 0,
               child: ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) => SizedBox(
+                  separatorBuilder: (BuildContext context, int index) =>
+                      SizedBox(
                         height: 12,
                       ),
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: itemsDone.length,
                   itemBuilder: (context, index) {
-
-                      return ItemEditShopList(
-                        item: new Item(
-                          id: itemsDone[index]['id'],
-                          nome: itemsDone[index]['nome'],
-                          estado: itemsDone[index]['estado'],
-                          idShopList: itemsDone[index]['idShopList'],
-                        ),
-                        getItemsShopList: getItemsShopList,
-                        key: UniqueKey(),
-                        updateItem: _updateItem,
-                      );
-
+                    return ItemEditShopList(
+                      key: UniqueKey(),
+                      item: new Item(
+                        id: itemsDone[index]['id'],
+                        nome: itemsDone[index]['nome'],
+                        estado: itemsDone[index]['estado'],
+                        idShopList: itemsDone[index]['idShopList'],
+                      ),
+                      getItemsShopList: getItemsShopList,
+                      updateItem: _updateItem,
+                      deleteItem: _deleteItem,
+                    );
                   }),
             ),
             const SizedBox(
-              height: 100,
+              height: 200,
             ),
           ],
         ),
       ),
-      floatingActionButton: Container(
-        child: FloatingActionButton(
-          backgroundColor: Theme.of(context).accentColor,
-          elevation: 6,
-          onPressed: () {
-            _addEmptyItemToShopList();
-            getItemsShopList();
-          },
-          child: Icon(
-            Icons.add_shopping_cart_rounded,
-            color: Colors.white,
+      bottomSheet: Row(
+        children: [
+          Visibility(
+            visible: !editingItem,
+            child: Expanded(
+              child: TextField(
+                textAlign: TextAlign.center,
+                minLines: 1,
+                maxLines: 4,
+                maxLength: 200,
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                textCapitalization: TextCapitalization.sentences,
+                keyboardType: TextInputType.name,
+                controller: customControllerAddNewItem,
+                onSubmitted: (value) => {
+                  _addItemToShopList(),
+                  getItemsShopList(),
+                  customControllerAddNewItem.text = ""
+                },
+                onEditingComplete: () {},
+                decoration: InputDecoration(
+                    hintText: "Add New Item",
+                    contentPadding: new EdgeInsets.symmetric(
+                        vertical: 18.0, horizontal: 10.0),
+                    border: InputBorder.none,
+                    counterStyle: TextStyle(
+                      height: double.minPositive,
+                    ),
+                    counterText: "" // hide maxlength counter
+                    ),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Theme.of(context).textTheme.headline6.color,
+                ),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
 }
-//visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+
+
+
+//https://stackoverflow.com/questions/51320692/flutter-keyboard-disappears-immediately-when-editing-my-text-fields

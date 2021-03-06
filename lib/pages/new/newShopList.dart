@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/db/shopListDao.dart';
 import 'package:shoppinglistfschmtz/db/itemDao.dart';
@@ -12,43 +13,63 @@ class NewShopList extends StatefulWidget {
   int lastId;
   Function() refreshShopLists;
 
-  NewShopList({Key key, this.lastId,this.refreshShopLists})
-      : super(key: key);
+  NewShopList({Key key, this.lastId, this.refreshShopLists}) : super(key: key);
 }
 
 class _NewShopListState extends State<NewShopList> {
   TextEditingController customControllerNome = TextEditingController();
   TextEditingController customControllerCor = TextEditingController();
-
+  TextEditingController customControllerAddNewItem = TextEditingController();
+  bool editingItem = false;
   List<Item> items = [];
 
   String corAtual = "Color(0xFF607D8B)";
 
+  @override
+  void initState() {
+    super.initState();
+  }
 
-  void refreshList(){
+
+  void refreshList() {
     setState(() {});
   }
 
-  void updateItem(int idItem,String nome){
-      items[idItem].nome=nome;
+
+  void isEditingItem(){
+    setState(() {
+      editingItem = !editingItem;
+    });
   }
 
-  void _addEmptyItemToShopList() async {
-    items.insert(items.length,
+  void updateItem(int idItem, String nome) {
+    items[idItem].nome = nome;
+  }
+
+  void _deleteItem(int idItem) async {
+    setState(() {
+      items.removeAt(idItem);
+    });
+  }
+
+  void _addItemToShopList() async {
+    items.insert(
+        items.length,
         new Item(
             id: items.length,
-            nome: "",
+            nome: customControllerAddNewItem.text,
             estado: 0,
-            idShopList: widget.lastId+1)
-    );
+            idShopList: widget.lastId + 1));
   }
 
   //DAO SHOPLIST
   Future<void> _saveShopList() async {
     final dbShopList = shopListDao.instance;
     Map<String, dynamic> row = {
-      shopListDao.columnId: widget.lastId+1,
-      shopListDao.columnNome: customControllerNome.text.isEmpty ? "ShopList" : customControllerNome.text,
+      shopListDao.columnId: widget.lastId + 1,
+      shopListDao.columnNome: customControllerNome.text.isEmpty
+          ? "ShopList"
+          : customControllerNome.text,
       shopListDao.columnCor: corAtual.toString(),
     };
     final id = await dbShopList.insert(row);
@@ -56,16 +77,15 @@ class _NewShopListState extends State<NewShopList> {
 
   Future<void> _saveItemsToShopList() async {
     final dbItems = itemDao.instance;
-    for(int i = 0; i < items.length ; i++) {
+    for (int i = 0; i < items.length; i++) {
       Map<String, dynamic> row = {
-        itemDao.columnNome:items[i].nome,
+        itemDao.columnNome: items[i].nome,
         itemDao.columnEstado: 0,
         itemDao.columnIdShopList: widget.lastId + 1,
       };
       final id = await dbItems.insert(row);
     }
   }
-
 
   Color pickerColor = Color(0xFF607D8B);
   Color currentColor = Color(0xFF607D8B);
@@ -74,37 +94,42 @@ class _NewShopListState extends State<NewShopList> {
     setState(() => pickerColor = color);
   }
 
-  createAlert(BuildContext context) {
-    return showDialog(
-      context: context,
-      child: AlertDialog(
-        title: const Text(
-          'Select Color :',
-          style: TextStyle(fontSize: 18),
-        ),
-        content: SingleChildScrollView(
-            child: BlockPicker(
-          pickerColor: currentColor,
-          onColorChanged: changeColor,
-        )),
-        actions: <Widget>[
-          FlatButton(
-            child: const Text(
-              'Ok',
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            onPressed: () {
-              setState(() => {
-                    currentColor = pickerColor,
-                    corAtual = pickerColor.toString()
-                  });
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
+  createAlertSelectColor(BuildContext context) {
+    Widget okButton = TextButton(
+      child: Text(
+        "Ok",
+        style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).textTheme.headline6.color),
       ),
+      onPressed: () {
+        setState(() =>
+            {currentColor = pickerColor, corAtual = pickerColor.toString()});
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      elevation: 3.0,
+      title: Text(
+        "Select Color : ", //
+        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+      ),
+      content: SingleChildScrollView(
+          child: BlockPicker(
+        pickerColor: currentColor,
+        onColorChanged: changeColor,
+      )),
+      actions: [
+        okButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 
@@ -120,10 +145,10 @@ class _NewShopListState extends State<NewShopList> {
                 Icons.save_outlined,
               ),
               onPressed: () async {
-                  await _saveShopList();
-                  await _saveItemsToShopList();
-                  await widget.refreshShopLists();
-                  Navigator.of(context).pop();
+                await _saveShopList();
+                await _saveItemsToShopList();
+                await widget.refreshShopLists();
+                Navigator.of(context).pop();
               },
             ),
           )
@@ -131,7 +156,7 @@ class _NewShopListState extends State<NewShopList> {
         elevation: 0,
         title: Text('New Shopping List'),
       ),
-      body:SingleChildScrollView(
+      body: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,7 +174,7 @@ class _NewShopListState extends State<NewShopList> {
                       autofocus: false,
                       minLines: 1,
                       maxLength: 30,
-                      maxLengthEnforced: true,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
                       textCapitalization: TextCapitalization.sentences,
                       keyboardType: TextInputType.name,
                       controller: customControllerNome,
@@ -194,7 +219,7 @@ class _NewShopListState extends State<NewShopList> {
                     elevation: 1,
                     color: currentColor,
                     onPressed: () {
-                      createAlert(context);
+                      createAlertSelectColor(context);
                     },
                   ),
                 ],
@@ -207,47 +232,69 @@ class _NewShopListState extends State<NewShopList> {
             ),
             ListView.separated(
                 separatorBuilder: (BuildContext context, int index) => SizedBox(
-                  height: 12,
-                ),
+                      height: 12,
+                    ),
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: items.length,
                 itemBuilder: (context, index) {
-
                   return ItemNewShopList(
+                    key: UniqueKey(),
                     item: new Item(
                       id: items[index].id,
                       nome: items[index].nome,
                       estado: items[index].estado,
                       idShopList: items[index].idShopList,
                     ),
-                    key: UniqueKey(),
                     updateItem: updateItem,
+                    deleteItem: _deleteItem,
                   );
-
                 }),
 
             const SizedBox(
-              height: 100,
+              height: 200,
             ),
           ],
         ),
       ),
-      floatingActionButton: Container(
-        child: FittedBox(
-          child: FloatingActionButton(
-            backgroundColor: Theme.of(context).accentColor,
-            elevation: 6,
-            onPressed: () {
-              _addEmptyItemToShopList();
-             refreshList();
-            },
-            child: Icon(
-              Icons.add_shopping_cart_rounded,
-              color: Colors.white,
+      bottomSheet: Row(
+        children: [
+          Visibility(
+            visible: !editingItem,
+            child: Expanded(
+              child: TextField(
+                textAlign: TextAlign.center,
+                minLines: 1,
+                maxLines: 4,
+                maxLength: 200,
+                onSubmitted: (value) => {
+                  _addItemToShopList(),
+                  refreshList(),
+                  customControllerAddNewItem.text = ""
+                },
+                onEditingComplete: () {},
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                textCapitalization: TextCapitalization.sentences,
+                keyboardType: TextInputType.name,
+                controller: customControllerAddNewItem,
+                decoration: InputDecoration(
+                    hintText: "Add New Item",
+                    contentPadding: new EdgeInsets.symmetric(
+                        vertical: 18.0, horizontal: 10.0),
+                    border: InputBorder.none,
+                    counterStyle: TextStyle(
+                      height: double.minPositive,
+                    ),
+                    counterText: "" // hide maxlength counter
+                ),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Theme.of(context).textTheme.headline6.color,
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

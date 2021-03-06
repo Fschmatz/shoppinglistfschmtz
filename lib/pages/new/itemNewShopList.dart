@@ -8,19 +8,21 @@ class ItemNewShopList extends StatefulWidget {
 
   Item item;
   Function(int, String) updateItem;
-  ItemNewShopList({Key key, this.item, this.updateItem}) : super(key: key);
+  Function(int) deleteItem;
+  ItemNewShopList({Key key, this.item, this.updateItem,this.deleteItem}) : super(key: key);
 }
 
 class _ItemNewShopListState extends State<ItemNewShopList> {
   bool value = false;
   TextEditingController customControllerNome = TextEditingController();
 
-
   @override
   void initState() {
     super.initState();
     customControllerNome.text = widget.item.nome;
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +37,21 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
       ),
       child: Row(
         children: [
+          IconButton(
+              icon: Icon(
+                Icons.clear,
+                size: 18,
+              ),
+              onPressed: () {
+                widget.deleteItem(widget.item.id);
+              }),
           Expanded(
             child: TextField(
               onChanged:(value)=> widget.updateItem(widget.item.id,customControllerNome.text),
               minLines: 1,
               maxLines: 4,
               maxLength: 200,
-              maxLengthEnforced: true,
-              autofocus: false,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
               textCapitalization: TextCapitalization.sentences,
               keyboardType: TextInputType.name,
               controller: customControllerNome,

@@ -46,15 +46,11 @@ class _HomeState extends State<Home> {
       });
   }
 
-  /*Future<void> refreshShopLists() {
-    getShopLists();
-  }*/
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      resizeToAvoidBottomPadding: false,
       body: ListView(children: <Widget>[
         const SizedBox(
           height: 8,

@@ -9,9 +9,10 @@ class ItemEditShopList extends StatefulWidget {
 
   Item item;
   Function() getItemsShopList;
+  Function(int) deleteItem;
   Function(int, String, int) updateItem;
 
-  ItemEditShopList({Key key, this.item, this.getItemsShopList, this.updateItem})
+  ItemEditShopList({Key key, this.item, this.getItemsShopList, this.updateItem,this.deleteItem})
       : super(key: key);
 }
 
@@ -20,10 +21,6 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
 
   TextEditingController customControllerNome = TextEditingController();
 
-  void _deletar() async {
-    final dbItem = itemDao.instance;
-    final deletado = await dbItem.delete(widget.item.id);
-  }
 
   void _updateEstadoItem(bool state) async {
     final dbShopList = itemDao.instance;
@@ -64,7 +61,7 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
                     : Theme.of(context).textTheme.headline6.color,
               ),
               onPressed: () {
-                _deletar();
+                widget.deleteItem(widget.item.id);
                 widget.getItemsShopList();
               }),
           Expanded(
@@ -74,8 +71,7 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
               minLines: 1,
               maxLines: 4,
               maxLength: 200,
-              maxLengthEnforced: true,
-              autofocus: false,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
               textCapitalization: TextCapitalization.sentences,
               keyboardType: TextInputType.name,
               controller: customControllerNome,
@@ -88,7 +84,7 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
                     height: double.minPositive,
                   ),
                   counterText: "" // hide maxlength counter
-                  ),
+              ),
               style: TextStyle(
                 fontSize: 18,
                 color: widget.item.estado == 1
@@ -115,3 +111,4 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
     );
   }
 }
+

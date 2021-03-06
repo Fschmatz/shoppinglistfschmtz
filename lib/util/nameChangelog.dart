@@ -1,17 +1,27 @@
 class NameChangelog{
 
-  static String appVersion = "0.5.1";
+  static String appVersion = "0.7.0";
   static String appName = "ShopList Fschmtz";
 
   static String changelogCurrent = '''  
   
+0.7.0
+- Add Item with ModalBottom
+''';
+
+  static String changelogsOld = '''
+
+0.6.1
+- Flutter 2.0 Fixes
+
+0.6.0
+- New Add Item Button
+- Plugin Keyboard Visibility
+
 0.5.1
 - Small Fixes Everywhere
 - Ui Changes
 - Add Keyboard Visibility
-''';
-
-  static String changelogsOld = '''
 
 0.5.0
 - Technically Usable
