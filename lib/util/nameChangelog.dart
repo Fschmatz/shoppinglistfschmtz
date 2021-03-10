@@ -1,15 +1,25 @@
 class NameChangelog{
 
-  static String appVersion = "0.6.3";
+  static String appVersion = "1.0.0";
   static String appName = "ShopList Fschmtz";
 
   static String changelogCurrent = '''  
   
-0.6.3
-- Fixes
+1.0.0
+- Offline Final
+- Theme Changes
 ''';
 
   static String changelogsOld = '''
+
+0.6.5
+- Small Fixes
+
+0.6.4
+- Small Changes
+
+0.6.3
+- Fixes
 
 0.6.2
 - Changes to add Item

@@ -45,7 +45,6 @@ class _EditShopListState extends State<EditShopList> {
     //SetState error call, use if mounted
     if (mounted) {
       setState(() {
-        //items = resposta;
         itemsDo = listDo;
         itemsDone = listDone;
       });
@@ -205,7 +204,7 @@ class _EditShopListState extends State<EditShopList> {
         elevation: 0,
         title: Text('Edit Shopping List'),
       ),
-      //padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+
       body: Padding(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
         child: Column(
@@ -235,7 +234,7 @@ class _EditShopListState extends State<EditShopList> {
                                   vertical: 15.0, horizontal: 12.0),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.black.withOpacity(0.5),
+                                  color: Colors.black.withOpacity(0.7),
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
@@ -286,7 +285,7 @@ class _EditShopListState extends State<EditShopList> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           side: BorderSide(
-                            width: 1.8,
+                            width: 1.5,
                             color: currentColor.withOpacity(0.8),
                           ),
                         ),
@@ -308,6 +307,7 @@ class _EditShopListState extends State<EditShopList> {
                           onEditingComplete: () {},
                           decoration: InputDecoration(
                               hintText: "Add New Item",
+                              hintStyle: TextStyle(fontSize: 16.5, color: currentColor.withOpacity(0.5)),
                               contentPadding: new EdgeInsets.symmetric(
                                   vertical: 18.0, horizontal: 10.0),
                               border: InputBorder.none,
@@ -341,9 +341,9 @@ class _EditShopListState extends State<EditShopList> {
                     ),
                     ListView.separated(
                         separatorBuilder: (BuildContext context, int index) =>
-                            const SizedBox(
-                              height: 12,
-                            ),
+                        const SizedBox(
+                          height: 12,
+                        ),
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: itemsDo.length,
@@ -386,9 +386,9 @@ class _EditShopListState extends State<EditShopList> {
                       visible: itemsDone.length > 0,
                       child: ListView.separated(
                           separatorBuilder: (BuildContext context, int index) =>
-                              const SizedBox(
-                                height: 12,
-                              ),
+                          const SizedBox(
+                            height: 12,
+                          ),
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: itemsDone.length,
@@ -422,3 +422,4 @@ class _EditShopListState extends State<EditShopList> {
     );
   }
 }
+

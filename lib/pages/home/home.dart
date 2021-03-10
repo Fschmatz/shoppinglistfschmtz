@@ -34,18 +34,16 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> getLastId() async {
-      final dbShopList = shopListDao.instance;
-      var resposta = await dbShopList.getLastId();
-      setState(() {
-        if(resposta.isEmpty){
-          lastId = 0;
-        }
-        else{
-          lastId = resposta[0]['id'];
-        }
-      });
+    final dbShopList = shopListDao.instance;
+    var resposta = await dbShopList.getLastId();
+    setState(() {
+      if (resposta.isEmpty) {
+        lastId = 0;
+      } else {
+        lastId = resposta[0]['id'];
+      }
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,22 +53,24 @@ class _HomeState extends State<Home> {
         const SizedBox(
           height: 8,
         ),
-        shopLists.isEmpty ? SizedBox.shrink() : ListView.builder(
-          physics: ScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: shopLists.length,
-          itemBuilder: (context, index) {
-            return ShopListHome(
-              refreshShopLists: getShopLists,
-              key: UniqueKey(), //USADO pro REFRESH GERAL
-              shopList: new ShopList(
-                id: shopLists[index]['id'],
-                nome: shopLists[index]['nome'],
-                cor: shopLists[index]['cor'],
+        shopLists.isEmpty
+            ? SizedBox.shrink()
+            : ListView.builder(
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: shopLists.length,
+                itemBuilder: (context, index) {
+                  return ShopListHome(
+                    refreshShopLists: getShopLists,
+                    key: UniqueKey(), //USADO pro REFRESH GERAL
+                    shopList: new ShopList(
+                      id: shopLists[index]['id'],
+                      nome: shopLists[index]['nome'],
+                      cor: shopLists[index]['cor'],
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
         const SizedBox(
           height: 50,
         ),
@@ -81,23 +81,22 @@ class _HomeState extends State<Home> {
         child: FittedBox(
           child: FloatingActionButton(
             backgroundColor: Theme.of(context).accentColor,
-            elevation: 0,
+            elevation: 6,
             onPressed: () {
               Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => NewShopList(
-                          lastId: lastId,
-                          refreshShopLists: getShopLists,
-                        ),
-                        fullscreenDialog: true,
-                      ))
-                  .then((value) => getLastId());
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => NewShopList(
+                      lastId: lastId,
+                      refreshShopLists: getShopLists,
+                    ),
+                    fullscreenDialog: true,
+                  )).then((value) => getLastId());
             },
             child: Icon(
               Icons.playlist_add,
-              size: 28,
-              color: Colors.white,
+              size: 27,
+              //color: Colors.white,
             ),
           ),
         ),
@@ -105,7 +104,8 @@ class _HomeState extends State<Home> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
 
       bottomNavigationBar: BottomAppBar(
-
+        notchMargin: 4,
+          shape: CircularNotchedRectangle(),
           child: Row(
         children: [
           Padding(
