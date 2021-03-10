@@ -30,7 +30,7 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
         borderRadius: BorderRadius.all(Radius.circular(8)),
         side: BorderSide(
           width: 1,
-          color: Colors.black.withOpacity(0.7),
+          color: Colors.black.withOpacity(0.5),
         ),
       ),
       child: Row(

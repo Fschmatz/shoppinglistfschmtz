@@ -81,7 +81,7 @@ class _HomeState extends State<Home> {
         child: FittedBox(
           child: FloatingActionButton(
             backgroundColor: Theme.of(context).accentColor,
-            elevation: 6,
+            elevation: 0,
             onPressed: () {
               Navigator.push(
                   context,
@@ -95,8 +95,7 @@ class _HomeState extends State<Home> {
             },
             child: Icon(
               Icons.playlist_add,
-              size: 27,
-              //color: Colors.white,
+              size: 26,
             ),
           ),
         ),
@@ -104,10 +103,8 @@ class _HomeState extends State<Home> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
 
       bottomNavigationBar: BottomAppBar(
-        notchMargin: 4,
-          shape: CircularNotchedRectangle(),
           child: Row(
-        children: [
+          children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 0, 0), //24
             child: IconButton(

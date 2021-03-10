@@ -47,8 +47,8 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
         side: BorderSide(
           width: 1,
           color: widget.item.estado == 0
-              ? Colors.black.withOpacity(0.7)
-              : Colors.black.withOpacity(0.3),
+              ? Colors.black.withOpacity(0.5)
+              : Colors.black.withOpacity(0.1),
         ),
       ),
       child: Row(
@@ -99,7 +99,7 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
           ),
           Checkbox(
             //activeColor: Theme.of(context).accentColor.withOpacity(0.6),
-            activeColor: widget.listAccent.withOpacity(0.6),
+            activeColor: widget.listAccent.withOpacity(0.4),
             value: widget.item.estado == 0 ? false : true,
             onChanged: (bool v) {
               setState(() {

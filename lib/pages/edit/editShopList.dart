@@ -234,7 +234,7 @@ class _EditShopListState extends State<EditShopList> {
                                   vertical: 15.0, horizontal: 12.0),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.black.withOpacity(0.7),
+                                  color: Colors.black.withOpacity(0.5),
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
@@ -307,7 +307,7 @@ class _EditShopListState extends State<EditShopList> {
                           onEditingComplete: () {},
                           decoration: InputDecoration(
                               hintText: "Add New Item",
-                              hintStyle: TextStyle(fontSize: 16.5, color: currentColor.withOpacity(0.5)),
+                              hintStyle: TextStyle(fontSize: 17, color: currentColor.withOpacity(0.6)),
                               contentPadding: new EdgeInsets.symmetric(
                                   vertical: 18.0, horizontal: 10.0),
                               border: InputBorder.none,
