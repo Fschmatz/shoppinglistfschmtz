@@ -31,7 +31,7 @@ class criadorDb {
   // Código SQL para criar o banco de dados e a tabela,
   // só roda uma vez quando detecta banco nulo
   Future _onCreate(Database db, int version) async {
-    print("OI DO CRIADOR DE DB");
+    print("Hello DB Creator !!!");
 
     await db.execute('''
     

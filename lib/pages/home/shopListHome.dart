@@ -30,7 +30,7 @@ class _ShopListHomeState extends State<ShopListHome> {
   // ONLY DO ITEMS
   Future<void> getItemsShopList() async {
     final dbItems = itemDao.instance;
-    var resposta = await dbItems.getItemsShopListDo(widget.shopList.id);
+    var resposta = await dbItems.getItemsShopListDoDesc(widget.shopList.id);
 
     //SetState error call, use if mounted
     if (mounted) {
@@ -42,7 +42,7 @@ class _ShopListHomeState extends State<ShopListHome> {
 
   Future<void> getItemsRefreshShopList(int idShopList) async {
     final dbItems = itemDao.instance;
-    var resposta = await dbItems.getItemsShopListDo(idShopList);
+    var resposta = await dbItems.getItemsShopListDoDesc(idShopList);
 
     //SetState error call, use if mounted
     if (mounted) {
@@ -94,10 +94,13 @@ class _ShopListHomeState extends State<ShopListHome> {
                   style:
                       TextStyle(fontSize: 18.5, fontWeight: FontWeight.bold),
                 )),
-            const Divider(
-              thickness: 1.8,
-              indent: 15,
-              endIndent: 15,
+            Visibility(
+              visible: items.length > 0,
+              child: const Divider(
+                thickness: 1.8,
+                indent: 15,
+                endIndent: 15,
+              ),
             ),
             ListView.builder(
                 physics: NeverScrollableScrollPhysics(),

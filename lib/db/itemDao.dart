@@ -82,4 +82,24 @@ class itemDao {
         ''');
   }
 
+  Future<List<Map<String, dynamic>>> getItemsShopListDoDesc(int idShopLista) async {
+    Database db = await instance.database;
+    return await db.rawQuery('''
+    
+        SELECT * FROM $table 
+        WHERE idShopList=$idShopLista AND estado=0    
+        ORDER BY id DESC
+        ''');
+  }
+
+  Future<List<Map<String, dynamic>>> getItemsShopListDoneDesc(int idShopLista) async {
+    Database db = await instance.database;
+    return await db.rawQuery('''
+    
+        SELECT * FROM $table 
+        WHERE idShopList=$idShopLista AND estado=1      
+        ORDER BY id DESC
+        ''');
+  }
+
 }

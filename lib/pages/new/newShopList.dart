@@ -156,16 +156,14 @@ class _NewShopListState extends State<NewShopList> {
         elevation: 0,
         title: Text('New Shopping List'),
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 15,
-            ),
-            Column(
+      body: Column(
+        children: [
+          SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+            child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
@@ -207,7 +205,7 @@ class _NewShopListState extends State<NewShopList> {
                         ),
                       ),
                       SizedBox(
-                        width: 15,
+                        width: 10,
                       ),
                       MaterialButton(
                         minWidth: 20,
@@ -238,7 +236,7 @@ class _NewShopListState extends State<NewShopList> {
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           side: BorderSide(
                             width: 1.5,
-                            color: currentColor.withOpacity(0.8),
+                            color: currentColor.withOpacity(0.7),
                           ),
                         ),
                         child: TextField(
@@ -280,12 +278,19 @@ class _NewShopListState extends State<NewShopList> {
                 const SizedBox(height: 5,),
               ],
             ),
+          ),
+          const SizedBox(height: 5,),
 
-            //LIST
-            
-            Flexible(
+          Divider(
+            thickness: 1,
+            color: Colors.black.withOpacity(0.5),
+          ),
+
+          //LIST
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
               child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     const SizedBox(
@@ -298,6 +303,7 @@ class _NewShopListState extends State<NewShopList> {
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: items.length,
+                        reverse: true,
                         itemBuilder: (context, index) {
                           return ItemNewShopList(
                             key: UniqueKey(),
@@ -318,8 +324,8 @@ class _NewShopListState extends State<NewShopList> {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
 
     );

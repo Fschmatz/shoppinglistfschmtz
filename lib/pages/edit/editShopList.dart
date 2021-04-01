@@ -39,8 +39,8 @@ class _EditShopListState extends State<EditShopList> {
 
   Future<void> getItemsShopList() async {
     final dbItems = itemDao.instance;
-    var listDo = await dbItems.getItemsShopListDo(widget.shopList.id);
-    var listDone = await dbItems.getItemsShopListDone(widget.shopList.id);
+    var listDo = await dbItems.getItemsShopListDoDesc(widget.shopList.id);
+    var listDone = await dbItems.getItemsShopListDoneDesc(widget.shopList.id);
 
     //SetState error call, use if mounted
     if (mounted) {
@@ -205,14 +205,14 @@ class _EditShopListState extends State<EditShopList> {
         title: Text('Edit Shopping List'),
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 15,
-            ),
-            Column(
+      body: Column(
+        children: [
+          SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+            child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
@@ -254,7 +254,7 @@ class _EditShopListState extends State<EditShopList> {
                         ),
                       ),
                       SizedBox(
-                        width: 15,
+                        width: 10,
                       ),
                       MaterialButton(
                         minWidth: 20,
@@ -286,7 +286,7 @@ class _EditShopListState extends State<EditShopList> {
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           side: BorderSide(
                             width: 1.5,
-                            color: currentColor.withOpacity(0.8),
+                            color: currentColor.withOpacity(0.7),
                           ),
                         ),
                         child: TextField(
@@ -328,12 +328,19 @@ class _EditShopListState extends State<EditShopList> {
                 const SizedBox(height: 5,),
               ],
             ),
+          ),
+          const SizedBox(height: 5,),
 
+          Divider(
+            thickness: 1,
+            color: Colors.black.withOpacity(0.5),
+          ),
 
-            //LIST
-            Flexible(
+          //LIST
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
               child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     const SizedBox(
@@ -415,9 +422,9 @@ class _EditShopListState extends State<EditShopList> {
                 ),
               ),
             ),
+          ),
 
-          ],
-        ),
+        ],
       ),
     );
   }

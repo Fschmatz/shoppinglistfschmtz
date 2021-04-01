@@ -76,54 +76,50 @@ class _HomeState extends State<Home> {
         ),
       ]),
 
-      //BOTTOMBAR
-      floatingActionButton: Container(
-        child: FittedBox(
-          child: FloatingActionButton(
-            backgroundColor: Theme.of(context).accentColor,
-            elevation: 0,
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => NewShopList(
-                      lastId: lastId,
-                      refreshShopLists: getShopLists,
-                    ),
-                    fullscreenDialog: true,
-                  )).then((value) => getLastId());
-            },
-            child: Icon(
-              Icons.playlist_add,
-              size: 26,
-            ),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
 
       bottomNavigationBar: BottomAppBar(
-          child: Row(
-          children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0), //24
-            child: IconButton(
-                icon: Icon(
-                  Icons.settings,
-                  size: 24,
-                ),
-                tooltip: "Settings",
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => Configs(),
-                        fullscreenDialog: true,
-                      ));
-                }),
-          ),
-        ],
-      )),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(7, 0, 3, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                    icon: Icon(
+                      Icons.playlist_add_outlined,
+                      size: 28,
+                    ),
+                    splashRadius: 28,
+                    tooltip: "New Shopping List",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => NewShopList(
+                              lastId: lastId,
+                              refreshShopLists: getShopLists,
+                            ),
+                            fullscreenDialog: true,
+                          )).then((value) => getLastId());
+
+                    }),
+                 IconButton(
+                    icon: Icon(
+                      Icons.settings,
+                      size: 24,
+                    ),
+                    splashRadius: 28,
+                    tooltip: "Settings",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => Configs(),
+                            fullscreenDialog: true,
+                          ));
+                    }),
+              ],
+            ),
+          )),
     );
   }
 }
