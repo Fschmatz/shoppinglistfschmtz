@@ -79,14 +79,15 @@ class _HomeState extends State<Home> {
 
       bottomNavigationBar: BottomAppBar(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(7, 0, 3, 0),
+            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                     icon: Icon(
-                      Icons.playlist_add_outlined,
-                      size: 28,
+                      Icons.add_outlined,
+                      size: 25,
+                      color: Theme.of(context).hintColor,
                     ),
                     splashRadius: 28,
                     tooltip: "New Shopping List",
@@ -104,8 +105,9 @@ class _HomeState extends State<Home> {
                     }),
                  IconButton(
                     icon: Icon(
-                      Icons.settings,
+                      Icons.settings_outlined,
                       size: 24,
+                      color: Theme.of(context).hintColor,
                     ),
                     splashRadius: 28,
                     tooltip: "Settings",

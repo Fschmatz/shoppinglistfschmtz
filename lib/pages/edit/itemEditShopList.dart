@@ -47,7 +47,7 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
         side: BorderSide(
           width: 1,
           color: widget.item.estado == 0
-              ? Colors.black.withOpacity(0.5)
+              ? Colors.black.withOpacity(0.6)
               : Colors.black.withOpacity(0.1),
         ),
       ),
@@ -79,7 +79,7 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
               decoration: InputDecoration(
                   hintText: "Item Name",
                   contentPadding: new EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 10.0),
+                      vertical: 15.0, horizontal: 10.0),
                   border: InputBorder.none,
                   counterStyle: TextStyle(
                     height: double.minPositive,

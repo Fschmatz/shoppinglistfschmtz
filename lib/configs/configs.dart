@@ -57,7 +57,7 @@ class _ConfigsState extends State<Configs> {
               ),
 
               Card(
-                elevation: 0,
+                elevation: 1,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   side: BorderSide(
@@ -83,7 +83,7 @@ class _ConfigsState extends State<Configs> {
               SizedBox(height: 10,),
 
               Card(
-                elevation: 0,
+                elevation: 1,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   side: BorderSide(

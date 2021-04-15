@@ -158,9 +158,6 @@ class _NewShopListState extends State<NewShopList> {
       ),
       body: Column(
         children: [
-          SizedBox(
-            height: 15,
-          ),
           Padding(
             padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
             child: Column(
@@ -204,7 +201,7 @@ class _NewShopListState extends State<NewShopList> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       MaterialButton(
@@ -225,7 +222,7 @@ class _NewShopListState extends State<NewShopList> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 25,),
+                const SizedBox(height: 20,),
 
                 Row(
                   children: [
@@ -257,9 +254,9 @@ class _NewShopListState extends State<NewShopList> {
                           onEditingComplete: () {},
                           decoration: InputDecoration(
                               hintText: "Add New Item",
-                              hintStyle: TextStyle(fontSize: 17, color: currentColor.withOpacity(0.6)),
+                              hintStyle: TextStyle(fontSize: 17, color: currentColor.withOpacity(0.7)),
                               contentPadding: new EdgeInsets.symmetric(
-                                  vertical: 18.0, horizontal: 10.0),
+                                  vertical: 14.0, horizontal: 10.0),
                               border: InputBorder.none,
                               counterStyle: TextStyle(
                                 height: double.minPositive,
@@ -275,22 +272,24 @@ class _NewShopListState extends State<NewShopList> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 5,),
               ],
             ),
           ),
-          const SizedBox(height: 5,),
 
-          Divider(
-            thickness: 1,
-            color: Colors.black.withOpacity(0.5),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+            child: Divider(
+              height: 1,
+              thickness: 1,
+              color: Colors.black.withOpacity(0.5),
+            ),
           ),
 
           //LIST
           Flexible(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-              child: SingleChildScrollView(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                 child: Column(
                   children: [
                     const SizedBox(

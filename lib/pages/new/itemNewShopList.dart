@@ -30,7 +30,7 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
         borderRadius: BorderRadius.all(Radius.circular(8)),
         side: BorderSide(
           width: 1,
-          color: Colors.black.withOpacity(0.5),
+          color: Colors.black.withOpacity(0.6),
         ),
       ),
       child: Row(
@@ -56,7 +56,7 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
               decoration: InputDecoration(
                   hintText: "Item Name",
                   contentPadding: new EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 10.0),
+                      vertical: 15.0, horizontal: 10.0),
                   border: InputBorder.none,
                   counterStyle: TextStyle(
                     height: double.minPositive,
