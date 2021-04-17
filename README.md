@@ -4,4 +4,4 @@ Simple ShopList App created with Flutter.
 
 Created with Android in mind, it has not been tested for IOS.
 
-<img src="https://user-images.githubusercontent.com/21291813/110710671-0d8c8300-81dd-11eb-9fc3-eb0c1c8e72c6.png" width="40%"></img> <img src="https://user-images.githubusercontent.com/21291813/110710673-0ebdb000-81dd-11eb-8c77-5517010e5ac0.png" width="40%"></img> 
+<img src="https://user-images.githubusercontent.com/21291813/114953215-4815bb00-9e2e-11eb-9271-2a493d2f0c10.png" width="30%"></img> <img src="https://user-images.githubusercontent.com/21291813/114953220-49df7e80-9e2e-11eb-999f-4759e8987349.png" width="30%"></img> 
