@@ -155,7 +155,7 @@ class _EditShopListState extends State<EditShopList> {
       ),
       onPressed: () {
         setState(() =>
-        {currentColor = pickerColor, corAtual = pickerColor.toString()});
+            {currentColor = pickerColor, corAtual = pickerColor.toString()});
         _updateShopList();
         Navigator.of(context).pop();
       },
@@ -169,9 +169,9 @@ class _EditShopListState extends State<EditShopList> {
       ),
       content: SingleChildScrollView(
           child: BlockPicker(
-            pickerColor: currentColor,
-            onColorChanged: changeColor,
-          )),
+        pickerColor: currentColor,
+        onColorChanged: changeColor,
+      )),
       actions: [
         okButton,
       ],
@@ -190,7 +190,7 @@ class _EditShopListState extends State<EditShopList> {
       appBar: AppBar(
         actions: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 3, 0),
+            padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
             child: IconButton(
               icon: Icon(
                 Icons.delete_outline_outlined,
@@ -204,7 +204,6 @@ class _EditShopListState extends State<EditShopList> {
         elevation: 0,
         title: Text('Edit Shopping List'),
       ),
-
       body: Column(
         children: [
           Padding(
@@ -226,43 +225,39 @@ class _EditShopListState extends State<EditShopList> {
                           onChanged: (value) => _updateShopList(),
                           decoration: InputDecoration(
                               counterText: "",
+                              filled: true,
                               hintText: "Shopping List Name",
                               contentPadding: new EdgeInsets.symmetric(
-                                  vertical: 15.0, horizontal: 12.0),
+                                  vertical: 0.0, horizontal: 12.0),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.black.withOpacity(0.5),
+                                  color: Colors.grey[700],
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Colors.black.withOpacity(0.5),
+                                    color: Colors.grey[700],
                                   ),
                                   borderRadius: BorderRadius.circular(8.0)),
                               border: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Colors.black.withOpacity(0.5),
+                                    color: Colors.grey[700],
                                   ),
                                   borderRadius: BorderRadius.circular(8.0))),
                           style: TextStyle(
-                            fontSize: 19,
+                            fontSize: 18,
                           ),
                         ),
                       ),
                       const SizedBox(
-                        width: 10,
+                        width: 20,
                       ),
                       MaterialButton(
-                        minWidth: 20,
-                        height: 45,
-                        child: Icon(
-                          Icons.color_lens_rounded,
-                          color: Colors.grey[800],
-                          size: 24,
-                        ),
+                        minWidth: 45,
+                        height: 50,
                         shape: CircleBorder(),
-                        elevation: 1,
+                        elevation: 0,
                         color: currentColor,
                         onPressed: () {
                           createAlertSelectColor(context);
@@ -271,29 +266,20 @@ class _EditShopListState extends State<EditShopList> {
                     ],
                   ),
                 ),
-
-                const SizedBox(height: 20,),
-
-                Row(
-                  children: [
-                    Expanded(
-                      child: Card(
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          side: BorderSide(
-                            width: 1.5,
-                            color: currentColor.withOpacity(0.7),
-                          ),
-                        ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(3, 0, 3, 0),
+                  child: Row(
+                    children: [
+                      Expanded(
                         child: TextField(
-                          textAlign: TextAlign.center,
                           minLines: 1,
-                          maxLines: 4,
                           maxLength: 200,
                           autofocus: false,
                           maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                          textCapitalization: TextCapitalization.sentences,
+                          textCapitalization: TextCapitalization.words,
                           keyboardType: TextInputType.name,
                           controller: customControllerAddNewItem,
                           onSubmitted: (value) => {
@@ -303,35 +289,56 @@ class _EditShopListState extends State<EditShopList> {
                           },
                           onEditingComplete: () {},
                           decoration: InputDecoration(
-                              hintText: "Add New Item",
-                              hintStyle: TextStyle(fontSize: 17, color: currentColor.withOpacity(0.7)),
+                            hintText: "  Add New Item",
+                              filled: true,
+                              prefixIcon: Icon(
+                                Icons.add_shopping_cart_outlined,
+                                color: currentColor.withOpacity(0.8),
+                              ),
                               contentPadding: new EdgeInsets.symmetric(
                                   vertical: 14.0, horizontal: 10.0),
-                              border: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 1.8,
+                                    color: currentColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 1.8,
+                                    color: currentColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0)),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 1.8,
+                                    color: currentColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0)),
                               counterStyle: TextStyle(
                                 height: double.minPositive,
                               ),
                               counterText: "" // hide maxlength counter
-                          ),
+                              ),
                           style: TextStyle(
                             fontSize: 18,
                             color: Theme.of(context).textTheme.headline6.color,
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
             child: Divider(
               height: 1,
               thickness: 1,
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.grey[800],
             ),
           ),
 
@@ -339,7 +346,7 @@ class _EditShopListState extends State<EditShopList> {
           Flexible(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Column(
                   children: [
                     const SizedBox(
@@ -347,9 +354,9 @@ class _EditShopListState extends State<EditShopList> {
                     ),
                     ListView.separated(
                         separatorBuilder: (BuildContext context, int index) =>
-                        const SizedBox(
-                          height: 12,
-                        ),
+                            const SizedBox(
+                              height: 12,
+                            ),
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: itemsDo.length,
@@ -368,7 +375,6 @@ class _EditShopListState extends State<EditShopList> {
                             listAccent: currentColor,
                           );
                         }),
-
                     const SizedBox(
                       height: 30,
                     ),
@@ -380,21 +386,19 @@ class _EditShopListState extends State<EditShopList> {
                         endIndent: 6,
                       ),
                     ),
-
                     Visibility(
                       visible: itemsDone.length > 0,
                       child: const SizedBox(
                         height: 30,
                       ),
                     ),
-
                     Visibility(
                       visible: itemsDone.length > 0,
                       child: ListView.separated(
                           separatorBuilder: (BuildContext context, int index) =>
-                          const SizedBox(
-                            height: 12,
-                          ),
+                              const SizedBox(
+                                height: 12,
+                              ),
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: itemsDone.length,
@@ -415,17 +419,15 @@ class _EditShopListState extends State<EditShopList> {
                           }),
                     ),
                     const SizedBox(
-                      height: 50,
+                      height: 100,
                     ),
                   ],
                 ),
               ),
             ),
           ),
-
         ],
       ),
     );
   }
 }
-

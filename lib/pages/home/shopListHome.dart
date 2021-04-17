@@ -56,7 +56,7 @@ class _ShopListHomeState extends State<ShopListHome> {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.fromLTRB(15, 8, 15, 8),
-      elevation: 5,
+      elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15)),
         side: BorderSide(
@@ -94,14 +94,11 @@ class _ShopListHomeState extends State<ShopListHome> {
                   style:
                       TextStyle(fontSize: 18.5, fontWeight: FontWeight.bold),
                 )),
-            Visibility(
-              visible: items.length > 0,
-              child: const Divider(
-                thickness: 1.8,
-                indent: 15,
-                endIndent: 15,
-              ),
-            ),
+            items.length > 0 ? Divider(
+              thickness: 1.8,
+              indent: 15,
+              endIndent: 15,
+            ) : SizedBox(height: 5,),
             ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

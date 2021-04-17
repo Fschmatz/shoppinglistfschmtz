@@ -47,8 +47,8 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
         side: BorderSide(
           width: 1,
           color: widget.item.estado == 0
-              ? Colors.black.withOpacity(0.6)
-              : Colors.black.withOpacity(0.1),
+              ? Colors.grey[700]
+              : Colors.grey[700].withOpacity(0.1),
         ),
       ),
       child: Row(
