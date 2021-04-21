@@ -55,14 +55,14 @@ class _ShopListHomeState extends State<ShopListHome> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.fromLTRB(15, 8, 15, 8),
+      margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15)),
         side: BorderSide(
           color: Color(int.parse(widget.shopList.cor.substring(6, 16)))
               .withOpacity(0.8),
-          width: 1.8,
+          width: 1,
         ),
       ),
       child: InkWell(
@@ -94,11 +94,7 @@ class _ShopListHomeState extends State<ShopListHome> {
                   style:
                       TextStyle(fontSize: 18.5, fontWeight: FontWeight.bold),
                 )),
-            items.length > 0 ? Divider(
-              thickness: 1.8,
-              indent: 15,
-              endIndent: 15,
-            ) : SizedBox(height: 5,),
+            const SizedBox(height: 7,),
             ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

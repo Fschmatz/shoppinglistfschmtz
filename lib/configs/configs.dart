@@ -39,7 +39,10 @@ class _ConfigsState extends State<Configs> {
               Card(
                 elevation: 0,
                 margin: const EdgeInsets.all(2.0),
-                color: Colors.green,
+                color: Color(0xFFFF5C78),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
                 child: ListTile(
                   title: Text(
                     "Flutter " +
@@ -66,6 +69,9 @@ class _ConfigsState extends State<Configs> {
                   ),
                 ),
                 child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                  ),
                   leading: Icon(Icons.text_snippet_outlined),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   title: Text(
@@ -94,6 +100,9 @@ class _ConfigsState extends State<Configs> {
                   ),
                 ),
                 child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                  ),
                   leading: Icon(Icons.text_snippet_outlined),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   title: Text(
@@ -117,7 +126,7 @@ class _ConfigsState extends State<Configs> {
                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                 child: Text(
                   "Options: ",
-                  style: TextStyle(fontSize: 21),
+                  style: TextStyle(fontSize: 19),
                 ),
               ),
               SizedBox(
@@ -128,7 +137,7 @@ class _ConfigsState extends State<Configs> {
                 contentPadding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                 title: Text(
                   "Dark Theme",
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 17.5),
                 ),
                 trailing: Consumer<ThemeNotifier>(
                   builder: (context, notifier, child) => Switch(

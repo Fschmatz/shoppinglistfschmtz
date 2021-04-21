@@ -190,7 +190,7 @@ class _EditShopListState extends State<EditShopList> {
       appBar: AppBar(
         actions: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+            padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
             child: IconButton(
               icon: Icon(
                 Icons.delete_outline_outlined,
@@ -225,6 +225,9 @@ class _EditShopListState extends State<EditShopList> {
                           onChanged: (value) => _updateShopList(),
                           decoration: InputDecoration(
                               counterText: "",
+                              prefixIcon: Icon(
+                                Icons.notes_outlined,
+                              ),
                               filled: true,
                               hintText: "Shopping List Name",
                               contentPadding: new EdgeInsets.symmetric(
@@ -254,7 +257,7 @@ class _EditShopListState extends State<EditShopList> {
                         width: 20,
                       ),
                       MaterialButton(
-                        minWidth: 45,
+                        minWidth: 40,
                         height: 50,
                         shape: CircleBorder(),
                         elevation: 0,
@@ -289,7 +292,7 @@ class _EditShopListState extends State<EditShopList> {
                           },
                           onEditingComplete: () {},
                           decoration: InputDecoration(
-                            hintText: "  Add New Item",
+                              hintText: "  Add New Item",
                               filled: true,
                               prefixIcon: Icon(
                                 Icons.add_shopping_cart_outlined,
@@ -299,20 +302,17 @@ class _EditShopListState extends State<EditShopList> {
                                   vertical: 14.0, horizontal: 10.0),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    width: 1.8,
-                                    color: currentColor,
+                                    color: currentColor.withOpacity(0.8),
                                   ),
                                   borderRadius: BorderRadius.circular(8.0)),
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    width: 1.8,
-                                    color: currentColor,
+                                    color: currentColor.withOpacity(0.8),
                                   ),
                                   borderRadius: BorderRadius.circular(8.0)),
                               border: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    width: 1.8,
-                                    color: currentColor,
+                                    color: currentColor.withOpacity(0.8),
                                   ),
                                   borderRadius: BorderRadius.circular(8.0)),
                               counterStyle: TextStyle(
@@ -334,7 +334,7 @@ class _EditShopListState extends State<EditShopList> {
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, 28, 0, 0),
             child: Divider(
               height: 1,
               thickness: 1,
@@ -375,11 +375,14 @@ class _EditShopListState extends State<EditShopList> {
                             listAccent: currentColor,
                           );
                         }),
-                    const SizedBox(
-                      height: 30,
+                    Visibility(
+                      visible: itemsDone.length > 0 && itemsDo.length > 0,
+                      child: SizedBox(
+                        height: 30,
+                      ),
                     ),
                     Visibility(
-                      visible: itemsDone.length > 0,
+                      visible: itemsDone.length > 0 && itemsDo.length > 0,
                       child: Divider(
                         thickness: 1.8,
                         indent: 6,
@@ -387,7 +390,7 @@ class _EditShopListState extends State<EditShopList> {
                       ),
                     ),
                     Visibility(
-                      visible: itemsDone.length > 0,
+                      visible: itemsDone.length > 0 && itemsDo.length > 0,
                       child: const SizedBox(
                         height: 30,
                       ),

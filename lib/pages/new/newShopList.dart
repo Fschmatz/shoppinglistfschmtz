@@ -137,7 +137,7 @@ class _NewShopListState extends State<NewShopList> {
       appBar: AppBar(
         actions: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+            padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
             child: IconButton(
               icon: Icon(
                 Icons.save_outlined,
@@ -175,6 +175,9 @@ class _NewShopListState extends State<NewShopList> {
                           controller: customControllerNome,
                           decoration: InputDecoration(
                               filled: true,
+                              prefixIcon: Icon(
+                                Icons.notes_outlined,
+                              ),
                               counterText: "",
                               hintText: "Shopping List Name",
                               contentPadding: new EdgeInsets.symmetric(
@@ -204,7 +207,7 @@ class _NewShopListState extends State<NewShopList> {
                         width: 20,
                       ),
                       MaterialButton(
-                        minWidth: 45,
+                        minWidth: 40,
                         height: 50,
                         shape: CircleBorder(),
                         elevation: 0,
@@ -252,20 +255,17 @@ class _NewShopListState extends State<NewShopList> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    width: 1.8,
-                                    color: currentColor,
+                                    color: currentColor.withOpacity(0.8),
                                   ),
                                   borderRadius: BorderRadius.circular(8.0)),
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    width: 1.8,
-                                    color: currentColor,
+                                    color: currentColor.withOpacity(0.8),
                                   ),
                                   borderRadius: BorderRadius.circular(8.0)),
                               border: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    width: 1.8,
-                                    color: currentColor,
+                                    color: currentColor.withOpacity(0.8),
                                   ),
                                   borderRadius: BorderRadius.circular(8.0)),
                               counterText: "" // hide maxlength counter
@@ -284,7 +284,7 @@ class _NewShopListState extends State<NewShopList> {
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, 28, 0, 0),
             child: Divider(
               height: 1,
               thickness: 1,
