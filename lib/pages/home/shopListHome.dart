@@ -61,8 +61,8 @@ class _ShopListHomeState extends State<ShopListHome> {
         borderRadius: BorderRadius.all(Radius.circular(15)),
         side: BorderSide(
           color: Color(int.parse(widget.shopList.cor.substring(6, 16)))
-              .withOpacity(0.8),
-          width: 1,
+              .withOpacity(0.7),
+          width: 1.5,
         ),
       ),
       child: InkWell(
@@ -92,7 +92,7 @@ class _ShopListHomeState extends State<ShopListHome> {
                 child: Text(
                   widget.shopList.nome,
                   style:
-                      TextStyle(fontSize: 18.5, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
                 )),
             const SizedBox(height: 7,),
             ListView.builder(

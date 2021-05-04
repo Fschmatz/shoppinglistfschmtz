@@ -30,7 +30,7 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
         borderRadius: BorderRadius.all(Radius.circular(8)),
         side: BorderSide(
           width: 1,
-          color: Colors.grey[700],
+          color: Colors.grey[800],
         ),
       ),
       child: Row(
@@ -64,7 +64,7 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
                   counterText: "" // hide maxlength counter
               ),
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 16,
               ),
             ),
           ),

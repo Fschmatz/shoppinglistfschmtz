@@ -33,7 +33,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
       child: ListTile(
         title: Text(
           widget.item.nome,
-          style: TextStyle(fontSize: 17),
+          style: TextStyle(fontSize: 16),
         ),
         trailing:  Checkbox(
           activeColor: Theme.of(context).accentColor,

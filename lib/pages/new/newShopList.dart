@@ -97,7 +97,7 @@ class _NewShopListState extends State<NewShopList> {
       child: Text(
         "Ok",
         style: TextStyle(
-            fontSize: 18,
+            fontSize: 17,
             fontWeight: FontWeight.bold,
             color: Theme.of(context).textTheme.headline6.color),
       ),
@@ -184,22 +184,22 @@ class _NewShopListState extends State<NewShopList> {
                                   vertical: 0.0, horizontal: 12.0),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.grey[700],
+                                  color: Colors.grey[800],
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Colors.grey[700],
+                                    color: Colors.grey[800],
                                   ),
                                   borderRadius: BorderRadius.circular(8.0)),
                               border: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Colors.grey[700],
+                                    color: Colors.grey[800],
                                   ),
                                   borderRadius: BorderRadius.circular(8.0))),
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -246,7 +246,7 @@ class _NewShopListState extends State<NewShopList> {
                               filled: true,
                               prefixIcon: Icon(
                                 Icons.add_shopping_cart_outlined,
-                                color: currentColor.withOpacity(0.8),
+                                color: currentColor.withOpacity(0.7),
                               ),
                               contentPadding: new EdgeInsets.symmetric(
                                   vertical: 14.0, horizontal: 10.0),
@@ -271,7 +271,7 @@ class _NewShopListState extends State<NewShopList> {
                               counterText: "" // hide maxlength counter
                               ),
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             color: Theme.of(context).textTheme.headline6.color,
                           ),
                         ),
@@ -287,7 +287,6 @@ class _NewShopListState extends State<NewShopList> {
             padding: const EdgeInsets.fromLTRB(0, 28, 0, 0),
             child: Divider(
               height: 1,
-              thickness: 1,
               color: Colors.grey[800],
             ),
           ),

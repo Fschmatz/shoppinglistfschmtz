@@ -47,8 +47,8 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
         side: BorderSide(
           width: 1,
           color: widget.item.estado == 0
-              ? Colors.grey[700]
-              : Colors.grey[700].withOpacity(0.1),
+              ? Colors.grey[800]
+              : Colors.grey[800].withOpacity(0.1),
         ),
       ),
       child: Row(
@@ -87,7 +87,7 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
                   counterText: "" // hide maxlength counter
               ),
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 color: widget.item.estado == 1
                     ? Theme.of(context).disabledColor
                     : Theme.of(context).textTheme.headline6.color,

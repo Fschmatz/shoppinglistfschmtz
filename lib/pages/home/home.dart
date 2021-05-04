@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shoppinglistfschmtz/classes/shopList.dart';
+import 'package:shoppinglistfschmtz/configs/appInfo.dart';
 import 'package:shoppinglistfschmtz/db/shopListDao.dart';
 import 'package:shoppinglistfschmtz/pages/home/shopListHome.dart';
 import 'package:shoppinglistfschmtz/pages/new/newShopList.dart';
-import '../../configs/configs.dart';
+import '../../configs/settings.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -48,10 +49,13 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
+      appBar: AppBar(
+        toolbarHeight: 0,
+        elevation: 0,
+      ),
       body: ListView(children: <Widget>[
         const SizedBox(
-          height: 8,
+          height: 5,
         ),
         shopLists.isEmpty
             ? SizedBox.shrink()
@@ -62,7 +66,7 @@ class _HomeState extends State<Home> {
                 itemBuilder: (context, index) {
                   return ShopListHome(
                     refreshShopLists: getShopLists,
-                    key: UniqueKey(), //USADO pro REFRESH GERAL
+                    key: UniqueKey(),
                     shopList: new ShopList(
                       id: shopLists[index]['id'],
                       nome: shopLists[index]['nome'],
@@ -71,57 +75,58 @@ class _HomeState extends State<Home> {
                   );
                 },
               ),
-        const SizedBox(
-          height: 50,
-        ),
       ]),
-
 
       bottomNavigationBar: BottomAppBar(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                    icon: Icon(
-                      Icons.add_outlined,
-                      size: 25,
-                      color: Theme.of(context).hintColor,
-                    ),
-                    splashRadius: 28,
-                    tooltip: "New Shopping List",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) => NewShopList(
-                              lastId: lastId,
-                              refreshShopLists: getShopLists,
-                            ),
-                            fullscreenDialog: true,
-                          )).then((value) => getLastId());
-
-                    }),
-                 IconButton(
-                    icon: Icon(
-                      Icons.settings_outlined,
-                      size: 24,
-                      color: Theme.of(context).hintColor,
-                    ),
-                    splashRadius: 28,
-                    tooltip: "Settings",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) => Configs(),
-                            fullscreenDialog: true,
-                          ));
-                    }),
-              ],
-            ),
-          )),
+        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+                icon: Icon(
+                  Icons.add_outlined,
+                  color: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .color
+                      .withOpacity(0.7),
+                ),
+                splashRadius: 28,
+                tooltip: "New Shopping List",
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => NewShopList(
+                          lastId: lastId,
+                          refreshShopLists: getShopLists,
+                        ),
+                        fullscreenDialog: true,
+                      )).then((value) => getLastId());
+                }),
+            IconButton(
+                icon: Icon(
+                  Icons.settings_outlined,
+                  color: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .color
+                      .withOpacity(0.7),
+                ),
+                splashRadius: 28,
+                tooltip: "Settings",
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => Settings(),
+                        fullscreenDialog: true,
+                      ));
+                }),
+          ],
+        ),
+      )),
     );
   }
 }
