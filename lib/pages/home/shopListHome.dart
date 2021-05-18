@@ -62,7 +62,7 @@ class _ShopListHomeState extends State<ShopListHome> {
         side: BorderSide(
           color: Color(int.parse(widget.shopList.cor.substring(6, 16)))
               .withOpacity(0.7),
-          width: 1.5,
+          width: 1,
         ),
       ),
       child: InkWell(
