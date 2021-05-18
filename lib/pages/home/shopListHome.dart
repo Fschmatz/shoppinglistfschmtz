@@ -26,13 +26,10 @@ class _ShopListHomeState extends State<ShopListHome> {
     super.initState();
   }
 
-
   // ONLY DO ITEMS
   Future<void> getItemsShopList() async {
     final dbItems = itemDao.instance;
     var resposta = await dbItems.getItemsShopListDoDesc(widget.shopList.id);
-
-    //SetState error call, use if mounted
     if (mounted) {
       setState(() {
         items = resposta;
@@ -43,8 +40,6 @@ class _ShopListHomeState extends State<ShopListHome> {
   Future<void> getItemsRefreshShopList(int idShopList) async {
     final dbItems = itemDao.instance;
     var resposta = await dbItems.getItemsShopListDoDesc(idShopList);
-
-    //SetState error call, use if mounted
     if (mounted) {
       setState(() {
         items = resposta;
@@ -56,13 +51,13 @@ class _ShopListHomeState extends State<ShopListHome> {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-      elevation: 2,
+      elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15)),
         side: BorderSide(
           color: Color(int.parse(widget.shopList.cor.substring(6, 16)))
               .withOpacity(0.7),
-          width: 1,
+          width: 1.25,
         ),
       ),
       child: InkWell(
@@ -70,7 +65,6 @@ class _ShopListHomeState extends State<ShopListHome> {
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
         onTap: (){
-
           Navigator.push(
               context,
               MaterialPageRoute<void>(
@@ -82,7 +76,6 @@ class _ShopListHomeState extends State<ShopListHome> {
                     ),
                 fullscreenDialog: true,
               )).then((value) => widget.refreshShopLists());
-
         },
         child: Column(
           children: [
@@ -107,7 +100,6 @@ class _ShopListHomeState extends State<ShopListHome> {
                       estado: items[index]['estado'],
                       idShopList: items[index]['idShopList'],
                     ),
-                    //refreshShopLists: widget.refreshShopLists,
                     getItemsRefreshShopList: getItemsRefreshShopList,
                     key: UniqueKey(),
                   );

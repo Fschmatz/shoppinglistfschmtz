@@ -98,7 +98,6 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
             width: 5,
           ),
           Checkbox(
-            //activeColor: Theme.of(context).accentColor.withOpacity(0.6),
             activeColor: widget.listAccent.withOpacity(0.4),
             value: widget.item.estado == 0 ? false : true,
             onChanged: (bool v) {
