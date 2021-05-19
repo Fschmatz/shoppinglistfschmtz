@@ -51,13 +51,13 @@ class _ShopListHomeState extends State<ShopListHome> {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-      elevation: 3,
+      elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15)),
         side: BorderSide(
           color: Color(int.parse(widget.shopList.cor.substring(6, 16)))
               .withOpacity(0.7),
-          width: 1.25,
+          width: 1.3,
         ),
       ),
       child: InkWell(

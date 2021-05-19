@@ -33,7 +33,7 @@ ThemeData dark = ThemeData(
       color: Color(0xFF353535),
     ),
     dialogTheme: DialogTheme(
-      backgroundColor: Color(0xFF3B3B3B),
+      backgroundColor: Color(0xFF202020),
     ),
     bottomAppBarColor: Color(0xFF161616),
     bottomSheetTheme:
