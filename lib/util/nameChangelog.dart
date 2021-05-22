@@ -7,6 +7,7 @@ class NameChangelog{
 1.2.2
 - Lists Ordered By Name
 - Small Fixes
+- Removed Cards
 - Changed List Colors
 ''';
   static String changelogsOld = '''

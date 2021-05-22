@@ -8,8 +8,9 @@ class ItemShopListHome extends StatefulWidget {
 
   Item item;
   Function(int) getItemsRefreshShopList;
+  Color shopListColor;
 
-  ItemShopListHome({Key key, this.item,this.getItemsRefreshShopList})
+  ItemShopListHome({Key key, this.item,this.getItemsRefreshShopList,this.shopListColor})
       : super(key: key);
 }
 
@@ -27,23 +28,25 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
-      child: ListTile(
-        title: Text(
-          widget.item.nome,
-          style: TextStyle(fontSize: 16),
-        ),
-        trailing:  Checkbox(
-          activeColor: Theme.of(context).accentColor,
-          value: widget.item.estado == 1 ? true : false,
-          onChanged: (bool v) {
-            setState(() {
-              _updateEstadoItem(v);
-              widget.getItemsRefreshShopList(widget.item.idShopList);
-            });
-          },
-        ),
+    return ListTile(
+      leading: Padding(
+        padding: const EdgeInsets.fromLTRB(6, 5, 0, 0),
+        child: Icon(Icons.circle,color: widget.shopListColor,size: 12,),
+      ),
+      title: Text(
+        widget.item.nome,
+        style: TextStyle(fontSize: 16),
+      ),
+      trailing: Checkbox(
+        splashRadius: 30,
+        activeColor: Theme.of(context).accentColor,
+        value: widget.item.estado == 1 ? true : false,
+        onChanged: (bool v) {
+          setState(() {
+            _updateEstadoItem(v);
+            widget.getItemsRefreshShopList(widget.item.idShopList);
+          });
+        },
       ),
     );
   }

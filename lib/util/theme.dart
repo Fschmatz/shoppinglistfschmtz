@@ -23,9 +23,9 @@ ThemeData light = ThemeData(
 //ESCURO
 ThemeData dark = ThemeData(
     brightness: Brightness.dark,
-    primaryColor: Color(0xFF202020),
+    primaryColor: Color(0xFF252525),
     accentColor: Color(0xFF6B89BF),
-    scaffoldBackgroundColor: Color(0xFF202020),
+    scaffoldBackgroundColor: Color(0xFF252525),
     inputDecorationTheme: InputDecorationTheme(
       fillColor: Color(0xFF323232), //CARD COLOR
     ),

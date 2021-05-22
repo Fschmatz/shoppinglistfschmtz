@@ -59,7 +59,8 @@ class _HomeState extends State<Home> {
         ),
         shopLists.isEmpty
             ? SizedBox.shrink()
-            : ListView.builder(
+            : ListView.separated(
+                separatorBuilder: (context, index) => const Divider(),
                 physics: ScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: shopLists.length,
@@ -75,6 +76,9 @@ class _HomeState extends State<Home> {
                   );
                 },
               ),
+        const SizedBox(
+          height: 25,
+        ),
       ]),
 
       bottomNavigationBar: BottomAppBar(

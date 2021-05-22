@@ -19,10 +19,12 @@ class ShopListHome extends StatefulWidget {
 
 class _ShopListHomeState extends State<ShopListHome> {
   List<Map<String, dynamic>> items = [];
+  Color shopListColor;
 
   @override
   void initState() {
     getItemsShopList();
+    shopListColor = Color(int.parse(widget.shopList.cor.substring(6, 16)));
     super.initState();
   }
 
@@ -49,66 +51,48 @@ class _ShopListHomeState extends State<ShopListHome> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        side: BorderSide(
-          color: Color(int.parse(widget.shopList.cor.substring(6, 16)))
-              .withOpacity(0.8),
-          width: 0.8,
-        ),
-      ),
-      child: InkWell(
-        customBorder: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        onTap: (){
-          Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) =>
-                    EditShopList(
-                      refreshShopLists:
-                      widget.refreshShopLists,
-                      shopList: widget.shopList,
-                    ),
-                fullscreenDialog: true,
-              )).then((value) => widget.refreshShopLists());
-        },
-        child: Column(
-          children: [
-            Container(
-                padding: EdgeInsets.fromLTRB(28, 20, 16, 5),
-                alignment: Alignment.topLeft,
-                child: Text(
-                  widget.shopList.nome,
-                  style:
-                      TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
-                )),
-            const SizedBox(height: 7,),
-            ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  return ItemShopListHome(
-                    item: new Item(
-                      id: items[index]['id'],
-                      nome: items[index]['nome'],
-                      estado: items[index]['estado'],
-                      idShopList: items[index]['idShopList'],
-                    ),
-                    getItemsRefreshShopList: getItemsRefreshShopList,
-                    key: UniqueKey(),
-                  );
-                }),
-            const SizedBox(
-              height: 8,
-            )
-          ],
-        ),
+    return InkWell(
+      onTap: (){
+        Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) =>
+                  EditShopList(
+                    refreshShopLists:
+                    widget.refreshShopLists,
+                    shopList: widget.shopList,
+                  ),
+              fullscreenDialog: true,
+            )).then((value) => widget.refreshShopLists());
+      },
+      child: Column(
+        children: [
+          ListTile(
+            leading: Icon(Icons.shopping_cart_outlined,color: shopListColor,),
+            title: Text(
+              widget.shopList.nome,
+              style:
+              TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            ),
+          ),
+          ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return ItemShopListHome(
+                  item: new Item(
+                    id: items[index]['id'],
+                    nome: items[index]['nome'],
+                    estado: items[index]['estado'],
+                    idShopList: items[index]['idShopList'],
+                  ),
+                  shopListColor: shopListColor,
+                  getItemsRefreshShopList: getItemsRefreshShopList,
+                  key: UniqueKey(),
+                );
+              }),
+        ],
       ),
     );
   }
