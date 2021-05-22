@@ -51,18 +51,18 @@ class _ShopListHomeState extends State<ShopListHome> {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-      elevation: 0,
+      elevation: 2,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
         side: BorderSide(
           color: Color(int.parse(widget.shopList.cor.substring(6, 16)))
-              .withOpacity(0.7),
-          width: 1.3,
+              .withOpacity(0.8),
+          width: 0.8,
         ),
       ),
       child: InkWell(
         customBorder: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         onTap: (){
           Navigator.push(
@@ -85,7 +85,7 @@ class _ShopListHomeState extends State<ShopListHome> {
                 child: Text(
                   widget.shopList.nome,
                   style:
-                      TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                      TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
                 )),
             const SizedBox(height: 7,),
             ListView.builder(

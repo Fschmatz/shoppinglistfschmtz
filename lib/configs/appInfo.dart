@@ -116,8 +116,8 @@ class AppInfo extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.messenger_outline),
             title: Text(
-              "The main value in software is not the code produced, but the knowledge accumulated by the people who produced it.  ",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              "The main value in software is not the code produced, but the knowledge accumulated by the people who produced it.",
+              style: TextStyle(fontSize: 16),
             ),
           ),
         ]));

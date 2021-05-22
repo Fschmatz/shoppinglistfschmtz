@@ -1,10 +1,10 @@
 class NameChangelog{
 
-  static String appVersion = "1.2.1";
+  static String appVersion = "1.2.2";
   static String appName = "ShopList Fschmtz";
 
   static String changelogCurrent = ''' 
-1.2.1
+1.2.2
 - Lists Ordered By Name
 - Small Fixes
 - Changed List Colors
