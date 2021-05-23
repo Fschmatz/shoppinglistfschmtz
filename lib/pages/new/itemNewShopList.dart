@@ -24,52 +24,40 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        side: BorderSide(
-          width: 1,
-          color: Colors.grey[800],
+    return ListTile(
+        contentPadding: const EdgeInsets.fromLTRB(5, 0, 16, 0),
+      leading: IconButton(
+          icon: Icon(
+            Icons.clear,
+            size: 18,
+          ),
+          onPressed: () {
+            widget.deleteItem(widget.item.id);
+          }),
+      title: TextField(
+        onChanged:(value)=> widget.updateItem(widget.item.id,customControllerNome.text),
+        minLines: 1,
+        maxLines: 4,
+        maxLength: 200,
+        maxLengthEnforcement: MaxLengthEnforcement.enforced,
+        textCapitalization: TextCapitalization.sentences,
+        keyboardType: TextInputType.name,
+        controller: customControllerNome,
+        decoration: InputDecoration(
+            hintText: "Item Name",
+            contentPadding: new EdgeInsets.symmetric(
+                vertical: 15.0, horizontal: 10.0),
+            border: InputBorder.none,
+            counterStyle: TextStyle(
+              height: double.minPositive,
+            ),
+            counterText: "" // hide maxlength counter
+        ),
+        style: TextStyle(
+          fontSize: 16,
         ),
       ),
-      child: Row(
-        children: [
-          IconButton(
-              icon: Icon(
-                Icons.clear,
-                size: 18,
-              ),
-              onPressed: () {
-                widget.deleteItem(widget.item.id);
-              }),
-          Expanded(
-            child: TextField(
-              onChanged:(value)=> widget.updateItem(widget.item.id,customControllerNome.text),
-              minLines: 1,
-              maxLines: 4,
-              maxLength: 200,
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              textCapitalization: TextCapitalization.sentences,
-              keyboardType: TextInputType.name,
-              controller: customControllerNome,
-              decoration: InputDecoration(
-                  hintText: "Item Name",
-                  contentPadding: new EdgeInsets.symmetric(
-                      vertical: 15.0, horizontal: 10.0),
-                  border: InputBorder.none,
-                  counterStyle: TextStyle(
-                    height: double.minPositive,
-                  ),
-                  counterText: "" // hide maxlength counter
-              ),
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ],
-      ),
     );
+
   }
 }

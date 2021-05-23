@@ -30,8 +30,8 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Padding(
-        padding: const EdgeInsets.fromLTRB(6, 5, 0, 0),
-        child: Icon(Icons.circle,color: widget.shopListColor,size: 12,),
+        padding: const EdgeInsets.fromLTRB(7, 7, 0, 0),
+        child: Icon(Icons.circle,color: widget.shopListColor,size: 10,),
       ),
       title: Text(
         widget.item.nome,

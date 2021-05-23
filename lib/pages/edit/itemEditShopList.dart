@@ -40,76 +40,57 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        side: BorderSide(
-          width: 1,
-          color: widget.item.estado == 0
-              ? Colors.grey[800]
-              : Colors.grey[800].withOpacity(0.1),
+    return ListTile(
+      contentPadding: const EdgeInsets.fromLTRB(5, 0, 16, 0),
+      leading: IconButton(
+          icon: Icon(
+            Icons.clear,
+            size: 18,
+            color: widget.item.estado == 1
+                ? Theme.of(context).disabledColor
+                : Theme.of(context).textTheme.headline6.color,
+          ),
+          onPressed: () {
+            widget.deleteItem(widget.item.id);
+            widget.getItemsShopList();
+          }),
+      title: TextField(
+        onChanged: (value) => widget.updateItem(widget.item.id,
+            customControllerNome.text, widget.item.estado),
+        minLines: 1,
+        maxLines: 4,
+        maxLength: 200,
+        maxLengthEnforcement: MaxLengthEnforcement.enforced,
+        textCapitalization: TextCapitalization.sentences,
+        keyboardType: TextInputType.name,
+        controller: customControllerNome,
+        decoration: InputDecoration(
+            hintText: "Item Name",
+            border: InputBorder.none,
+            counterStyle: TextStyle(
+              height: double.minPositive,
+            ),
+            counterText: "" // hide maxlength counter
+        ),
+        style: TextStyle(
+          fontSize: 16,
+          color: widget.item.estado == 1
+              ? Theme.of(context).disabledColor
+              : Theme.of(context).textTheme.headline6.color,
         ),
       ),
-      child: Row(
-        children: [
-          IconButton(
-              icon: Icon(
-                Icons.clear,
-                size: 18,
-                color: widget.item.estado == 1
-                    ? Theme.of(context).disabledColor
-                    : Theme.of(context).textTheme.headline6.color,
-              ),
-              onPressed: () {
-                widget.deleteItem(widget.item.id);
-                widget.getItemsShopList();
-              }),
-          Expanded(
-            child: TextField(
-              onChanged: (value) => widget.updateItem(widget.item.id,
-                  customControllerNome.text, widget.item.estado),
-              minLines: 1,
-              maxLines: 4,
-              maxLength: 200,
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              textCapitalization: TextCapitalization.sentences,
-              keyboardType: TextInputType.name,
-              controller: customControllerNome,
-              decoration: InputDecoration(
-                  hintText: "Item Name",
-                  contentPadding: new EdgeInsets.symmetric(
-                      vertical: 15.0, horizontal: 10.0),
-                  border: InputBorder.none,
-                  counterStyle: TextStyle(
-                    height: double.minPositive,
-                  ),
-                  counterText: "" // hide maxlength counter
-              ),
-              style: TextStyle(
-                fontSize: 16,
-                color: widget.item.estado == 1
-                    ? Theme.of(context).disabledColor
-                    : Theme.of(context).textTheme.headline6.color,
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          Checkbox(
-            activeColor: widget.listAccent.withOpacity(0.4),
-            value: widget.item.estado == 0 ? false : true,
-            onChanged: (bool v) {
-              setState(() {
-                _updateEstadoItem(v);
-                widget.getItemsShopList();
-              });
-            },
-          ),
-        ],
+      trailing: Checkbox(
+        activeColor: widget.listAccent.withOpacity(0.4),
+        value: widget.item.estado == 0 ? false : true,
+        onChanged: (bool v) {
+          setState(() {
+            _updateEstadoItem(v);
+            widget.getItemsShopList();
+          });
+        },
       ),
     );
+
   }
 }
 

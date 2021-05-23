@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shoppinglistfschmtz/classes/shopList.dart';
-import 'package:shoppinglistfschmtz/configs/appInfo.dart';
+import 'package:shoppinglistfschmtz/configs/appInfoPage.dart';
 import 'package:shoppinglistfschmtz/db/shopListDao.dart';
 import 'package:shoppinglistfschmtz/pages/home/shopListHome.dart';
 import 'package:shoppinglistfschmtz/pages/new/newShopList.dart';
-import '../../configs/settings.dart';
+import '../../configs/settingsPage.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -50,8 +50,27 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 0,
+        title: Text('ShopList'),
         elevation: 0,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 17, 0),
+            child: IconButton(
+                icon: Icon(
+                  Icons.settings_outlined,
+                ),
+                splashRadius: 28,
+                tooltip: "Settings",
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => SettingsPage(),
+                        fullscreenDialog: true,
+                      ));
+                }),
+          ),
+        ],
       ),
       body: ListView(children: <Widget>[
         const SizedBox(
@@ -77,60 +96,31 @@ class _HomeState extends State<Home> {
                 },
               ),
         const SizedBox(
-          height: 25,
+          height: 100,
         ),
       ]),
-
-      bottomNavigationBar: BottomAppBar(
-          child: Padding(
-        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-                icon: Icon(
-                  Icons.add_outlined,
-                  color: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      .color
-                      .withOpacity(0.7),
-                ),
-                splashRadius: 28,
-                tooltip: "New Shopping List",
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => NewShopList(
-                          lastId: lastId,
-                          refreshShopLists: getShopLists,
-                        ),
-                        fullscreenDialog: true,
-                      )).then((value) => getLastId());
-                }),
-            IconButton(
-                icon: Icon(
-                  Icons.settings_outlined,
-                  color: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      .color
-                      .withOpacity(0.7),
-                ),
-                splashRadius: 28,
-                tooltip: "Settings",
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => Settings(),
-                        fullscreenDialog: true,
-                      ));
-                }),
-          ],
+      floatingActionButton: Container(
+        child: FittedBox(
+          child: FloatingActionButton(
+            elevation: 0.0,
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => NewShopList(
+                      lastId: lastId,
+                      refreshShopLists: getShopLists,
+                    ),
+                    fullscreenDialog: true,
+                  )).then((value) => getLastId());
+            },
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+          ),
         ),
-      )),
+      ),
     );
   }
 }

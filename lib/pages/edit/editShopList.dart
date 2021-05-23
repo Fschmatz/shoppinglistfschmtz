@@ -190,7 +190,7 @@ class _EditShopListState extends State<EditShopList> {
       appBar: AppBar(
         actions: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+            padding: const EdgeInsets.fromLTRB(0, 0, 17, 0),
             child: IconButton(
               icon: Icon(
                 Icons.delete_outline_outlined,
@@ -206,167 +206,148 @@ class _EditShopListState extends State<EditShopList> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          minLines: 1,
-                          maxLength: 30,
-                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                          textCapitalization: TextCapitalization.sentences,
-                          keyboardType: TextInputType.name,
-                          controller: customControllerNome,
-                          onChanged: (value) => _updateShopList(),
-                          decoration: InputDecoration(
-                              counterText: "",
-                              prefixIcon: Icon(
-                                Icons.notes_outlined,
-                              ),
-                              filled: true,
-                              hintText: "Shopping List Name",
-                              contentPadding: new EdgeInsets.symmetric(
-                                  vertical: 0.0, horizontal: 12.0),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.grey[800],
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.grey[800],
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0)),
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.grey[800],
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0))),
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      MaterialButton(
-                        minWidth: 40,
-                        height: 50,
-                        shape: CircleBorder(),
-                        elevation: 0,
-                        color: currentColor,
-                        onPressed: () {
-                          createAlertSelectColor(context);
-                        },
-                      ),
-                    ],
+          Column(
+            children: [
+              ListTile(
+                leading: Icon(
+                  Icons.notes_outlined,
+                ),
+                title: TextField(
+                  minLines: 1,
+                  maxLength: 30,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  textCapitalization: TextCapitalization.sentences,
+                  keyboardType: TextInputType.name,
+                  controller: customControllerNome,
+                  onChanged: (value) => _updateShopList(),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    counterText: "",
+                    hintText: "Shopping List Name",
+                  ),
+                  style: TextStyle(
+                    fontSize: 16,
                   ),
                 ),
-                const SizedBox(
-                  height: 25,
+                trailing: MaterialButton(
+                  minWidth: 30,
+                  height: 30,
+                  shape: CircleBorder(),
+                  elevation: 0,
+                  color: currentColor,
+                  onPressed: () {
+                    createAlertSelectColor(context);
+                  },
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(3, 0, 3, 0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          minLines: 1,
-                          maxLength: 200,
-                          autofocus: false,
-                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                          textCapitalization: TextCapitalization.words,
-                          keyboardType: TextInputType.name,
-                          controller: customControllerAddNewItem,
-                          onSubmitted: (value) => {
-                            _addItemToShopList(),
-                            getItemsShopList(),
-                            customControllerAddNewItem.text = ""
-                          },
-                          onEditingComplete: () {},
-                          decoration: InputDecoration(
-                              hintText: "  Add New Item",
-                              filled: true,
-                              prefixIcon: Icon(
-                                Icons.add_shopping_cart_outlined,
-                                color: currentColor.withOpacity(0.7),
-                              ),
-                              contentPadding: new EdgeInsets.symmetric(
-                                  vertical: 14.0, horizontal: 10.0),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: currentColor.withOpacity(0.8),
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0)),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: currentColor.withOpacity(0.8),
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0)),
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: currentColor.withOpacity(0.8),
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0)),
-                              counterStyle: TextStyle(
-                                height: double.minPositive,
-                              ),
-                              counterText: "" // hide maxlength counter
-                              ),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Theme.of(context).textTheme.headline6.color,
-                          ),
-                        ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.add_shopping_cart_outlined,
+                  color: currentColor.withOpacity(0.8),
+                ),
+                title: TextField(
+                  minLines: 1,
+                  maxLength: 200,
+                  autofocus: false,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  textCapitalization: TextCapitalization.words,
+                  keyboardType: TextInputType.name,
+                  controller: customControllerAddNewItem,
+                  onSubmitted: (value) => {
+                    _addItemToShopList(),
+                    getItemsShopList(),
+                    customControllerAddNewItem.text = ""
+                  },
+                  onEditingComplete: () {},
+                  decoration: InputDecoration(
+                      hintText: "Add New Item",
+                      hintStyle: TextStyle(color: currentColor.withOpacity(0.8)),
+                      border: InputBorder.none,
+                      counterStyle: TextStyle(
+                        height: double.minPositive,
                       ),
-                    ],
+                      counterText: "" // hide maxlength counter
+                      ),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).textTheme.headline6.color,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 28, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Divider(
               height: 1,
-              color: Colors.grey[800],
             ),
           ),
 
           //LIST
           Flexible(
             child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 25,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: itemsDo.length,
+                      itemBuilder: (context, index) {
+                        return ItemEditShopList(
+                          key: UniqueKey(),
+                          item: new Item(
+                            id: itemsDo[index]['id'],
+                            nome: itemsDo[index]['nome'],
+                            estado: itemsDo[index]['estado'],
+                            idShopList: itemsDo[index]['idShopList'],
+                          ),
+                          getItemsShopList: getItemsShopList,
+                          updateItem: _updateItem,
+                          deleteItem: _deleteItem,
+                          listAccent: currentColor,
+                        );
+                      }),
+                  Visibility(
+                    visible: itemsDone.length > 0 && itemsDo.length > 0,
+                    child: SizedBox(
+                      height: 30,
                     ),
-                    ListView.separated(
-                        separatorBuilder: (BuildContext context, int index) =>
-                            const SizedBox(
-                              height: 12,
-                            ),
+                  ),
+                  Visibility(
+                    visible: itemsDone.length > 0 && itemsDo.length > 0,
+                    child: Divider(
+                      thickness: 0.5,
+                      indent: 6,
+                      endIndent: 6,
+                    ),
+                  ),
+                  Visibility(
+                    visible: itemsDone.length > 0 && itemsDo.length > 0,
+                    child: const SizedBox(
+                      height: 30,
+                    ),
+                  ),
+                  Visibility(
+                    visible: itemsDone.length > 0,
+                    child: ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: itemsDo.length,
+                        itemCount: itemsDone.length,
                         itemBuilder: (context, index) {
                           return ItemEditShopList(
                             key: UniqueKey(),
                             item: new Item(
-                              id: itemsDo[index]['id'],
-                              nome: itemsDo[index]['nome'],
-                              estado: itemsDo[index]['estado'],
-                              idShopList: itemsDo[index]['idShopList'],
+                              id: itemsDone[index]['id'],
+                              nome: itemsDone[index]['nome'],
+                              estado: itemsDone[index]['estado'],
+                              idShopList: itemsDone[index]['idShopList'],
                             ),
                             getItemsShopList: getItemsShopList,
                             updateItem: _updateItem,
@@ -374,57 +355,11 @@ class _EditShopListState extends State<EditShopList> {
                             listAccent: currentColor,
                           );
                         }),
-                    Visibility(
-                      visible: itemsDone.length > 0 && itemsDo.length > 0,
-                      child: SizedBox(
-                        height: 30,
-                      ),
-                    ),
-                    Visibility(
-                      visible: itemsDone.length > 0 && itemsDo.length > 0,
-                      child: Divider(
-                        thickness: 0.5,
-                        indent: 6,
-                        endIndent: 6,
-                      ),
-                    ),
-                    Visibility(
-                      visible: itemsDone.length > 0 && itemsDo.length > 0,
-                      child: const SizedBox(
-                        height: 30,
-                      ),
-                    ),
-                    Visibility(
-                      visible: itemsDone.length > 0,
-                      child: ListView.separated(
-                          separatorBuilder: (BuildContext context, int index) =>
-                              const SizedBox(
-                                height: 12,
-                              ),
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: itemsDone.length,
-                          itemBuilder: (context, index) {
-                            return ItemEditShopList(
-                              key: UniqueKey(),
-                              item: new Item(
-                                id: itemsDone[index]['id'],
-                                nome: itemsDone[index]['nome'],
-                                estado: itemsDone[index]['estado'],
-                                idShopList: itemsDone[index]['idShopList'],
-                              ),
-                              getItemsShopList: getItemsShopList,
-                              updateItem: _updateItem,
-                              deleteItem: _deleteItem,
-                              listAccent: currentColor,
-                            );
-                          }),
-                    ),
-                    const SizedBox(
-                      height: 100,
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 100,
+                  ),
+                ],
               ),
             ),
           ),
