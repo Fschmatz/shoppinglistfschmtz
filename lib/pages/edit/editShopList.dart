@@ -189,16 +189,13 @@ class _EditShopListState extends State<EditShopList> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 17, 0),
-            child: IconButton(
-              icon: Icon(
-                Icons.delete_outline_outlined,
-              ),
-              onPressed: () {
-                showAlertDialogOkDelete(context);
-              },
+          IconButton(
+            icon: Icon(
+              Icons.delete_outline_outlined,
             ),
+            onPressed: () {
+              showAlertDialogOkDelete(context);
+            },
           ),
         ],
         elevation: 0,

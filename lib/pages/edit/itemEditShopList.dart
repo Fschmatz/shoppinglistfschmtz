@@ -80,6 +80,7 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
         ),
       ),
       trailing: Checkbox(
+        splashRadius: 30,
         activeColor: widget.listAccent.withOpacity(0.4),
         value: widget.item.estado == 0 ? false : true,
         onChanged: (bool v) {

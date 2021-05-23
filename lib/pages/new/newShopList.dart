@@ -136,19 +136,16 @@ class _NewShopListState extends State<NewShopList> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 17, 0),
-            child: IconButton(
-              icon: Icon(
-                Icons.save_outlined,
-              ),
-              onPressed: () async {
-                await _saveShopList();
-                await _saveItemsToShopList();
-                await widget.refreshShopLists();
-                Navigator.of(context).pop();
-              },
+          IconButton(
+            icon: Icon(
+              Icons.save_outlined,
             ),
+            onPressed: () async {
+              await _saveShopList();
+              await _saveItemsToShopList();
+              await widget.refreshShopLists();
+              Navigator.of(context).pop();
+            },
           )
         ],
         elevation: 0,

@@ -52,25 +52,6 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text('ShopList'),
         elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 17, 0),
-            child: IconButton(
-                icon: Icon(
-                  Icons.settings_outlined,
-                ),
-                splashRadius: 28,
-                tooltip: "Settings",
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => SettingsPage(),
-                        fullscreenDialog: true,
-                      ));
-                }),
-          ),
-        ],
       ),
       body: ListView(children: <Widget>[
         const SizedBox(
@@ -121,6 +102,35 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                    icon: Icon(
+                      Icons.settings_outlined,
+                      color: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          .color
+                          .withOpacity(0.7),
+                    ),
+                    splashRadius: 28,
+                    tooltip: "Settings",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => SettingsPage(),
+                            fullscreenDialog: true,
+                          ));
+                    }),
+              ],
+            ),
+          )),
     );
   }
 }
