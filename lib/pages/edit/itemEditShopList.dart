@@ -41,7 +41,7 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.fromLTRB(5, 0, 16, 0),
+      contentPadding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
       leading: IconButton(
           icon: Icon(
             Icons.clear,

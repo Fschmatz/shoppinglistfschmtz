@@ -136,16 +136,19 @@ class _NewShopListState extends State<NewShopList> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.save_outlined,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+            child: IconButton(
+              icon: Icon(
+                Icons.save_outlined,
+              ),
+              onPressed: () async {
+                await _saveShopList();
+                await _saveItemsToShopList();
+                await widget.refreshShopLists();
+                Navigator.of(context).pop();
+              },
             ),
-            onPressed: () async {
-              await _saveShopList();
-              await _saveItemsToShopList();
-              await widget.refreshShopLists();
-              Navigator.of(context).pop();
-            },
           )
         ],
         elevation: 0,
@@ -156,6 +159,7 @@ class _NewShopListState extends State<NewShopList> {
           Column(
             children: [
               ListTile(
+                contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
                 leading: Icon(
                   Icons.notes_outlined,
                 ),

@@ -189,13 +189,16 @@ class _EditShopListState extends State<EditShopList> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.delete_outline_outlined,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+            child: IconButton(
+              icon: Icon(
+                Icons.delete_outline_outlined,
+              ),
+              onPressed: () {
+                showAlertDialogOkDelete(context);
+              },
             ),
-            onPressed: () {
-              showAlertDialogOkDelete(context);
-            },
           ),
         ],
         elevation: 0,
@@ -206,6 +209,7 @@ class _EditShopListState extends State<EditShopList> {
           Column(
             children: [
               ListTile(
+                contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
                 leading: Icon(
                   Icons.notes_outlined,
                 ),

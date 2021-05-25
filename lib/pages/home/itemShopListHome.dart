@@ -29,6 +29,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
       leading: Padding(
         padding: const EdgeInsets.fromLTRB(7, 7, 0, 0),
         child: Icon(Icons.circle,color: widget.shopListColor,size: 10,),
@@ -39,7 +40,6 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
       ),
       trailing: Checkbox(
         splashRadius: 30,
-        activeColor: Theme.of(context).accentColor,
         value: widget.item.estado == 1 ? true : false,
         onChanged: (bool v) {
           setState(() {

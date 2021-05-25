@@ -51,62 +51,61 @@ class _ShopListHomeState extends State<ShopListHome> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: (){
-        Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) =>
-                  EditShopList(
-                    refreshShopLists:
-                    widget.refreshShopLists,
+    return Column(
+      children: [
+        ListTile(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => EditShopList(
+                    refreshShopLists: widget.refreshShopLists,
                     shopList: widget.shopList,
                   ),
-              fullscreenDialog: true,
-            )).then((value) => widget.refreshShopLists());
-      },
-      child: Column(
-        children: [
-          ListTile(
-            leading: Icon(Icons.shopping_cart_outlined,color: shopListColor,),
-            title: Text(
-              widget.shopList.nome,
-              style:
-              TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-            ),
-            trailing: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-              child: Text(
-                items.length.toString(),
-                style:
-                TextStyle(fontSize: 16,fontWeight: FontWeight.w700,
-                    color: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    .color
-                    .withOpacity(0.7)),
-              ),
+                  fullscreenDialog: true,
+                )).then((value) => widget.refreshShopLists());
+          },
+          leading: Icon(
+            Icons.shopping_cart_outlined,
+            color: shopListColor,
+          ),
+          title: Text(
+            widget.shopList.nome,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          ),
+          trailing: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+            child: Text(
+              items.length.toString(),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .color
+                      .withOpacity(0.7)),
             ),
           ),
-          ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return ItemShopListHome(
-                  item: new Item(
-                    id: items[index]['id'],
-                    nome: items[index]['nome'],
-                    estado: items[index]['estado'],
-                    idShopList: items[index]['idShopList'],
-                  ),
-                  shopListColor: shopListColor,
-                  getItemsRefreshShopList: getItemsRefreshShopList,
-                  key: UniqueKey(),
-                );
-              }),
-        ],
-      ),
+        ),
+        ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              return ItemShopListHome(
+                item: new Item(
+                  id: items[index]['id'],
+                  nome: items[index]['nome'],
+                  estado: items[index]['estado'],
+                  idShopList: items[index]['idShopList'],
+                ),
+                shopListColor: shopListColor,
+                getItemsRefreshShopList: getItemsRefreshShopList,
+                key: UniqueKey(),
+              );
+            }),
+      ],
     );
   }
 }

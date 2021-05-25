@@ -1,15 +1,19 @@
 class Changelog{
 
-  static String appVersion = "1.3.0";
+  static String appVersion = "1.3.1";
   static String appName = "ShopList Fschmtz";
 
   static String changelogCurrent = ''' 
-1.3.0
+1.3.1
+- Only Open Edit List by Tapping the Name 
+- Small Bug Fix
+''';
+  static String changelogsOld = '''
+ 1.3.0
 - New Home
 - Removed Cards
 - Changed New/Edit Window Layout
-''';
-  static String changelogsOld = '''
+
 1.2.2
 - Lists Ordered By Name
 - Small Fixes
