@@ -80,35 +80,37 @@ class _HomeState extends State<Home> {
           height: 100,
         ),
       ]),
-      floatingActionButton: Container(
-        child: FittedBox(
-          child: FloatingActionButton(
-            elevation: 0.0,
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => NewShopList(
-                      lastId: lastId,
-                      refreshShopLists: getShopLists,
-                    ),
-                    fullscreenDialog: true,
-                  )).then((value) => getLastId());
-            },
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
       bottomNavigationBar: BottomAppBar(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                IconButton(
+                    icon: Icon(
+                      Icons.add_outlined,
+                      size: 26,
+                      color: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          .color
+                          .withOpacity(0.8),
+                    ),
+                    splashRadius: 28,
+                    tooltip: "New Shopping List",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => NewShopList(
+                              lastId: lastId,
+                              refreshShopLists: getShopLists,
+                            ),
+                            fullscreenDialog: true,
+                          )).then((value) => getLastId());
+
+                    }),
                 IconButton(
                     icon: Icon(
                       Icons.settings_outlined,
@@ -116,7 +118,7 @@ class _HomeState extends State<Home> {
                           .textTheme
                           .headline6
                           .color
-                          .withOpacity(0.7),
+                          .withOpacity(0.8),
                     ),
                     splashRadius: 28,
                     tooltip: "Settings",

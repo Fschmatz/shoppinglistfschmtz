@@ -137,7 +137,7 @@ class _NewShopListState extends State<NewShopList> {
       appBar: AppBar(
         actions: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+            padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
             child: IconButton(
               icon: Icon(
                 Icons.save_outlined,
