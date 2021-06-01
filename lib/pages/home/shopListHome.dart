@@ -12,8 +12,9 @@ class ShopListHome extends StatefulWidget {
 
   ShopList shopList;
   Function() refreshShopLists;
+  Function() resetController;
 
-  ShopListHome({Key key, this.shopList, this.refreshShopLists})
+  ShopListHome({Key key, this.shopList, this.refreshShopLists,this.resetController})
       : super(key: key);
 }
 
@@ -55,6 +56,7 @@ class _ShopListHomeState extends State<ShopListHome> {
       children: [
         ListTile(
           onTap: () {
+            widget.resetController();
             Navigator.push(
                 context,
                 MaterialPageRoute<void>(

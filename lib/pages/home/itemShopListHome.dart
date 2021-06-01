@@ -32,7 +32,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
       contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
       leading: Padding(
         padding: const EdgeInsets.fromLTRB(7, 7, 0, 0),
-        child: Icon(Icons.circle,color: widget.shopListColor,size: 10,),
+        child: SizedBox.shrink()
       ),
       title: Text(
         widget.item.nome,
@@ -42,12 +42,14 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
         splashRadius: 30,
         value: widget.item.estado == 1 ? true : false,
         onChanged: (bool v) {
-          setState(() {
+
             _updateEstadoItem(v);
             widget.getItemsRefreshShopList(widget.item.idShopList);
-          });
+          
         },
       ),
     );
   }
 }
+
+// Icon(Icons.circle,color: widget.shopListColor,size: 10,),

@@ -1,14 +1,18 @@
 class Changelog{
 
-  static String appVersion = "1.3.1";
+  static String appVersion = "1.3.2";
   static String appName = "ShopList Fschmtz";
 
   static String changelogCurrent = ''' 
+1.3.2
+- FadeTransition 
+- Ui Changes
+''';
+  static String changelogsOld = '''
 1.3.1
 - Only Open Edit List by Tapping the Name 
 - Small Bug Fix
-''';
-  static String changelogsOld = '''
+
  1.3.0
 - New Home
 - Removed Cards

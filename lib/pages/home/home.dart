@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shoppinglistfschmtz/classes/shopList.dart';
-import 'package:shoppinglistfschmtz/configs/appInfoPage.dart';
 import 'package:shoppinglistfschmtz/db/shopListDao.dart';
 import 'package:shoppinglistfschmtz/pages/home/shopListHome.dart';
 import 'package:shoppinglistfschmtz/pages/new/newShopList.dart';
@@ -15,15 +14,32 @@ class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with TickerProviderStateMixin {
   List<Map<String, dynamic>> shopLists = [];
   int lastId;
+  AnimationController _controller;
+  Animation _animation;
 
   @override
   void initState() {
     getShopLists();
     getLastId();
     super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+    _animation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   Future<void> getShopLists() async {
@@ -46,40 +62,45 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void resetController(){
+    _controller.reset();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _controller.forward();
     return Scaffold(
       appBar: AppBar(
         title: Text('ShopList'),
         elevation: 0,
       ),
-      body: ListView(children: <Widget>[
-        const SizedBox(
-          height: 5,
-        ),
-        shopLists.isEmpty
-            ? SizedBox.shrink()
-            : ListView.separated(
-                separatorBuilder: (context, index) => const Divider(),
-                physics: ScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: shopLists.length,
-                itemBuilder: (context, index) {
-                  return ShopListHome(
-                    refreshShopLists: getShopLists,
-                    key: UniqueKey(),
-                    shopList: new ShopList(
-                      id: shopLists[index]['id'],
-                      nome: shopLists[index]['nome'],
-                      cor: shopLists[index]['cor'],
-                    ),
-                  );
-                },
-              ),
-        const SizedBox(
-          height: 100,
-        ),
-      ]),
+      body: FadeTransition(
+          opacity: _animation,
+          child:
+          ListView(children: <Widget>[
+          ListView.separated(
+                  separatorBuilder: (context, index) => const Divider(),
+                  physics: ScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: shopLists.length,
+                  itemBuilder: (context, index) {
+                    return ShopListHome(
+                      refreshShopLists: getShopLists,
+                      key: UniqueKey(),
+                      resetController: resetController,
+                      shopList: new ShopList(
+                        id: shopLists[index]['id'],
+                        nome: shopLists[index]['nome'],
+                        cor: shopLists[index]['cor'],
+                      ),
+                    );
+                  },
+                ),
+          const SizedBox(
+            height: 100,
+          ),
+        ]),
+      ),
 
       bottomNavigationBar: BottomAppBar(
           child: Padding(
@@ -100,6 +121,7 @@ class _HomeState extends State<Home> {
                     splashRadius: 28,
                     tooltip: "New Shopping List",
                     onPressed: () {
+                      resetController();
                       Navigator.push(
                           context,
                           MaterialPageRoute<void>(
@@ -123,6 +145,7 @@ class _HomeState extends State<Home> {
                     splashRadius: 28,
                     tooltip: "Settings",
                     onPressed: () {
+                      resetController();
                       Navigator.push(
                           context,
                           MaterialPageRoute<void>(
