@@ -10,7 +10,8 @@ class ItemShopListHome extends StatefulWidget {
   Function(int) getItemsRefreshShopList;
   Color shopListColor;
 
-  ItemShopListHome({Key key, this.item,this.getItemsRefreshShopList,this.shopListColor})
+  ItemShopListHome(
+      {Key key, this.item, this.getItemsRefreshShopList, this.shopListColor})
       : super(key: key);
 }
 
@@ -21,7 +22,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
     final dbShopList = itemDao.instance;
     Map<String, dynamic> row = {
       itemDao.columnId: widget.item.id,
-      itemDao.columnEstado: state ? 1:0,
+      itemDao.columnEstado: state ? 1 : 0,
     };
     final update = await dbShopList.update(row);
   }
@@ -32,7 +33,11 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
       contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
       leading: Padding(
         padding: const EdgeInsets.fromLTRB(7, 7, 0, 0),
-        child: SizedBox.shrink()
+        child: Icon(
+          Icons.circle,
+          color: widget.shopListColor,
+          size: 10,
+        ),
       ),
       title: Text(
         widget.item.nome,
@@ -42,14 +47,10 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
         splashRadius: 30,
         value: widget.item.estado == 1 ? true : false,
         onChanged: (bool v) {
-
-            _updateEstadoItem(v);
-            widget.getItemsRefreshShopList(widget.item.idShopList);
-          
+          _updateEstadoItem(v);
+          widget.getItemsRefreshShopList(widget.item.idShopList);
         },
       ),
     );
   }
 }
-
-// Icon(Icons.circle,color: widget.shopListColor,size: 10,),

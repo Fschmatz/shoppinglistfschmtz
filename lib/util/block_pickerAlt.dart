@@ -16,8 +16,8 @@ const List<Color> _defaultColors = [
   Color(0xFF64CC17),
   Color(0xFF00C853),
   Color(0xFF01A173),
-  Color(0xFF00B8FF),
-  Color(0xFF2079DF),
+  Color(0xFF20cbfa),
+  Color(0xFF3792fa),
   Color(0xFF607D8B),
 ];
 
