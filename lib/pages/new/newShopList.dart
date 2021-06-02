@@ -23,7 +23,7 @@ class _NewShopListState extends State<NewShopList> {
   bool editingItem = false;
   List<Item> items = [];
 
-  String corAtual = "Color(0xFF607D8B)";
+  String corAtual = "Color(0xFFFF5252)";
 
   @override
   void initState() {
@@ -85,8 +85,8 @@ class _NewShopListState extends State<NewShopList> {
     }
   }
 
-  Color pickerColor = Color(0xFF607D8B);
-  Color currentColor = Color(0xFF607D8B);
+  Color pickerColor = Color(0xFFFF5252);
+  Color currentColor = Color(0xFFFF5252);
 
   void changeColor(Color color) {
     setState(() => pickerColor = color);

@@ -5,7 +5,7 @@ class Changelog{
 
   static String changelogCurrent = ''' 
 1.3.2
-- FadeTransition 
+- Added Animations 
 - Ui Changes
 ''';
   static String changelogsOld = '''
@@ -13,7 +13,7 @@ class Changelog{
 - Only Open Edit List by Tapping the Name 
 - Small Bug Fix
 
- 1.3.0
+1.3.0
 - New Home
 - Removed Cards
 - Changed New/Edit Window Layout

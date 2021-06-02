@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/db/itemDao.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 
 class ItemShopListHome extends StatefulWidget {
   @override
@@ -16,6 +17,10 @@ class ItemShopListHome extends StatefulWidget {
 }
 
 class _ItemShopListHomeState extends State<ItemShopListHome> {
+
+  final GlobalKey<InOutAnimationState> inOutAnimation =
+      GlobalKey<InOutAnimationState>();
+
   bool value = false;
 
   void _updateEstadoItem(bool state) async {
@@ -29,27 +34,37 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
-      leading: Padding(
-        padding: const EdgeInsets.fromLTRB(7, 7, 0, 0),
-        child: Icon(
-          Icons.circle,
-          color: widget.shopListColor,
-          size: 10,
+    return InOutAnimation(
+      autoPlay: InOutAnimationStatus.None,
+      key: inOutAnimation,
+      inDefinition: FadeInAnimation(),
+      outDefinition: FadeOutAnimation(),
+      child: ListTile(
+        contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
+        leading: Padding(
+          padding: const EdgeInsets.fromLTRB(7, 7, 0, 0),
+          child: Icon(
+            Icons.circle,
+            color: widget.shopListColor,
+            size: 10,
+          ),
         ),
-      ),
-      title: Text(
-        widget.item.nome,
-        style: TextStyle(fontSize: 16),
-      ),
-      trailing: Checkbox(
-        splashRadius: 30,
-        value: widget.item.estado == 1 ? true : false,
-        onChanged: (bool v) {
-          _updateEstadoItem(v);
-          widget.getItemsRefreshShopList(widget.item.idShopList);
-        },
+        title: Text(
+          widget.item.nome,
+          style: TextStyle(fontSize: 16),
+        ),
+        trailing: Checkbox(
+          splashRadius: 30,
+          value: widget.item.estado == 1 ? true : false,
+          onChanged: (bool v) {
+            inOutAnimation.currentState.animateOut();
+
+            Future.delayed(const Duration(milliseconds: 600), () {
+              _updateEstadoItem(v);
+              widget.getItemsRefreshShopList(widget.item.idShopList);
+            });
+          },
+        ),
       ),
     );
   }
