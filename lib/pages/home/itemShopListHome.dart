@@ -38,7 +38,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
       autoPlay: InOutAnimationStatus.None,
       key: inOutAnimation,
       inDefinition: FadeInAnimation(),
-      outDefinition: FadeOutAnimation(),
+      outDefinition: SlideOutRightAnimation(),
       child: ListTile(
         contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
         leading: Padding(
