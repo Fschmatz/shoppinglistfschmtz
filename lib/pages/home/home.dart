@@ -6,6 +6,7 @@ import 'package:shoppinglistfschmtz/db/shopListDao.dart';
 import 'package:shoppinglistfschmtz/pages/home/shopListHome.dart';
 import 'package:shoppinglistfschmtz/pages/new/newShopList.dart';
 import '../../configs/settingsPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -19,12 +20,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   int lastId;
   AnimationController _controller;
   Animation _animation;
+  bool showItemCount;
 
   @override
   void initState() {
     getShopLists();
     getLastId();
     super.initState();
+
+    _loadFromPrefs();
 
     _controller = AnimationController(
       duration: const Duration(milliseconds: 600),
@@ -35,6 +39,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       end: 1.0,
     ).animate(_controller);
   }
+
+  _loadFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    showItemCount =  prefs.getBool('showItemCount') ?? true;
+  }
+
 
   @override
   void dispose() {
@@ -88,6 +98,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       refreshShopLists: getShopLists,
                       key: UniqueKey(),
                       resetController: resetController,
+                      showItemCount: showItemCount,
                       shopList: new ShopList(
                         id: shopLists[index]['id'],
                         nome: shopLists[index]['nome'],
@@ -151,7 +162,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           MaterialPageRoute<void>(
                             builder: (BuildContext context) => SettingsPage(),
                             fullscreenDialog: true,
-                          ));
+                          )).then((value) => _loadFromPrefs());
                     }),
               ],
             ),

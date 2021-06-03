@@ -38,15 +38,15 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
       autoPlay: InOutAnimationStatus.None,
       key: inOutAnimation,
       inDefinition: FadeInAnimation(),
-      outDefinition: SlideOutRightAnimation(),
+      outDefinition: FadeOutRightAnimation(),
       child: ListTile(
         contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
         leading: Padding(
-          padding: const EdgeInsets.fromLTRB(7, 7, 0, 0),
+          padding: const EdgeInsets.fromLTRB(6, 6, 0, 0),
           child: Icon(
             Icons.circle,
             color: widget.shopListColor,
-            size: 10,
+            size: 12,
           ),
         ),
         title: Text(
@@ -59,7 +59,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
           onChanged: (bool v) {
             inOutAnimation.currentState.animateOut();
 
-            Future.delayed(const Duration(milliseconds: 600), () {
+            Future.delayed(const Duration(milliseconds: 500), () {
               _updateEstadoItem(v);
               widget.getItemsRefreshShopList(widget.item.idShopList);
             });

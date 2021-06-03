@@ -13,8 +13,9 @@ class ShopListHome extends StatefulWidget {
   ShopList shopList;
   Function() refreshShopLists;
   Function() resetController;
+  bool showItemCount;
 
-  ShopListHome({Key key, this.shopList, this.refreshShopLists,this.resetController})
+  ShopListHome({Key key, this.shopList, this.refreshShopLists,this.resetController,this.showItemCount})
       : super(key: key);
 }
 
@@ -77,16 +78,19 @@ class _ShopListHomeState extends State<ShopListHome> {
           ),
           trailing: Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-            child: Text(
-              items.length.toString(),
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      .color
-                      .withOpacity(0.7)),
+            child: Visibility(
+              visible: widget.showItemCount,
+              child: Text(
+                items.length.toString(),
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        .color
+                        .withOpacity(0.7)),
+              ),
             ),
           ),
         ),
