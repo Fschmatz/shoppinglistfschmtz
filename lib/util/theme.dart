@@ -4,21 +4,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 //CLARO
 ThemeData light = ThemeData(
     brightness: Brightness.light,
-    primaryColor: Color(0xFFF8F8F8),
+    primaryColor: Color(0xFFFFFFFF),
     accentColor: Colors.blueAccent,
-    scaffoldBackgroundColor: Color(0xFFF8F8F8),
+    scaffoldBackgroundColor: Color(0xFFFFFFFF),
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: Color(0xFFFDFDFD),
+      fillColor: Color(0xFFFFFFFF),
     ),
     cardTheme: CardTheme(
-      color: Color(0xFFFDFDFD),
+      color: Color(0xFFFFFFFF),
     ),
     dialogTheme: DialogTheme(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: Color(0xFFFFFFFF),
     ),
-    bottomAppBarColor: Color(0xFFDBDBDB),
+    bottomAppBarColor: Color(0xFFF4F4F4),
     bottomSheetTheme:
-        BottomSheetThemeData(modalBackgroundColor: Color(0xFFF3F3F3)));
+        BottomSheetThemeData(modalBackgroundColor: Color(0xFFF4F4F4)));
 
 //ESCURO
 ThemeData dark = ThemeData(
@@ -35,7 +35,7 @@ ThemeData dark = ThemeData(
     dialogTheme: DialogTheme(
       backgroundColor: Color(0xFF262626),
     ),
-    bottomAppBarColor: Color(0xFF262626),
+    bottomAppBarColor: Color(0xFF202020),
     bottomSheetTheme:
         BottomSheetThemeData(modalBackgroundColor: Color(0xFF202020)));
 

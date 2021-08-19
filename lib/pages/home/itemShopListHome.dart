@@ -38,7 +38,9 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
       autoPlay: InOutAnimationStatus.None,
       key: inOutAnimation,
       inDefinition: FadeInAnimation(),
-      outDefinition: FadeOutAnimation(),
+      outDefinition: FadeOutAnimation(
+          preferences: AnimationPreferences(duration: Duration(milliseconds: 450))
+      ),
       child: ListTile(
         contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
         leading: Padding(
@@ -59,7 +61,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
           onChanged: (bool v) {
             inOutAnimation.currentState.animateOut();
 
-            Future.delayed(const Duration(milliseconds: 400), () {
+            Future.delayed(const Duration(milliseconds: 450), () {
               _updateEstadoItem(v);
               widget.getItemsRefreshShopList(widget.item.idShopList);
             });

@@ -74,8 +74,8 @@ class _ShopListHomeState extends State<ShopListHome> {
             color: shopListColor,
           ),
           title: Text(
-            widget.shopList.nome,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            widget.shopList.nome.toUpperCase(),
+            style: TextStyle(fontSize: 14.5, fontWeight: FontWeight.w700,color: shopListColor),
           ),
           trailing: Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
