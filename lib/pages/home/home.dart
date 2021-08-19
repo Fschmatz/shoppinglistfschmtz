@@ -83,6 +83,58 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       appBar: AppBar(
         title: Text('ShopList'),
         elevation: 0,
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.add_outlined,
+                size: 26,
+                color: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .color
+                    .withOpacity(0.8),
+              ),
+              splashRadius: 28,
+              tooltip: "New Shopping List",
+              onPressed: () {
+                resetController();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => NewShopList(
+                        lastId: lastId,
+                        refreshShopLists: getShopLists,
+                      ),
+                      fullscreenDialog: true,
+                    )).then((value) => getLastId());
+
+              }),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 0, 5, 0),
+            child: IconButton(
+                icon: Icon(
+                  Icons.settings_outlined,
+                  color: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .color
+                      .withOpacity(0.8),
+                ),
+                splashRadius: 28,
+                tooltip: "Settings",
+                onPressed: () {
+                  resetController();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => SettingsPage(),
+                        fullscreenDialog: true,
+                      )).then((value) => _loadFromPrefs());
+                }),
+          ),
+
+        ],
       ),
       body: FadeTransition(
           opacity: _animation,
@@ -113,60 +165,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         ]),
       ),
 
-      bottomNavigationBar: BottomAppBar(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                    icon: Icon(
-                      Icons.add_outlined,
-                      size: 26,
-                      color: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          .color
-                          .withOpacity(0.8),
-                    ),
-                    splashRadius: 28,
-                    tooltip: "New Shopping List",
-                    onPressed: () {
-                      resetController();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) => NewShopList(
-                              lastId: lastId,
-                              refreshShopLists: getShopLists,
-                            ),
-                            fullscreenDialog: true,
-                          )).then((value) => getLastId());
-
-                    }),
-                IconButton(
-                    icon: Icon(
-                      Icons.settings_outlined,
-                      color: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          .color
-                          .withOpacity(0.8),
-                    ),
-                    splashRadius: 28,
-                    tooltip: "Settings",
-                    onPressed: () {
-                      resetController();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) => SettingsPage(),
-                            fullscreenDialog: true,
-                          )).then((value) => _loadFromPrefs());
-                    }),
-              ],
-            ),
-          )),
     );
   }
 }

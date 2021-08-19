@@ -23,9 +23,9 @@ ThemeData light = ThemeData(
 //ESCURO
 ThemeData dark = ThemeData(
     brightness: Brightness.dark,
-    primaryColor: Color(0xFF272727),
+    primaryColor: Color(0xFF262626),
     accentColor: Color(0xFF6B89BF),
-    scaffoldBackgroundColor: Color(0xFF272727),
+    scaffoldBackgroundColor: Color(0xFF262626),
     inputDecorationTheme: InputDecorationTheme(
       fillColor: Color(0xFF323232), //CARD COLOR
     ),
@@ -33,9 +33,9 @@ ThemeData dark = ThemeData(
       color: Color(0xFF323232),
     ),
     dialogTheme: DialogTheme(
-      backgroundColor: Color(0xFF202020),
+      backgroundColor: Color(0xFF262626),
     ),
-    bottomAppBarColor: Color(0xFF161616),
+    bottomAppBarColor: Color(0xFF262626),
     bottomSheetTheme:
         BottomSheetThemeData(modalBackgroundColor: Color(0xFF202020)));
 

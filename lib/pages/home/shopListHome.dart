@@ -56,6 +56,7 @@ class _ShopListHomeState extends State<ShopListHome> {
     return Column(
       children: [
         ListTile(
+          contentPadding: const EdgeInsets.fromLTRB(16, 5, 16, 5),
           onTap: () {
             widget.resetController();
             Navigator.push(
@@ -115,3 +116,4 @@ class _ShopListHomeState extends State<ShopListHome> {
     );
   }
 }
+
