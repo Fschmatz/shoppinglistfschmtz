@@ -16,9 +16,9 @@ ThemeData light = ThemeData(
     dialogTheme: DialogTheme(
       backgroundColor: Color(0xFFFFFFFF),
     ),
-    bottomAppBarColor: Color(0xFFF4F4F4),
+    bottomAppBarColor: Color(0xFFF2F2F2),
     bottomSheetTheme:
-        BottomSheetThemeData(modalBackgroundColor: Color(0xFFF4F4F4)));
+        BottomSheetThemeData(modalBackgroundColor: Color(0xFFF2F2F2)));
 
 //ESCURO
 ThemeData dark = ThemeData(
@@ -35,9 +35,9 @@ ThemeData dark = ThemeData(
     dialogTheme: DialogTheme(
       backgroundColor: Color(0xFF262626),
     ),
-    bottomAppBarColor: Color(0xFF202020),
+    bottomAppBarColor: Color(0xFF1C1C1C),
     bottomSheetTheme:
-        BottomSheetThemeData(modalBackgroundColor: Color(0xFF202020)));
+        BottomSheetThemeData(modalBackgroundColor: Color(0xFF1A1A1A)));
 
 class ThemeNotifier extends ChangeNotifier {
   final String key = 'valorTema';
