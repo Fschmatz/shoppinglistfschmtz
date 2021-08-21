@@ -82,8 +82,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         title: Text('ShopList'),
-        elevation: 1,
-        backgroundColor: Theme.of(context).bottomAppBarColor,
+        elevation: 0,
         actions: [
           IconButton(
               icon: Icon(
