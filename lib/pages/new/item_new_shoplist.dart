@@ -27,7 +27,7 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
     return ListTile(
         contentPadding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
       leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.clear,
             size: 18,
           ),
@@ -43,9 +43,9 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
         textCapitalization: TextCapitalization.sentences,
         keyboardType: TextInputType.name,
         controller: customControllerNome,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: "Item Name",
-            contentPadding: new EdgeInsets.symmetric(
+            contentPadding: EdgeInsets.symmetric(
                 vertical: 15.0, horizontal: 10.0),
             border: InputBorder.none,
             counterStyle: TextStyle(
@@ -53,7 +53,7 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
             ),
             counterText: "" // hide maxlength counter
         ),
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
         ),
       ),

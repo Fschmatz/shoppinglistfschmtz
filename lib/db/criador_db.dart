@@ -3,13 +3,13 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
-class criadorDb {
+class CriadorDb {
 
-  static final _databaseName = "ShopList.db";
-  static final _databaseVersion = 1;
+  static const _databaseName = "ShopList.db";
+  static const _databaseVersion = 1;
 
-  criadorDb._privateConstructor(); //_privateConstructor
-  static final criadorDb instance = criadorDb._privateConstructor();
+  CriadorDb._privateConstructor(); //_privateConstructor
+  static final CriadorDb instance = CriadorDb._privateConstructor();
   static Database _database;
 
   Future<Database> get database async {
@@ -31,7 +31,6 @@ class criadorDb {
   // Código SQL para criar o banco de dados e a tabela,
   // só roda uma vez quando detecta banco nulo
   Future _onCreate(Database db, int version) async {
-    print("Hello DB Creator !!!");
 
     await db.execute('''
     

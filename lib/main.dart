@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:shoppinglistfschmtz/pages/home/home.dart';
 import 'package:shoppinglistfschmtz/util/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:shoppinglistfschmtz/db/criadorDb.dart';
+import 'package:shoppinglistfschmtz/db/criador_db.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final dbHelperCriadorDB = criadorDb.instance;
+  final dbHelperCriadorDB = CriadorDb.instance;
   dbHelperCriadorDB.initDatabase();
   runApp(ChangeNotifierProvider(
     create: (_) => ThemeNotifier(),

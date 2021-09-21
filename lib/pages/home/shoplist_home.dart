@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
-import 'package:shoppinglistfschmtz/classes/shopList.dart';
-import 'package:shoppinglistfschmtz/db/itemDao.dart';
-import 'package:shoppinglistfschmtz/pages/edit/editShopList.dart';
-import 'package:shoppinglistfschmtz/pages/home/itemShopListHome.dart';
+import 'package:shoppinglistfschmtz/classes/shop_list.dart';
+import 'package:shoppinglistfschmtz/db/item_dao.dart';
+import 'package:shoppinglistfschmtz/pages/edit/edit_shoplist.dart';
+import 'package:shoppinglistfschmtz/pages/home/item_shoplist_home.dart';
 
 class ShopListHome extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class _ShopListHomeState extends State<ShopListHome> {
 
   // ONLY DO ITEMS
   Future<void> getItemsShopList() async {
-    final dbItems = itemDao.instance;
+    final dbItems = ItemDao.instance;
     var resposta = await dbItems.getItemsShopListDoDesc(widget.shopList.id);
     if (mounted) {
       setState(() {
@@ -42,7 +42,7 @@ class _ShopListHomeState extends State<ShopListHome> {
   }
 
   Future<void> getItemsRefreshShopList(int idShopList) async {
-    final dbItems = itemDao.instance;
+    final dbItems = ItemDao.instance;
     var resposta = await dbItems.getItemsShopListDoDesc(idShopList);
     if (mounted) {
       setState(() {
@@ -96,12 +96,12 @@ class _ShopListHomeState extends State<ShopListHome> {
           ),
         ),
         ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: items.length,
             itemBuilder: (context, index) {
               return ItemShopListHome(
-                item: new Item(
+                item: Item(
                   id: items[index]['id'],
                   nome: items[index]['nome'],
                   estado: items[index]['estado'],

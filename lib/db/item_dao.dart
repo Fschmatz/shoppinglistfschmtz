@@ -3,19 +3,19 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
-class itemDao {
+class ItemDao {
 
-  static final _databaseName = "ShopList.db";
-  static final _databaseVersion = 1;
+  static const _databaseName = "ShopList.db";
+  static const _databaseVersion = 1;
 
-  static final table = 'items';
-  static final columnId = 'id';
-  static final columnNome = 'nome';
-  static final columnEstado = 'estado'; // 0 or 1
-  static final columnIdShopList = 'idShopList';
+  static const table = 'items';
+  static const columnId = 'id';
+  static const columnNome = 'nome';
+  static const columnEstado = 'estado'; // 0 or 1
+  static const columnIdShopList = 'idShopList';
 
-  itemDao._privateConstructor();
-  static final itemDao instance = itemDao._privateConstructor();
+  ItemDao._privateConstructor();
+  static final ItemDao instance = ItemDao._privateConstructor();
   static Database _database;
 
   Future<Database> get database async {

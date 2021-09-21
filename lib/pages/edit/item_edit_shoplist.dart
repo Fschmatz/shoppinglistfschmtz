@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
-import 'package:shoppinglistfschmtz/db/itemDao.dart';
+import 'package:shoppinglistfschmtz/db/item_dao.dart';
 
 class ItemEditShopList extends StatefulWidget {
   @override
@@ -13,7 +13,13 @@ class ItemEditShopList extends StatefulWidget {
   Function(int, String, int) updateItem;
   Color listAccent;
 
-  ItemEditShopList({Key key, this.item, this.getItemsShopList, this.updateItem,this.deleteItem,this.listAccent})
+  ItemEditShopList(
+      {Key key,
+      this.item,
+      this.getItemsShopList,
+      this.updateItem,
+      this.deleteItem,
+      this.listAccent})
       : super(key: key);
 }
 
@@ -22,12 +28,11 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
 
   TextEditingController customControllerNome = TextEditingController();
 
-
   void _updateEstadoItem(bool state) async {
-    final dbShopList = itemDao.instance;
+    final dbShopList = ItemDao.instance;
     Map<String, dynamic> row = {
-      itemDao.columnId: widget.item.id,
-      itemDao.columnEstado: state ? 1 : 0,
+      ItemDao.columnId: widget.item.id,
+      ItemDao.columnEstado: state ? 1 : 0,
     };
     final update = await dbShopList.update(row);
   }
@@ -55,8 +60,8 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
             widget.getItemsShopList();
           }),
       title: TextField(
-        onChanged: (value) => widget.updateItem(widget.item.id,
-            customControllerNome.text, widget.item.estado),
+        onChanged: (value) => widget.updateItem(
+            widget.item.id, customControllerNome.text, widget.item.estado),
         minLines: 1,
         maxLines: 4,
         maxLength: 200,
@@ -64,14 +69,14 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
         textCapitalization: TextCapitalization.sentences,
         keyboardType: TextInputType.name,
         controller: customControllerNome,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: "Item Name",
             border: InputBorder.none,
             counterStyle: TextStyle(
               height: double.minPositive,
             ),
             counterText: "" // hide maxlength counter
-        ),
+            ),
         style: TextStyle(
           fontSize: 16,
           color: widget.item.estado == 1
@@ -91,7 +96,5 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
         },
       ),
     );
-
   }
 }
-

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
-import 'package:shoppinglistfschmtz/db/shopListDao.dart';
-import 'package:shoppinglistfschmtz/db/itemDao.dart';
-import 'package:shoppinglistfschmtz/pages/new/itemNewShopList.dart';
+import 'package:shoppinglistfschmtz/db/shoplist_dao.dart';
+import 'package:shoppinglistfschmtz/db/item_dao.dart';
+import 'package:shoppinglistfschmtz/pages/new/item_new_shoplist.dart';
 import '../../util/block_pickerAlt.dart';
 
 class NewShopList extends StatefulWidget {
@@ -53,7 +53,7 @@ class _NewShopListState extends State<NewShopList> {
   void _addItemToShopList() async {
     items.insert(
         items.length,
-        new Item(
+        Item(
             id: items.length,
             nome: customControllerAddNewItem.text,
             estado: 0,
@@ -62,31 +62,31 @@ class _NewShopListState extends State<NewShopList> {
 
   //DAO SHOPLIST
   Future<void> _saveShopList() async {
-    final dbShopList = shopListDao.instance;
+    final dbShopList = ShopListDao.instance;
     Map<String, dynamic> row = {
-      shopListDao.columnId: widget.lastId + 1,
-      shopListDao.columnNome: customControllerNome.text.isEmpty
+      ShopListDao.columnId: widget.lastId + 1,
+      ShopListDao.columnNome: customControllerNome.text.isEmpty
           ? "ShopList"
           : customControllerNome.text,
-      shopListDao.columnCor: corAtual.toString(),
+      ShopListDao.columnCor: corAtual.toString(),
     };
     final id = await dbShopList.insert(row);
   }
 
   Future<void> _saveItemsToShopList() async {
-    final dbItems = itemDao.instance;
+    final dbItems = ItemDao.instance;
     for (int i = 0; i < items.length; i++) {
       Map<String, dynamic> row = {
-        itemDao.columnNome: items[i].nome,
-        itemDao.columnEstado: 0,
-        itemDao.columnIdShopList: widget.lastId + 1,
+        ItemDao.columnNome: items[i].nome,
+        ItemDao.columnEstado: 0,
+        ItemDao.columnIdShopList: widget.lastId + 1,
       };
       final id = await dbItems.insert(row);
     }
   }
 
-  Color pickerColor = Color(0xFFFF5252);
-  Color currentColor = Color(0xFFFF5252);
+  Color pickerColor = const Color(0xFFFF5252);
+  Color currentColor = const Color(0xFFFF5252);
 
   void changeColor(Color color) {
     setState(() => pickerColor = color);
@@ -110,7 +110,7 @@ class _NewShopListState extends State<NewShopList> {
 
     AlertDialog alert = AlertDialog(
       elevation: 3.0,
-      title: Text(
+      title: const Text(
         "Select Color : ", //
         style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
       ),
@@ -139,7 +139,7 @@ class _NewShopListState extends State<NewShopList> {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.save_outlined,
               ),
               onPressed: () async {
@@ -152,7 +152,7 @@ class _NewShopListState extends State<NewShopList> {
           )
         ],
         elevation: 0,
-        title: Text('New Shopping List'),
+        title: const Text('New Shopping List'),
       ),
       body: Column(
         children: [
@@ -160,7 +160,7 @@ class _NewShopListState extends State<NewShopList> {
             children: [
               ListTile(
                 contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
-                leading: Icon(
+                leading: const Icon(
                   Icons.notes_outlined,
                 ),
                 title: TextField(
@@ -171,19 +171,19 @@ class _NewShopListState extends State<NewShopList> {
                   textCapitalization: TextCapitalization.sentences,
                   keyboardType: TextInputType.name,
                   controller: customControllerNome,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     counterText: "",
                     hintText: "Shopping List Name",
                   ),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                 ),
                 trailing: MaterialButton(
                   minWidth: 30,
                   height: 30,
-                  shape: CircleBorder(),
+                  shape: const CircleBorder(),
                   elevation: 0,
                   color: currentColor,
                   onPressed: () {
@@ -229,8 +229,8 @@ class _NewShopListState extends State<NewShopList> {
             ],
           ),
 
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+          const  Padding(
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Divider(
               height: 1,
             ),
@@ -245,14 +245,14 @@ class _NewShopListState extends State<NewShopList> {
                     height: 20,
                   ),
                   ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: items.length,
                       reverse: true,
                       itemBuilder: (context, index) {
                         return ItemNewShopList(
                           key: UniqueKey(),
-                          item: new Item(
+                          item: Item(
                             id: items[index].id,
                             nome: items[index].nome,
                             estado: items[index].estado,

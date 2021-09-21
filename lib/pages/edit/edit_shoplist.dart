@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
-import 'package:shoppinglistfschmtz/classes/shopList.dart';
-import 'package:shoppinglistfschmtz/db/shopListDao.dart';
-import 'package:shoppinglistfschmtz/pages/edit/itemEditShopList.dart';
+import 'package:shoppinglistfschmtz/classes/shop_list.dart';
+import 'package:shoppinglistfschmtz/db/shoplist_dao.dart';
+import 'package:shoppinglistfschmtz/pages/edit/item_edit_shoplist.dart';
 import '../../util/block_pickerAlt.dart';
-import 'package:shoppinglistfschmtz/db/itemDao.dart';
+import 'package:shoppinglistfschmtz/db/item_dao.dart';
 
 class EditShopList extends StatefulWidget {
   @override
@@ -38,7 +38,7 @@ class _EditShopListState extends State<EditShopList> {
   }
 
   Future<void> getItemsShopList() async {
-    final dbItems = itemDao.instance;
+    final dbItems = ItemDao.instance;
     var listDo = await dbItems.getItemsShopListDoDesc(widget.shopList.id);
     var listDone = await dbItems.getItemsShopListDoneDesc(widget.shopList.id);
 
@@ -53,45 +53,44 @@ class _EditShopListState extends State<EditShopList> {
 
   //DAO SHOPLIST
   void _updateShopList() async {
-    final dbShopList = shopListDao.instance;
+    final dbShopList = ShopListDao.instance;
     Map<String, dynamic> row = {
-      shopListDao.columnId: widget.shopList.id,
-      shopListDao.columnNome: customControllerNome.text.isEmpty
+      ShopListDao.columnId: widget.shopList.id,
+      ShopListDao.columnNome: customControllerNome.text.isEmpty
           ? "ShopList"
           : customControllerNome.text,
-      shopListDao.columnCor: corAtual.toString(),
+      ShopListDao.columnCor: corAtual.toString(),
     };
     final update = await dbShopList.update(row);
   }
 
   Future<void> _deleteShopList() async {
-    final dbShopList = shopListDao.instance;
-    print("id deletado -> " + widget.shopList.id.toString());
+    final dbShopList = ShopListDao.instance;
     var resp = await dbShopList.delete(widget.shopList.id);
   }
 
   void _deleteItem(int idItem) async {
-    final dbItem = itemDao.instance;
+    final dbItem = ItemDao.instance;
     final deletado = await dbItem.delete(idItem);
   }
 
   //DAO ITEMS
   void _addItemToShopList() async {
-    final dbItems = itemDao.instance;
+    final dbItems = ItemDao.instance;
     Map<String, dynamic> row = {
-      itemDao.columnNome: customControllerAddNewItem.text,
-      itemDao.columnEstado: 0,
-      itemDao.columnIdShopList: widget.shopList.id,
+      ItemDao.columnNome: customControllerAddNewItem.text,
+      ItemDao.columnEstado: 0,
+      ItemDao.columnIdShopList: widget.shopList.id,
     };
     final id = await dbItems.insert(row);
   }
 
   void _updateItem(int id, String nome, int estado) async {
-    final dbItems = itemDao.instance;
+    final dbItems = ItemDao.instance;
     Map<String, dynamic> row = {
-      itemDao.columnId: id,
-      itemDao.columnNome: nome,
-      itemDao.columnEstado: estado,
+      ItemDao.columnId: id,
+      ItemDao.columnNome: nome,
+      ItemDao.columnEstado: estado,
     };
     final update = await dbItems.update(row);
   }
@@ -115,11 +114,11 @@ class _EditShopListState extends State<EditShopList> {
 
     AlertDialog alert = AlertDialog(
       elevation: 3.0,
-      title: Text(
+      title: const Text(
         "Confirmation ", //
         style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
       ),
-      content: Text(
+      content: const Text(
         "\nDelete Shopping List ?",
         style: TextStyle(
           fontSize: 18,
@@ -137,8 +136,8 @@ class _EditShopListState extends State<EditShopList> {
     );
   }
 
-  Color pickerColor = Color(0xFF607D8B);
-  Color currentColor = Color(0xFF607D8B);
+  Color pickerColor = const Color(0xFF607D8B);
+  Color currentColor = const Color(0xFF607D8B);
 
   void changeColor(Color color) {
     setState(() => pickerColor = color);
@@ -163,7 +162,7 @@ class _EditShopListState extends State<EditShopList> {
 
     AlertDialog alert = AlertDialog(
       elevation: 3.0,
-      title: Text(
+      title: const Text(
         "Select Color : ", //
         style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
       ),
@@ -192,7 +191,7 @@ class _EditShopListState extends State<EditShopList> {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.delete_outline_outlined,
               ),
               onPressed: () {
@@ -202,7 +201,7 @@ class _EditShopListState extends State<EditShopList> {
           ),
         ],
         elevation: 0,
-        title: Text('Edit Shopping List'),
+        title: const Text('Edit Shopping List'),
       ),
       body: Column(
         children: [
@@ -210,7 +209,7 @@ class _EditShopListState extends State<EditShopList> {
             children: [
               ListTile(
                 contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
-                leading: Icon(
+                leading: const Icon(
                   Icons.notes_outlined,
                 ),
                 title: TextField(
@@ -221,19 +220,19 @@ class _EditShopListState extends State<EditShopList> {
                   keyboardType: TextInputType.name,
                   controller: customControllerNome,
                   onChanged: (value) => _updateShopList(),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     counterText: "",
                     hintText: "Shopping List Name",
                   ),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                 ),
                 trailing: MaterialButton(
                   minWidth: 30,
                   height: 30,
-                  shape: CircleBorder(),
+                  shape: const CircleBorder(),
                   elevation: 0,
                   color: currentColor,
                   onPressed: () {
@@ -267,7 +266,7 @@ class _EditShopListState extends State<EditShopList> {
                       hintText: "Add New Item",
                       hintStyle: TextStyle(color: currentColor.withOpacity(0.8)),
                       border: InputBorder.none,
-                      counterStyle: TextStyle(
+                      counterStyle: const TextStyle(
                         height: double.minPositive,
                       ),
                       counterText: "" // hide maxlength counter
@@ -281,8 +280,8 @@ class _EditShopListState extends State<EditShopList> {
             ],
           ),
 
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Divider(
               height: 1,
             ),
@@ -297,13 +296,13 @@ class _EditShopListState extends State<EditShopList> {
                     height: 20,
                   ),
                   ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: itemsDo.length,
                       itemBuilder: (context, index) {
                         return ItemEditShopList(
                           key: UniqueKey(),
-                          item: new Item(
+                          item: Item(
                             id: itemsDo[index]['id'],
                             nome: itemsDo[index]['nome'],
                             estado: itemsDo[index]['estado'],
@@ -316,35 +315,35 @@ class _EditShopListState extends State<EditShopList> {
                         );
                       }),
                   Visibility(
-                    visible: itemsDone.length > 0 && itemsDo.length > 0,
-                    child: SizedBox(
+                    visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
+                    child: const SizedBox(
                       height: 30,
                     ),
                   ),
                   Visibility(
-                    visible: itemsDone.length > 0 && itemsDo.length > 0,
-                    child: Divider(
+                    visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
+                    child: const Divider(
                       thickness: 0.5,
                       indent: 6,
                       endIndent: 6,
                     ),
                   ),
                   Visibility(
-                    visible: itemsDone.length > 0 && itemsDo.length > 0,
+                    visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
                     child: const SizedBox(
                       height: 30,
                     ),
                   ),
                   Visibility(
-                    visible: itemsDone.length > 0,
+                    visible: itemsDone.isNotEmpty,
                     child: ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: itemsDone.length,
                         itemBuilder: (context, index) {
                           return ItemEditShopList(
                             key: UniqueKey(),
-                            item: new Item(
+                            item: Item(
                               id: itemsDone[index]['id'],
                               nome: itemsDone[index]['nome'],
                               estado: itemsDone[index]['estado'],

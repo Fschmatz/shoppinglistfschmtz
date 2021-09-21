@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:shoppinglistfschmtz/classes/shopList.dart';
-import 'package:shoppinglistfschmtz/db/shopListDao.dart';
-import 'package:shoppinglistfschmtz/pages/home/shopListHome.dart';
-import 'package:shoppinglistfschmtz/pages/new/newShopList.dart';
-import '../../configs/settingsPage.dart';
+import 'package:shoppinglistfschmtz/classes/shop_list.dart';
+import 'package:shoppinglistfschmtz/db/shoplist_dao.dart';
+import 'package:shoppinglistfschmtz/pages/home/shoplist_home.dart';
+import 'package:shoppinglistfschmtz/pages/new/new_shoplist.dart';
+import '../../configs/settings_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 
-  Home({Key key}) : super(key: key);
+  const Home({Key key}) : super(key: key);
 }
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
@@ -53,7 +53,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 
   Future<void> getShopLists() async {
-    final dbShopList = shopListDao.instance;
+    final dbShopList = ShopListDao.instance;
     var resposta = await dbShopList.queryAllOrderByName();
     setState(() {
       shopLists = resposta;
@@ -61,7 +61,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 
   Future<void> getLastId() async {
-    final dbShopList = shopListDao.instance;
+    final dbShopList = ShopListDao.instance;
     var resposta = await dbShopList.getLastId();
     setState(() {
       if (resposta.isEmpty) {
@@ -81,8 +81,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     _controller.forward();
     return Scaffold(
       appBar: AppBar(
-        title: Text('ShopList'),
-        elevation: 0,
+        title: const Text('ShopList'),
         actions: [
           IconButton(
               icon: Icon(
@@ -142,7 +141,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           ListView(children: <Widget>[
           ListView.separated(
                   separatorBuilder: (context, index) => const Divider(),
-                  physics: ScrollPhysics(),
+                  physics: const ScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: shopLists.length,
                   itemBuilder: (context, index) {
@@ -151,7 +150,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       key: UniqueKey(),
                       resetController: resetController,
                       showItemCount: showItemCount,
-                      shopList: new ShopList(
+                      shopList: ShopList(
                         id: shopLists[index]['id'],
                         nome: shopLists[index]['nome'],
                         cor: shopLists[index]['cor'],

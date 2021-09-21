@@ -3,18 +3,18 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
-class shopListDao {
+class ShopListDao {
 
-  static final _databaseName = "ShopList.db";
-  static final _databaseVersion = 1;
+  static const _databaseName = "ShopList.db";
+  static const _databaseVersion = 1;
 
-  static final table = 'shoplists';
-  static final columnId = 'id';
-  static final columnNome = 'nome';
-  static final columnCor = 'cor';
+  static const table = 'shoplists';
+  static const columnId = 'id';
+  static const columnNome = 'nome';
+  static const columnCor = 'cor';
 
-  shopListDao._privateConstructor();
-  static final shopListDao instance = shopListDao._privateConstructor();
+  ShopListDao._privateConstructor();
+  static final ShopListDao instance = ShopListDao._privateConstructor();
   static Database _database;
 
   Future<Database> get database async {

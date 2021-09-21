@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
-import 'package:shoppinglistfschmtz/db/itemDao.dart';
+import 'package:shoppinglistfschmtz/db/item_dao.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
 class ItemShopListHome extends StatefulWidget {
@@ -24,10 +24,10 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
   bool value = false;
 
   void _updateEstadoItem(bool state) async {
-    final dbShopList = itemDao.instance;
+    final dbShopList = ItemDao.instance;
     Map<String, dynamic> row = {
-      itemDao.columnId: widget.item.id,
-      itemDao.columnEstado: state ? 1 : 0,
+      ItemDao.columnId: widget.item.id,
+      ItemDao.columnEstado: state ? 1 : 0,
     };
     final update = await dbShopList.update(row);
   }
@@ -39,7 +39,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
       key: inOutAnimation,
       inDefinition: FadeInAnimation(),
       outDefinition: FadeOutAnimation(
-          preferences: AnimationPreferences(duration: Duration(milliseconds: 450))
+          preferences: const AnimationPreferences(duration: Duration(milliseconds: 450))
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
@@ -53,7 +53,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
         ),
         title: Text(
           widget.item.nome,
-          style: TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16),
         ),
         trailing: Checkbox(
           splashRadius: 30,
