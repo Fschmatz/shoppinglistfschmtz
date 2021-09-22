@@ -151,7 +151,6 @@ class _NewShopListState extends State<NewShopList> {
             ),
           )
         ],
-        elevation: 0,
         title: const Text('New Shoplist'),
       ),
       body: Column(

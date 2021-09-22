@@ -26,7 +26,6 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Settings"),
-          elevation: 0,
         ),
         body: SingleChildScrollView(
           child: Column(

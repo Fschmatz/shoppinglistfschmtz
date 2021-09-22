@@ -200,7 +200,6 @@ class _EditShopListState extends State<EditShopList> {
             ),
           ),
         ],
-        elevation: 0,
         title: const Text('Edit Shoplist'),
       ),
       body: Column(
