@@ -1,7 +1,7 @@
 class Changelog{
 
   static String appVersion = "1.4.2";
-  static String appName = "ShopList Fschmatz";
+  static String appName = "Shoplist Fschmatz";
 
   static String changelogCurrent = ''' 
 1.4.2

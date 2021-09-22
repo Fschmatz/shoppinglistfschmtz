@@ -66,7 +66,7 @@ class _NewShopListState extends State<NewShopList> {
     Map<String, dynamic> row = {
       ShopListDao.columnId: widget.lastId + 1,
       ShopListDao.columnNome: customControllerNome.text.isEmpty
-          ? "ShopList"
+          ? "Shoplist"
           : customControllerNome.text,
       ShopListDao.columnCor: corAtual.toString(),
     };
@@ -152,7 +152,7 @@ class _NewShopListState extends State<NewShopList> {
           )
         ],
         elevation: 0,
-        title: const Text('New Shopping List'),
+        title: const Text('New Shoplist'),
       ),
       body: Column(
         children: [
@@ -174,7 +174,7 @@ class _NewShopListState extends State<NewShopList> {
                   decoration: const InputDecoration(
                     border: InputBorder.none,
                     counterText: "",
-                    hintText: "Shopping List Name",
+                    hintText: "Shoplist Name",
                   ),
                   style: const TextStyle(
                     fontSize: 16,

@@ -66,7 +66,7 @@ class CriadorDb {
 
 
     Batch batch = db.batch();
-    batch.insert('shoplists', {'id': 1,'nome': 'My ShopList','cor': 'Color(0xFF607D8B)'});
+    batch.insert('shoplists', {'id': 1,'nome': 'My Shoplist','cor': 'Color(0xFF607D8B)'});
 
     batch.insert('items', {'id': 1,'nome': 'Steel','estado': 0, 'idShopList':'1'});
     batch.insert('items', {'id': 2,'nome': 'Silver','estado': 0, 'idShopList':'1'});

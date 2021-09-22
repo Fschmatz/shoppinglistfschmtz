@@ -57,7 +57,7 @@ class _EditShopListState extends State<EditShopList> {
     Map<String, dynamic> row = {
       ShopListDao.columnId: widget.shopList.id,
       ShopListDao.columnNome: customControllerNome.text.isEmpty
-          ? "ShopList"
+          ? "Shoplist"
           : customControllerNome.text,
       ShopListDao.columnCor: corAtual.toString(),
     };
@@ -119,7 +119,7 @@ class _EditShopListState extends State<EditShopList> {
         style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
       ),
       content: const Text(
-        "\nDelete Shopping List ?",
+        "\nDelete Shoplist ?",
         style: TextStyle(
           fontSize: 18,
         ),
@@ -201,7 +201,7 @@ class _EditShopListState extends State<EditShopList> {
           ),
         ],
         elevation: 0,
-        title: const Text('Edit Shopping List'),
+        title: const Text('Edit Shoplist'),
       ),
       body: Column(
         children: [
@@ -223,7 +223,7 @@ class _EditShopListState extends State<EditShopList> {
                   decoration: const InputDecoration(
                     border: InputBorder.none,
                     counterText: "",
-                    hintText: "Shopping List Name",
+                    hintText: "Shoplist Name",
                   ),
                   style: const TextStyle(
                     fontSize: 16,

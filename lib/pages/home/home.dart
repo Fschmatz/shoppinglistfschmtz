@@ -81,7 +81,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     _controller.forward();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ShopList'),
+        title: const Text('Shoplist'),
         actions: [
           IconButton(
               icon: Icon(
@@ -94,7 +94,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     .withOpacity(0.8),
               ),
               splashRadius: 28,
-              tooltip: "New Shopping List",
+              tooltip: "New Shoplist",
               onPressed: () {
                 resetController();
                 Navigator.push(
