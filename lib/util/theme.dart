@@ -33,16 +33,16 @@ ThemeData light = ThemeData(
 //ESCURO
 ThemeData dark = ThemeData(
     brightness: Brightness.dark,
-    primaryColor: const Color(0xFF2F2F2F),
+    primaryColor: const Color(0xFF2B2B2B),
     accentColor: const Color(0xFF6B89BF),
     appBarTheme: const AppBarTheme(
-        color: Color(0xFF2F2F2F),
+        color: Color(0xFF2B2B2B),
         elevation: 0,
         titleTextStyle: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Color(0xFFFFFFFF))),
-    scaffoldBackgroundColor: const Color(0xFF2F2F2F),
+    scaffoldBackgroundColor: const Color(0xFF2B2B2B),
     inputDecorationTheme: const InputDecorationTheme(
       fillColor: Color(0xFF323232), //CARD COLOR
     ),
@@ -50,11 +50,11 @@ ThemeData dark = ThemeData(
       color: Color(0xFF323232),
     ),
     dialogTheme: const DialogTheme(
-      backgroundColor: Color(0xFF2F2F2F),
+      backgroundColor: Color(0xFF2B2B2B),
     ),
-    bottomAppBarColor: const Color(0xFF2F2F2F),
+    bottomAppBarColor: const Color(0xFF2B2B2B),
     bottomSheetTheme:
-    const BottomSheetThemeData(modalBackgroundColor: Color(0xFF2F2F2F)));
+    const BottomSheetThemeData(modalBackgroundColor: Color(0xFF2B2B2B)));
 
 class ThemeNotifier extends ChangeNotifier {
   final String key = 'valorTema';

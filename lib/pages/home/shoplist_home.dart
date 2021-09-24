@@ -12,10 +12,9 @@ class ShopListHome extends StatefulWidget {
 
   ShopList shopList;
   Function() refreshShopLists;
-  Function() resetController;
   bool showItemCount;
 
-  ShopListHome({Key key, this.shopList, this.refreshShopLists,this.resetController,this.showItemCount})
+  ShopListHome({Key key, this.shopList, this.refreshShopLists,this.showItemCount})
       : super(key: key);
 }
 
@@ -58,16 +57,15 @@ class _ShopListHomeState extends State<ShopListHome> {
         ListTile(
           contentPadding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
           onTap: () {
-            widget.resetController();
             Navigator.push(
                 context,
                 MaterialPageRoute<void>(
                   builder: (BuildContext context) => EditShopList(
-                    refreshShopLists: widget.refreshShopLists,
+                    refreshShopListHome: widget.refreshShopLists,
                     shopList: widget.shopList,
                   ),
                   fullscreenDialog: true,
-                )).then((value) => widget.refreshShopLists());
+                ));
           },
           leading: Icon(
             Icons.shopping_cart_outlined,

@@ -15,29 +15,18 @@ class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);
 }
 
-class _HomeState extends State<Home> with TickerProviderStateMixin {
+class _HomeState extends State<Home> {
   List<Map<String, dynamic>> shopLists = [];
   int lastId;
-  AnimationController _controller;
-  Animation _animation;
   bool showItemCount;
+  bool loading = true;
 
   @override
   void initState() {
     getShopLists();
     getLastId();
     super.initState();
-
     _loadFromPrefs();
-
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 600),
-      vsync: this,
-    );
-    _animation = Tween(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(_controller);
   }
 
   _loadFromPrefs() async {
@@ -45,18 +34,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     showItemCount =  prefs.getBool('showItemCount') ?? true;
   }
 
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   Future<void> getShopLists() async {
     final dbShopList = ShopListDao.instance;
     var resposta = await dbShopList.queryAllOrderByName();
     setState(() {
       shopLists = resposta;
+      loading = false;
     });
   }
 
@@ -72,13 +55,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     });
   }
 
-  void resetController(){
-    _controller.reset();
-  }
 
   @override
   Widget build(BuildContext context) {
-    _controller.forward();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Shoplist'),
@@ -96,7 +76,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               splashRadius: 28,
               tooltip: "New Shoplist",
               onPressed: () {
-                resetController();
+
                 Navigator.push(
                     context,
                     MaterialPageRoute<void>(
@@ -123,7 +103,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 splashRadius: 28,
                 tooltip: "Settings",
                 onPressed: () {
-                  resetController();
+
                   Navigator.push(
                       context,
                       MaterialPageRoute<void>(
@@ -135,9 +115,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
         ],
       ),
-      body: FadeTransition(
-          opacity: _animation,
-          child:
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 600),
+        child: loading
+            ? const Center(child: SizedBox.shrink())
+            :
           ListView(children: <Widget>[
           ListView.separated(
                   separatorBuilder: (context, index) => const Divider(),
@@ -148,7 +130,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     return ShopListHome(
                       refreshShopLists: getShopLists,
                       key: UniqueKey(),
-                      resetController: resetController,
                       showItemCount: showItemCount,
                       shopList: ShopList(
                         id: shopLists[index]['id'],
