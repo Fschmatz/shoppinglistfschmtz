@@ -32,6 +32,7 @@ class _HomeState extends State<Home> {
   _loadFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     showItemCount =  prefs.getBool('showItemCount') ?? true;
+    print('hhh');
   }
 
   Future<void> getShopLists() async {
@@ -86,7 +87,6 @@ class _HomeState extends State<Home> {
                       ),
                       fullscreenDialog: true,
                     )).then((value) => getLastId());
-
               }),
 
           Padding(
@@ -103,13 +103,16 @@ class _HomeState extends State<Home> {
                 splashRadius: 28,
                 tooltip: "Settings",
                 onPressed: () {
-
                   Navigator.push(
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) => SettingsPage(),
                         fullscreenDialog: true,
-                      )).then((value) => _loadFromPrefs());
+                      )).then((value) => {
+                      _loadFromPrefs(),
+                      getShopLists()
+                      }
+                  );
                 }),
           ),
 
@@ -122,19 +125,23 @@ class _HomeState extends State<Home> {
             :
           ListView(children: <Widget>[
           ListView.separated(
-                  separatorBuilder: (context, index) => const Divider(),
+                  separatorBuilder: (context, index) =>
+                  const Divider(),
                   physics: const ScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: shopLists.length,
                   itemBuilder: (context, index) {
-                    return ShopListHome(
-                      refreshShopLists: getShopLists,
-                      key: UniqueKey(),
-                      showItemCount: showItemCount,
-                      shopList: ShopList(
-                        id: shopLists[index]['id'],
-                        nome: shopLists[index]['nome'],
-                        cor: shopLists[index]['cor'],
+                    return Container(
+                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      child: ShopListHome(
+                        refreshShopLists: getShopLists,
+                        key: UniqueKey(),
+                        showItemCount: showItemCount,
+                        shopList: ShopList(
+                          id: shopLists[index]['id'],
+                          nome: shopLists[index]['nome'],
+                          cor: shopLists[index]['cor'],
+                        ),
                       ),
                     );
                   },

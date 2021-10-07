@@ -11,10 +11,9 @@ class EditShopList extends StatefulWidget {
   @override
   _EditShopListState createState() => _EditShopListState();
 
-  Function() refreshShopListHome;
   ShopList shopList;
 
-  EditShopList({Key key, this.refreshShopListHome, this.shopList})
+  EditShopList({Key key, this.shopList})
       : super(key: key);
 }
 
@@ -35,10 +34,6 @@ class _EditShopListState extends State<EditShopList> {
     corAtual = widget.shopList.cor;
     currentColor = Color(int.parse(widget.shopList.cor.substring(6, 16)));
     pickerColor = Color(int.parse(widget.shopList.cor.substring(6, 16)));
-  }
-
-  void refreshHome(){
-    widget.refreshShopListHome();
   }
 
   Future<void> getItemsShopList() async {
@@ -66,19 +61,16 @@ class _EditShopListState extends State<EditShopList> {
       ShopListDao.columnCor: corAtual.toString(),
     };
     final update = await dbShopList.update(row);
-    refreshHome();
   }
 
   Future<void> _deleteShopList() async {
     final dbShopList = ShopListDao.instance;
     var resp = await dbShopList.delete(widget.shopList.id);
-    refreshHome();
   }
 
-  void _deleteItem(int idItem) async {
+  void _deleteItemFromShoplist(int idItem) async {
     final dbItem = ItemDao.instance;
     final deletado = await dbItem.delete(idItem);
-    refreshHome();
   }
 
   //DAO ITEMS
@@ -90,7 +82,6 @@ class _EditShopListState extends State<EditShopList> {
       ItemDao.columnIdShopList: widget.shopList.id,
     };
     final id = await dbItems.insert(row);
-    refreshHome();
   }
 
   void _updateItem(int id, String nome, int estado) async {
@@ -101,7 +92,6 @@ class _EditShopListState extends State<EditShopList> {
       ItemDao.columnEstado: estado,
     };
     final update = await dbItems.update(row);
-    refreshHome();
   }
 
   showAlertDialogOkDelete(BuildContext context) {
@@ -115,7 +105,6 @@ class _EditShopListState extends State<EditShopList> {
       ),
       onPressed: () {
         _deleteShopList();
-        refreshHome();
         Navigator.of(context).pop();
         Navigator.of(context).pop();
       },
@@ -318,7 +307,7 @@ class _EditShopListState extends State<EditShopList> {
                           ),
                           getItemsShopList: getItemsShopList,
                           updateItem: _updateItem,
-                          deleteItem: _deleteItem,
+                          deleteItem: _deleteItemFromShoplist,
                           listAccent: currentColor,
                         );
                       }),
@@ -359,7 +348,7 @@ class _EditShopListState extends State<EditShopList> {
                             ),
                             getItemsShopList: getItemsShopList,
                             updateItem: _updateItem,
-                            deleteItem: _deleteItem,
+                            deleteItem: _deleteItemFromShoplist,
                             listAccent: currentColor,
                           );
                         }),

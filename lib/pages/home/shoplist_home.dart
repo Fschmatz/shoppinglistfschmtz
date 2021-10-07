@@ -61,11 +61,10 @@ class _ShopListHomeState extends State<ShopListHome> {
                 context,
                 MaterialPageRoute<void>(
                   builder: (BuildContext context) => EditShopList(
-                    refreshShopListHome: widget.refreshShopLists,
                     shopList: widget.shopList,
                   ),
                   fullscreenDialog: true,
-                ));
+                )).then((value) => widget.refreshShopLists());
           },
           leading: Icon(
             Icons.shopping_cart_outlined,
