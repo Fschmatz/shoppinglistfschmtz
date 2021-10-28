@@ -32,7 +32,6 @@ class _HomeState extends State<Home> {
   _loadFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     showItemCount =  prefs.getBool('showItemCount') ?? true;
-    print('hhh');
   }
 
   Future<void> getShopLists() async {

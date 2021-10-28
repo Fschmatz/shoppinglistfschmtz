@@ -4,6 +4,8 @@ import 'package:shoppinglistfschmtz/util/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppinglistfschmtz/db/criador_db.dart';
 
+import 'app.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -15,7 +17,7 @@ Future<void> main() async {
       builder: (context, ThemeNotifier notifier, child) {
         return MaterialApp(
           theme: notifier.darkTheme ? dark : light,
-          home: Home(),
+          home: const App(),
         );
       },
     ),

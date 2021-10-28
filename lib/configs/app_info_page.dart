@@ -53,30 +53,9 @@ class AppInfoPage extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                     color: themeColorApp)),
           ),
+
           const ListTile(
             leading: Icon( Icons.info_outline),
-            title: Text(
-              "HAMMERED AND REDONE: 0 Times !!!",
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-          ),
-          const ListTile(
-            leading: SizedBox(
-              height: 0.1,
-            ),
-            title: Text(
-              "( This is The Way! )",
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-          ),
-          const ListTile(
-            leading: SizedBox(
-              height: 0.1,
-            ),
             title: Text(
               "Application created using Flutter and the Dart language, used for testing and learning.",
               style: TextStyle(

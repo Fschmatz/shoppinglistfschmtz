@@ -23,6 +23,9 @@ ThemeData light = ThemeData(
     cardTheme: const CardTheme(
       color: Color(0xFFFFFFFF),
     ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: Color(0xFFE5E5E5),
+    ),
     dialogTheme: const DialogTheme(
       backgroundColor: Color(0xFFFFFFFF),
     ),
@@ -48,6 +51,9 @@ ThemeData dark = ThemeData(
     ),
     cardTheme: const CardTheme(
       color: Color(0xFF323232),
+    ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: Color(0xFF202020),
     ),
     dialogTheme: const DialogTheme(
       backgroundColor: Color(0xFF2B2B2B),
