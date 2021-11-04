@@ -8,18 +8,16 @@ class CriadorDb {
   static const _databaseName = "ShopList.db";
   static const _databaseVersion = 1;
 
-  CriadorDb._privateConstructor(); //_privateConstructor
+  CriadorDb._privateConstructor();
   static final CriadorDb instance = CriadorDb._privateConstructor();
   static Database _database;
 
   Future<Database> get database async {
     if (_database != null) return _database;
-    // instancia o db na primeira vez que for acessado
     _database = await initDatabase();
     return _database;
   }
 
-  // abre o banco de dados e o cria se ele não existir
   initDatabase() async { //_initDatabase();
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _databaseName);
@@ -28,8 +26,6 @@ class CriadorDb {
         onCreate: _onCreate);
   }
 
-  // Código SQL para criar o banco de dados e a tabela,
-  // só roda uma vez quando detecta banco nulo
   Future _onCreate(Database db, int version) async {
 
     await db.execute('''
@@ -64,13 +60,12 @@ class CriadorDb {
           
           ''');
 
-
+    // CREATE DEFAULT SHOPLIST
     Batch batch = db.batch();
     batch.insert('shoplists', {'id': 1,'nome': 'My Shoplist','cor': 'Color(0xFF607D8B)'});
 
     batch.insert('items', {'id': 1,'nome': 'Steel','estado': 0, 'idShopList':'1'});
     batch.insert('items', {'id': 2,'nome': 'Silver','estado': 0, 'idShopList':'1'});
-
 
     await batch.commit(noResult: true);
 

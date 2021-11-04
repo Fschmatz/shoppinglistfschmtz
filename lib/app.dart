@@ -14,16 +14,15 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
 
   @override
   Widget build(BuildContext context) {
 
-    final Color bottomOverlayColor = Theme.of(context).bottomNavigationBarTheme.backgroundColor;
-
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light.copyWith(
-          systemNavigationBarColor: bottomOverlayColor,
+          systemNavigationBarColor: Colors.transparent,
         ),
         child: const Home()
     );
