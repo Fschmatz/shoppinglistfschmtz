@@ -55,6 +55,7 @@ class _ShopListHomeState extends State<ShopListHome> {
     return Column(
       children: [
         ListTile(
+          tileColor: shopListColor.withOpacity(0.1),
           contentPadding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
           onTap: () {
             Navigator.push(
@@ -83,11 +84,8 @@ class _ShopListHomeState extends State<ShopListHome> {
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    color: Theme.of(context)
-                        .textTheme
-                        .headline6
-                        .color
-                        .withOpacity(0.7)),
+                    color: shopListColor,
+                   ),
               ),
             ),
           ),

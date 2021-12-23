@@ -67,7 +67,6 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
         maxLength: 200,
         maxLengthEnforcement: MaxLengthEnforcement.enforced,
         textCapitalization: TextCapitalization.sentences,
-        keyboardType: TextInputType.name,
         controller: customControllerNome,
         decoration: const InputDecoration(
             hintText: "Item Name",

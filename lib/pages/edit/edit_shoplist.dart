@@ -214,7 +214,6 @@ class _EditShopListState extends State<EditShopList> {
                   maxLength: 30,
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   textCapitalization: TextCapitalization.sentences,
-                  keyboardType: TextInputType.name,
                   controller: customControllerNome,
                   onChanged: (value) => _updateShopList(),
                   decoration: const InputDecoration(
@@ -250,8 +249,7 @@ class _EditShopListState extends State<EditShopList> {
                   maxLength: 200,
                   autofocus: false,
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  textCapitalization: TextCapitalization.words,
-                  keyboardType: TextInputType.name,
+                  textCapitalization: TextCapitalization.sentences,
                   controller: customControllerAddNewItem,
                   onSubmitted: (value) => {
                     _addItemToShopList(),

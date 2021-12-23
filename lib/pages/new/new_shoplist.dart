@@ -168,7 +168,6 @@ class _NewShopListState extends State<NewShopList> {
                   maxLength: 30,
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   textCapitalization: TextCapitalization.sentences,
-                  keyboardType: TextInputType.name,
                   controller: customControllerNome,
                   decoration: const InputDecoration(
                     border: InputBorder.none,
@@ -203,8 +202,7 @@ class _NewShopListState extends State<NewShopList> {
                   maxLength: 200,
                   autofocus: false,
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  textCapitalization: TextCapitalization.words,
-                  keyboardType: TextInputType.name,
+                  textCapitalization: TextCapitalization.sentences,
                   controller: customControllerAddNewItem,
                   onSubmitted: (value) => {
                     _addItemToShopList(),

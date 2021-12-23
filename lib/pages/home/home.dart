@@ -64,14 +64,9 @@ class _HomeState extends State<Home> {
         title: const Text('Shoplist'),
         actions: [
           IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.add_outlined,
                 size: 26,
-                color: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    .color
-                    .withOpacity(0.8),
               ),
               splashRadius: 28,
               tooltip: "New Shoplist",
@@ -91,13 +86,8 @@ class _HomeState extends State<Home> {
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 5, 0),
             child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.settings_outlined,
-                  color: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      .color
-                      .withOpacity(0.8),
                 ),
                 splashRadius: 28,
                 tooltip: "Settings",
@@ -125,22 +115,19 @@ class _HomeState extends State<Home> {
           ListView(children: <Widget>[
           ListView.separated(
                   separatorBuilder: (context, index) =>
-                  const Divider(),
+                  const SizedBox(height: 5,),
                   physics: const ScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: shopLists.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                      child: ShopListHome(
-                        refreshShopLists: getShopLists,
-                        key: UniqueKey(),
-                        showItemCount: showItemCount,
-                        shopList: ShopList(
-                          id: shopLists[index]['id'],
-                          nome: shopLists[index]['nome'],
-                          cor: shopLists[index]['cor'],
-                        ),
+                    return ShopListHome(
+                      refreshShopLists: getShopLists,
+                      key: UniqueKey(),
+                      showItemCount: showItemCount,
+                      shopList: ShopList(
+                        id: shopLists[index]['id'],
+                        nome: shopLists[index]['nome'],
+                        cor: shopLists[index]['cor'],
                       ),
                     );
                   },

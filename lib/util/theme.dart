@@ -4,13 +4,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 //CLARO
 ThemeData light = ThemeData(
     brightness: Brightness.light,
+    primaryColorBrightness: Brightness.dark,
     primaryColor: const Color(0xFFFFFFFF),
     accentColor: Colors.blueAccent,
     appBarTheme: const AppBarTheme(
         color: Color(0xFFFFFFFF),
         elevation: 0,
         iconTheme: IconThemeData(
-            color: Color(0xFF000000)
+            color: Color(0xFF050505)
         ),
         titleTextStyle: TextStyle(
             fontSize: 20,
@@ -36,16 +37,20 @@ ThemeData light = ThemeData(
 //ESCURO
 ThemeData dark = ThemeData(
     brightness: Brightness.dark,
-    primaryColor: const Color(0xFF2B2B2D),
+    primaryColorBrightness: Brightness.light,
+    primaryColor: const Color(0xFF242426),
     accentColor: const Color(0xFF6B89BF),
     appBarTheme: const AppBarTheme(
-        color: Color(0xFF2B2B2D),
+        color: Color(0xFF242426),
         elevation: 0,
+        iconTheme: IconThemeData(
+            color: Color(0xFFCACACA)
+        ),
         titleTextStyle: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Color(0xFFFFFFFF))),
-    scaffoldBackgroundColor: const Color(0xFF2B2B2D),
+    scaffoldBackgroundColor: const Color(0xFF242426),
     inputDecorationTheme: const InputDecorationTheme(
       fillColor: Color(0xFF323234), //CARD COLOR
     ),
@@ -56,11 +61,11 @@ ThemeData dark = ThemeData(
       backgroundColor: Color(0xFF202022),
     ),
     dialogTheme: const DialogTheme(
-      backgroundColor: Color(0xFF2B2B2D),
+      backgroundColor: Color(0xFF242426),
     ),
-    bottomAppBarColor: const Color(0xFF2B2B2D),
+    bottomAppBarColor: const Color(0xFF242426),
     bottomSheetTheme:
-    const BottomSheetThemeData(modalBackgroundColor: Color(0xFF2B2B2D)));
+    const BottomSheetThemeData(modalBackgroundColor: Color(0xFF242426)));
 
 class ThemeNotifier extends ChangeNotifier {
   final String key = 'valorTema';
