@@ -133,7 +133,7 @@ class _HomeState extends State<Home> {
                   },
                 ),
           const SizedBox(
-            height: 100,
+            height: 50,
           ),
         ]),
       ),

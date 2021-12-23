@@ -60,8 +60,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
           value: widget.item.estado == 1 ? true : false,
           onChanged: (bool v) {
             inOutAnimation.currentState.animateOut();
-
-            Future.delayed(const Duration(milliseconds: 300), () {
+            Future.delayed(const Duration(milliseconds: 250), () {
               _updateEstadoItem(v);
               widget.getItemsRefreshShopList(widget.item.idShopList);
             });
