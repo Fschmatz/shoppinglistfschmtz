@@ -38,34 +38,34 @@ ThemeData light = ThemeData(
 ThemeData dark = ThemeData(
     brightness: Brightness.dark,
     primaryColorBrightness: Brightness.light,
-    primaryColor: const Color(0xFF2B2B2D),
+    primaryColor: const Color(0xFF2B2B2C),
     accentColor: const Color(0xFF6B89BF),
     appBarTheme: const AppBarTheme(
-        color: Color(0xFF2B2B2D),
+        color: Color(0xFF2B2B2C),
         elevation: 0,
         iconTheme: IconThemeData(
-            color: Color(0xFFCACACA)
+            color: Color(0xFFEAEAEA)
         ),
         titleTextStyle: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Color(0xFFFFFFFF))),
-    scaffoldBackgroundColor: const Color(0xFF2B2B2D),
+    scaffoldBackgroundColor: const Color(0xFF2B2B2C),
     inputDecorationTheme: const InputDecorationTheme(
-      fillColor: Color(0xFF2B2B2D), //CARD COLOR
+      fillColor: Color(0xFF2B2B2C), //CARD COLOR
     ),
     cardTheme: const CardTheme(
-      color: Color(0xFF2B2B2D),
+      color: Color(0xFF2B2B2C),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Color(0xFF202022),
     ),
     dialogTheme: const DialogTheme(
-      backgroundColor: Color(0xFF2B2B2D),
+      backgroundColor: Color(0xFF2B2B2C),
     ),
-    bottomAppBarColor: const Color(0xFF2B2B2D),
+    bottomAppBarColor: const Color(0xFF2B2B2C),
     bottomSheetTheme:
-    const BottomSheetThemeData(modalBackgroundColor: Color(0xFF2B2B2D)));
+    const BottomSheetThemeData(modalBackgroundColor: Color(0xFF2B2B2C)));
 
 class ThemeNotifier extends ChangeNotifier {
   final String key = 'valorTema';

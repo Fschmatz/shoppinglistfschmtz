@@ -31,7 +31,7 @@ class _HomeState extends State<Home> {
 
   _loadFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    showItemCount =  prefs.getBool('showItemCount') ?? true;
+    showItemCount = prefs.getBool('showItemCount') ?? true;
   }
 
   Future<void> getShopLists() async {
@@ -55,89 +55,90 @@ class _HomeState extends State<Home> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Shoplist'),
-        actions: [
-          IconButton(
-              icon: const Icon(
-                Icons.add_outlined,
-                size: 26,
-              ),
-              splashRadius: 28,
-              tooltip: "New Shoplist",
-              onPressed: () {
-
-                Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => NewShopList(
-                        lastId: lastId,
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              title: const Text('Shoplist'),
+              pinned: false,
+              floating: true,
+              snap: true,
+              actions: [
+                IconButton(
+                    icon: const Icon(
+                      Icons.add_outlined,
+                      size: 26,
+                    ),
+                    splashRadius: 28,
+                    tooltip: "New Shoplist",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => NewShopList(
+                              lastId: lastId,
+                              refreshShopLists: getShopLists,
+                            ),
+                            fullscreenDialog: true,
+                          )).then((value) => getLastId());
+                    }),
+                const SizedBox(
+                  width: 15,
+                ),
+                IconButton(
+                    icon: const Icon(
+                      Icons.settings_outlined,
+                    ),
+                    splashRadius: 28,
+                    tooltip: "Settings",
+                    onPressed: () {
+                      Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    SettingsPage(),
+                                fullscreenDialog: true,
+                              ))
+                          .then((value) => {_loadFromPrefs(), getShopLists()});
+                    }),
+              ],
+            ),
+          ];
+        },
+        body: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 600),
+          child: loading
+              ? const Center(child: SizedBox.shrink())
+              : ListView(children: <Widget>[
+                  ListView.separated(
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 5,
+                    ),
+                    physics: const ScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: shopLists.length,
+                    itemBuilder: (context, index) {
+                      return ShopListHome(
                         refreshShopLists: getShopLists,
-                      ),
-                      fullscreenDialog: true,
-                    )).then((value) => getLastId());
-              }),
-
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 0, 5, 0),
-            child: IconButton(
-                icon: const Icon(
-                  Icons.settings_outlined,
-                ),
-                splashRadius: 28,
-                tooltip: "Settings",
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => SettingsPage(),
-                        fullscreenDialog: true,
-                      )).then((value) => {
-                      _loadFromPrefs(),
-                      getShopLists()
-                      }
-                  );
-                }),
-          ),
-
-        ],
+                        key: UniqueKey(),
+                        showItemCount: showItemCount,
+                        shopList: ShopList(
+                          id: shopLists[index]['id'],
+                          nome: shopLists[index]['nome'],
+                          cor: shopLists[index]['cor'],
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                ]),
+        ),
       ),
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 600),
-        child: loading
-            ? const Center(child: SizedBox.shrink())
-            :
-          ListView(children: <Widget>[
-          ListView.separated(
-                  separatorBuilder: (context, index) =>
-                  const SizedBox(height: 5,),
-                  physics: const ScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: shopLists.length,
-                  itemBuilder: (context, index) {
-                    return ShopListHome(
-                      refreshShopLists: getShopLists,
-                      key: UniqueKey(),
-                      showItemCount: showItemCount,
-                      shopList: ShopList(
-                        id: shopLists[index]['id'],
-                        nome: shopLists[index]['nome'],
-                        cor: shopLists[index]['cor'],
-                      ),
-                    );
-                  },
-                ),
-          const SizedBox(
-            height: 50,
-          ),
-        ]),
-      ),
-
     );
   }
 }
