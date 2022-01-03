@@ -85,25 +85,25 @@ class _HomeState extends State<Home> {
                             fullscreenDialog: true,
                           )).then((value) => getLastId());
                     }),
-                const SizedBox(
-                  width: 15,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 0, 5, 0),
+                  child: IconButton(
+                      icon: const Icon(
+                        Icons.settings_outlined,
+                      ),
+                      splashRadius: 28,
+                      tooltip: "Settings",
+                      onPressed: () {
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                      SettingsPage(),
+                                  fullscreenDialog: true,
+                                ))
+                            .then((value) => {_loadFromPrefs(), getShopLists()});
+                      }),
                 ),
-                IconButton(
-                    icon: const Icon(
-                      Icons.settings_outlined,
-                    ),
-                    splashRadius: 28,
-                    tooltip: "Settings",
-                    onPressed: () {
-                      Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>
-                                    SettingsPage(),
-                                fullscreenDialog: true,
-                              ))
-                          .then((value) => {_loadFromPrefs(), getShopLists()});
-                    }),
               ],
             ),
           ];

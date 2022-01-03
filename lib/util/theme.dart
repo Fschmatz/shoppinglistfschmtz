@@ -1,51 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//CLARO
 ThemeData light = ThemeData(
     brightness: Brightness.light,
     primaryColorBrightness: Brightness.dark,
-    primaryColor: const Color(0xFFF2F0F0),
-    accentColor: Colors.blueAccent,
+    primaryColor: const Color(0xFFECEBEB),
+    colorScheme: ColorScheme.light(
+        background: const Color(0xFFECEBEB),
+        primary: Colors.blueAccent,
+        secondary: Colors.blueGrey.shade600,
+        secondaryVariant: Colors.blueAccent,),
     appBarTheme: const AppBarTheme(
-        color: Color(0xFFF2F0F0),
+        color: Color(0xFFECEBEB),
         elevation: 0,
-        iconTheme: IconThemeData(
-            color: Color(0xFF050505)
-        ),
+        iconTheme: IconThemeData(color: Color(0xFF050505)),
         titleTextStyle: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Color(0xFF000000))),
-    scaffoldBackgroundColor: const Color(0xFFF2F0F0),
+    scaffoldBackgroundColor: const Color(0xFFECEBEB),
     inputDecorationTheme: const InputDecorationTheme(
-      fillColor: Color(0xFFF2F0F0),
+      fillColor: Color(0xFFECEBEB),
     ),
     cardTheme: const CardTheme(
-      color: Color(0xFFF2F0F0),
+      color: Color(0xFFECEBEB),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Color(0xFFE5E5E5),
     ),
     dialogTheme: const DialogTheme(
-      backgroundColor: Color(0xFFF2F0F0),
+      backgroundColor: Color(0xFFECEBEB),
     ),
-    bottomAppBarColor: const Color(0xFFF2F0F0),
+    bottomAppBarColor: const Color(0xFFECEBEB),
     bottomSheetTheme:
-    const BottomSheetThemeData(modalBackgroundColor: Color(0xFFF2F0F0)));
+        const BottomSheetThemeData(modalBackgroundColor: Color(0xFFECEBEB)));
 
-//ESCURO
 ThemeData dark = ThemeData(
     brightness: Brightness.dark,
     primaryColorBrightness: Brightness.light,
     primaryColor: const Color(0xFF2B2B2C),
-    accentColor: const Color(0xFF6B89BF),
+    colorScheme: ColorScheme.dark(
+        background: const Color(0xFF2B2B2C),
+        primary: const Color(0xFF648bd1),
+        secondary: Colors.blueGrey.shade600,
+        secondaryVariant: const Color(0xFF648bd1)),
     appBarTheme: const AppBarTheme(
         color: Color(0xFF2B2B2C),
         elevation: 0,
-        iconTheme: IconThemeData(
-            color: Color(0xFFEAEAEA)
-        ),
+        iconTheme: IconThemeData(color: Color(0xFFEAEAEA)),
         titleTextStyle: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -65,7 +67,7 @@ ThemeData dark = ThemeData(
     ),
     bottomAppBarColor: const Color(0xFF2B2B2C),
     bottomSheetTheme:
-    const BottomSheetThemeData(modalBackgroundColor: Color(0xFF2B2B2C)));
+        const BottomSheetThemeData(modalBackgroundColor: Color(0xFF2B2B2C)));
 
 class ThemeNotifier extends ChangeNotifier {
   final String key = 'valorTema';
