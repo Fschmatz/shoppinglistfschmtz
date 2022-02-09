@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:shoppinglistfschmtz/util/theme.dart';
 import '../util/changelog.dart';
 import 'package:provider/provider.dart';
+import '../util/dialog_select_theme.dart';
 import 'app_info_page.dart';
 import 'changelog_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -17,6 +19,17 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  String getThemeStringFormatted() {
+    String theme = EasyDynamicTheme.of(context)
+        .themeMode
+        .toString()
+        .replaceAll('ThemeMode.', '');
+    if (theme == 'system') {
+      theme = 'system default';
+    }
+    return theme.replaceFirst(theme[0], theme[0].toUpperCase());
   }
 
   Color themeColorApp = const Color(0xFFFF5C78);
@@ -103,18 +116,20 @@ class _SettingsPageState extends State<SettingsPage> {
                       fontWeight: FontWeight.w700,
                       color: themeColorApp)),
             ),
-            Consumer<ThemeNotifier>(
-              builder: (context, notifier, child) => SwitchListTile(
-                  title: const Text(
-                    "Dark Theme",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  secondary: const Icon(Icons.brightness_6_outlined),
-                  activeColor: Colors.blue,
-                  value: notifier.darkTheme,
-                  onChanged: (value) {
-                    notifier.toggleTheme();
+            ListTile(
+              onTap: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const DialogSelectTheme();
                   }),
+              leading: const Icon(Icons.brightness_6_outlined),
+              title: const Text(
+                "App Theme",
+                style: TextStyle(fontSize: 16),
+              ),
+              subtitle: Text(
+                getThemeStringFormatted(),
+              ),
             ),
             const SizedBox(
               height: 10.0,
