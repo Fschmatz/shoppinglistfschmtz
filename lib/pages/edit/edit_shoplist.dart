@@ -7,14 +7,15 @@ import 'package:shoppinglistfschmtz/pages/edit/item_edit_shoplist.dart';
 import '../../util/block_pickerAlt.dart';
 import 'package:shoppinglistfschmtz/db/item_dao.dart';
 
+import '../../util/utils_functions.dart';
+
 class EditShopList extends StatefulWidget {
   @override
   _EditShopListState createState() => _EditShopListState();
 
   ShopList shopList;
 
-  EditShopList({Key key, this.shopList})
-      : super(key: key);
+  EditShopList({Key key, this.shopList}) : super(key: key);
 }
 
 class _EditShopListState extends State<EditShopList> {
@@ -96,12 +97,8 @@ class _EditShopListState extends State<EditShopList> {
 
   showAlertDialogOkDelete(BuildContext context) {
     Widget okButton = TextButton(
-      child: Text(
+      child: const Text(
         "Yes",
-        style: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).textTheme.headline6.color),
       ),
       onPressed: () {
         _deleteShopList();
@@ -111,16 +108,11 @@ class _EditShopListState extends State<EditShopList> {
     );
 
     AlertDialog alert = AlertDialog(
-      elevation: 3.0,
       title: const Text(
-        "Confirmation ", //
-        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+        "Confirmation ",
       ),
       content: const Text(
-        "\nDelete Shoplist ?",
-        style: TextStyle(
-          fontSize: 18,
-        ),
+        "Delete Shoplist ?",
       ),
       actions: [
         okButton,
@@ -143,12 +135,8 @@ class _EditShopListState extends State<EditShopList> {
 
   createAlertSelectColor(BuildContext context) {
     Widget okButton = TextButton(
-      child: Text(
+      child: const Text(
         "Ok",
-        style: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).textTheme.headline6.color),
       ),
       onPressed: () {
         setState(() =>
@@ -159,10 +147,8 @@ class _EditShopListState extends State<EditShopList> {
     );
 
     AlertDialog alert = AlertDialog(
-      elevation: 3.0,
       title: const Text(
-        "Select Color : ", //
-        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+        "Select Color : ",
       ),
       content: SingleChildScrollView(
           child: BlockPicker(
@@ -183,6 +169,8 @@ class _EditShopListState extends State<EditShopList> {
 
   @override
   Widget build(BuildContext context) {
+    final Brightness _addNewItemTextBrightness = Theme.of(context).brightness;
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -242,7 +230,9 @@ class _EditShopListState extends State<EditShopList> {
               ListTile(
                 leading: Icon(
                   Icons.add_shopping_cart_outlined,
-                  color: currentColor.withOpacity(0.8),
+                  color: _addNewItemTextBrightness == Brightness.dark
+                      ? lightenColor(currentColor, 35)
+                      : darkenColor(currentColor, 20),
                 ),
                 title: TextField(
                   minLines: 1,
@@ -259,7 +249,11 @@ class _EditShopListState extends State<EditShopList> {
                   onEditingComplete: () {},
                   decoration: InputDecoration(
                       hintText: "Add New Item",
-                      hintStyle: TextStyle(color: currentColor.withOpacity(0.8)),
+                      hintStyle: TextStyle(
+                        color: _addNewItemTextBrightness == Brightness.dark
+                            ? lightenColor(currentColor, 35)
+                            : darkenColor(currentColor, 20),
+                      ),
                       border: InputBorder.none,
                       counterStyle: const TextStyle(
                         height: double.minPositive,

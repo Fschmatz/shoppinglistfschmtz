@@ -18,7 +18,7 @@ class _DialogSelectThemeState extends State<DialogSelectTheme> {
   Widget build(BuildContext context) {
 
     ThemeMode currentTheme = EasyDynamicTheme.of(context).themeMode;
-    Color appAccent = Theme.of(context).colorScheme.primary;
+    Color appAccent = Theme.of(context).colorScheme.tertiary;
 
     return AlertDialog(
       shape: RoundedRectangleBorder(

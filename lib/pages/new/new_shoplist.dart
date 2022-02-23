@@ -5,6 +5,7 @@ import 'package:shoppinglistfschmtz/db/shoplist_dao.dart';
 import 'package:shoppinglistfschmtz/db/item_dao.dart';
 import 'package:shoppinglistfschmtz/pages/new/item_new_shoplist.dart';
 import '../../util/block_pickerAlt.dart';
+import '../../util/utils_functions.dart';
 
 class NewShopList extends StatefulWidget {
   @override
@@ -94,12 +95,8 @@ class _NewShopListState extends State<NewShopList> {
 
   createAlertSelectColor(BuildContext context) {
     Widget okButton = TextButton(
-      child: Text(
+      child: const Text(
         "Ok",
-        style: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).textTheme.headline6.color),
       ),
       onPressed: () {
         setState(() =>
@@ -109,10 +106,8 @@ class _NewShopListState extends State<NewShopList> {
     );
 
     AlertDialog alert = AlertDialog(
-      elevation: 3.0,
       title: const Text(
-        "Select Color : ", //
-        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+        "Select Color : "
       ),
       content: SingleChildScrollView(
           child: BlockPicker(
@@ -133,6 +128,9 @@ class _NewShopListState extends State<NewShopList> {
 
   @override
   Widget build(BuildContext context) {
+
+    final Brightness _addNewItemTextBrightness = Theme.of(context).brightness;
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -195,7 +193,9 @@ class _NewShopListState extends State<NewShopList> {
               ListTile(
                 leading: Icon(
                   Icons.add_shopping_cart_outlined,
-                  color: currentColor.withOpacity(0.8),
+                  color: _addNewItemTextBrightness == Brightness.dark
+                      ? lightenColor(currentColor, 35)
+                      : darkenColor(currentColor, 20),
                 ),
                 title: TextField(
                   minLines: 1,
@@ -213,7 +213,9 @@ class _NewShopListState extends State<NewShopList> {
                   decoration: InputDecoration(
                       hintText: "Add New Item",
                       hintStyle:
-                          TextStyle(color: currentColor.withOpacity(0.8)),
+                          TextStyle(color: _addNewItemTextBrightness == Brightness.dark
+                              ? lightenColor(currentColor, 35)
+                              : darkenColor(currentColor, 20),),
                       border: InputBorder.none,
                       counterText: "" // hide maxlength counter
                       ),

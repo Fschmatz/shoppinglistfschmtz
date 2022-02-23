@@ -3,6 +3,8 @@ import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/db/item_dao.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
+import '../../util/utils_functions.dart';
+
 class ItemShopListHome extends StatefulWidget {
   @override
   _ItemShopListHomeState createState() => _ItemShopListHomeState();
@@ -34,6 +36,9 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
 
   @override
   Widget build(BuildContext context) {
+
+    final Brightness _dotIconBrightness = Theme.of(context).brightness;
+
     return InOutAnimation(
       autoPlay: InOutAnimationStatus.None,
       key: inOutAnimation,
@@ -47,7 +52,10 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
           padding: const EdgeInsets.fromLTRB(7, 7, 0, 0),
           child: Icon(
             Icons.circle,
-            color: widget.shopListColor,
+            color: _dotIconBrightness == Brightness.dark
+                ? lightenColor(widget.shopListColor, 35)
+                : darkenColor(widget.shopListColor, 20),
+           // color: widget.shopListColor,
             size: 10,
           ),
         ),

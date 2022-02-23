@@ -61,7 +61,7 @@ class BlockPicker extends StatefulWidget {
   static Widget defaultItemBuilder(
       Color color, bool isCurrentColor, Function changeColor) {
     return Container(
-      margin: EdgeInsets.all(5.0),
+      margin: const EdgeInsets.all(5.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50.0),
         color: color,

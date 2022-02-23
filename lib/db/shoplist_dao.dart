@@ -53,7 +53,7 @@ class ShopListDao {
 
   Future<List<Map<String, dynamic>>> queryAllOrderByName() async {
     Database db = await instance.database;
-    return await db.rawQuery('SELECT * FROM $table ORDER BY $columnNome');
+    return await db.rawQuery('SELECT * FROM $table ORDER BY $columnNome COLLATE NOCASE');
   }
 
   Future<List<Map<String, dynamic>>> getLastId() async {

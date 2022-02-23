@@ -23,10 +23,14 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    getShopLists();
-    getLastId();
     super.initState();
-    _loadFromPrefs();
+    appStart();
+  }
+
+  Future<void> appStart() async{
+    await _loadFromPrefs();
+    await getShopLists();
+    await getLastId();
   }
 
   _loadFromPrefs() async {
@@ -37,10 +41,12 @@ class _HomeState extends State<Home> {
   Future<void> getShopLists() async {
     final dbShopList = ShopListDao.instance;
     var resposta = await dbShopList.queryAllOrderByName();
-    setState(() {
-      shopLists = resposta;
-      loading = false;
-    });
+    if(mounted) {
+      setState(() {
+        shopLists = resposta;
+        loading = false;
+      });
+    }
   }
 
   Future<void> getLastId() async {

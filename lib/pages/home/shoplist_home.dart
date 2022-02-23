@@ -6,6 +6,8 @@ import 'package:shoppinglistfschmtz/db/item_dao.dart';
 import 'package:shoppinglistfschmtz/pages/edit/edit_shoplist.dart';
 import 'package:shoppinglistfschmtz/pages/home/item_shoplist_home.dart';
 
+import '../../util/utils_functions.dart';
+
 class ShopListHome extends StatefulWidget {
   @override
   _ShopListHomeState createState() => _ShopListHomeState();
@@ -14,7 +16,8 @@ class ShopListHome extends StatefulWidget {
   Function() refreshShopLists;
   bool showItemCount;
 
-  ShopListHome({Key key, this.shopList, this.refreshShopLists,this.showItemCount})
+  ShopListHome(
+      {Key key, this.shopList, this.refreshShopLists, this.showItemCount})
       : super(key: key);
 }
 
@@ -33,29 +36,27 @@ class _ShopListHomeState extends State<ShopListHome> {
   Future<void> getItemsShopList() async {
     final dbItems = ItemDao.instance;
     var resposta = await dbItems.getItemsShopListDoDesc(widget.shopList.id);
-    if (mounted) {
-      setState(() {
-        items = resposta;
-      });
-    }
+    setState(() {
+      items = resposta;
+    });
   }
 
   Future<void> getItemsRefreshShopList(int idShopList) async {
     final dbItems = ItemDao.instance;
     var resposta = await dbItems.getItemsShopListDoDesc(idShopList);
-    if (mounted) {
-      setState(() {
-        items = resposta;
-      });
-    }
+    setState(() {
+      items = resposta;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final Brightness _listNameTextBrightness = Theme.of(context).brightness;
+
     return Column(
       children: [
         ListTile(
-          tileColor: shopListColor.withOpacity(0.1),
+          tileColor: shopListColor.withOpacity(0.15),
           contentPadding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
           onTap: () {
             Navigator.push(
@@ -69,11 +70,19 @@ class _ShopListHomeState extends State<ShopListHome> {
           },
           leading: Icon(
             Icons.shopping_cart_outlined,
-            color: shopListColor,
+            color: _listNameTextBrightness == Brightness.dark
+                ? lightenColor(shopListColor, 35)
+                : darkenColor(shopListColor, 20),
           ),
           title: Text(
             widget.shopList.nome.toUpperCase(),
-            style: TextStyle(fontSize: 14.5, fontWeight: FontWeight.w700,color: shopListColor),
+            style: TextStyle(
+              fontSize: 14.5,
+              fontWeight: FontWeight.w700,
+              color: _listNameTextBrightness == Brightness.dark
+                  ? lightenColor(shopListColor, 35)
+                  : darkenColor(shopListColor, 20),
+            ),
           ),
           trailing: Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
@@ -82,10 +91,12 @@ class _ShopListHomeState extends State<ShopListHome> {
               child: Text(
                 items.length.toString(),
                 style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: shopListColor,
-                   ),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: _listNameTextBrightness == Brightness.dark
+                      ? lightenColor(shopListColor, 35)
+                      : darkenColor(shopListColor, 20),
+                ),
               ),
             ),
           ),
@@ -111,4 +122,3 @@ class _ShopListHomeState extends State<ShopListHome> {
     );
   }
 }
-
