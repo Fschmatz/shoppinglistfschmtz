@@ -231,7 +231,7 @@ class _EditShopListState extends State<EditShopList> {
                 leading: Icon(
                   Icons.add_shopping_cart_outlined,
                   color: _addNewItemTextBrightness == Brightness.dark
-                      ? lightenColor(currentColor, 35)
+                      ? lightenColor(currentColor, 20)
                       : darkenColor(currentColor, 20),
                 ),
                 title: TextField(
@@ -251,7 +251,7 @@ class _EditShopListState extends State<EditShopList> {
                       hintText: "Add New Item",
                       hintStyle: TextStyle(
                         color: _addNewItemTextBrightness == Brightness.dark
-                            ? lightenColor(currentColor, 35)
+                            ? lightenColor(currentColor, 20)
                             : darkenColor(currentColor, 20),
                       ),
                       border: InputBorder.none,

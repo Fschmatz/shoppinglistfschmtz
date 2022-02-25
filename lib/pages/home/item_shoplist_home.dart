@@ -53,7 +53,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
           child: Icon(
             Icons.circle,
             color: _dotIconBrightness == Brightness.dark
-                ? lightenColor(widget.shopListColor, 35)
+                ? lightenColor(widget.shopListColor, 20)
                 : darkenColor(widget.shopListColor, 20),
            // color: widget.shopListColor,
             size: 10,

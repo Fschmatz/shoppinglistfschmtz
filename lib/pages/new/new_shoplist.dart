@@ -194,7 +194,7 @@ class _NewShopListState extends State<NewShopList> {
                 leading: Icon(
                   Icons.add_shopping_cart_outlined,
                   color: _addNewItemTextBrightness == Brightness.dark
-                      ? lightenColor(currentColor, 35)
+                      ? lightenColor(currentColor, 20)
                       : darkenColor(currentColor, 20),
                 ),
                 title: TextField(
@@ -214,7 +214,7 @@ class _NewShopListState extends State<NewShopList> {
                       hintText: "Add New Item",
                       hintStyle:
                           TextStyle(color: _addNewItemTextBrightness == Brightness.dark
-                              ? lightenColor(currentColor, 35)
+                              ? lightenColor(currentColor, 20)
                               : darkenColor(currentColor, 20),),
                       border: InputBorder.none,
                       counterText: "" // hide maxlength counter

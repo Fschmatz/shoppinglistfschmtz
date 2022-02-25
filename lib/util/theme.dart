@@ -2,37 +2,37 @@ import 'package:flutter/material.dart';
 
 ThemeData light = ThemeData(
     brightness: Brightness.light,
-    primaryColor: const Color(0xFFE9E9E9),
+    primaryColor: const Color(0xFFEFEEEE),
     colorScheme: ColorScheme.light(
-        background: const Color(0xFFE9E9E9),
+        background: const Color(0xFFEFEEEE),
         primary: Colors.blueAccent,
         secondary: Colors.blueGrey.shade600,
         tertiary: const Color(0xFFFF5C78)
     ),
     appBarTheme: const AppBarTheme(
-        color: Color(0xFFE9E9E9),
+        color: Color(0xFFEFEEEE),
         elevation: 0,
         iconTheme: IconThemeData(color: Color(0xFF000000)),
         titleTextStyle: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Color(0xFF000000))),
-    scaffoldBackgroundColor: const Color(0xFFE9E9E9),
+    scaffoldBackgroundColor: const Color(0xFFEFEEEE),
     inputDecorationTheme: const InputDecorationTheme(
-      fillColor: Color(0xFFE9E9E9),
+      fillColor: Color(0xFFEFEEEE),
     ),
     cardTheme: const CardTheme(
-      color: Color(0xFFE9E9E9),
+      color: Color(0xFFEFEEEE),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Color(0xFFE5E5E5),
     ),
     dialogTheme: const DialogTheme(
-      backgroundColor: Color(0xFFE9E9E9),
+      backgroundColor: Color(0xFFEFEEEE),
     ),
-    bottomAppBarColor: const Color(0xFFE9E9E9),
+    bottomAppBarColor: const Color(0xFFEFEEEE),
     bottomSheetTheme:
-        const BottomSheetThemeData(modalBackgroundColor: Color(0xFFE9E9E9)));
+        const BottomSheetThemeData(modalBackgroundColor: Color(0xFFEFEEEE)));
 
 ThemeData dark = ThemeData(
     brightness: Brightness.dark,

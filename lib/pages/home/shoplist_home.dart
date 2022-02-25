@@ -71,7 +71,7 @@ class _ShopListHomeState extends State<ShopListHome> {
           leading: Icon(
             Icons.shopping_cart_outlined,
             color: _listNameTextBrightness == Brightness.dark
-                ? lightenColor(shopListColor, 35)
+                ? lightenColor(shopListColor, 20)
                 : darkenColor(shopListColor, 20),
           ),
           title: Text(
@@ -80,7 +80,7 @@ class _ShopListHomeState extends State<ShopListHome> {
               fontSize: 14.5,
               fontWeight: FontWeight.w700,
               color: _listNameTextBrightness == Brightness.dark
-                  ? lightenColor(shopListColor, 35)
+                  ? lightenColor(shopListColor, 20)
                   : darkenColor(shopListColor, 20),
             ),
           ),
@@ -94,7 +94,7 @@ class _ShopListHomeState extends State<ShopListHome> {
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   color: _listNameTextBrightness == Brightness.dark
-                      ? lightenColor(shopListColor, 35)
+                      ? lightenColor(shopListColor, 20)
                       : darkenColor(shopListColor, 20),
                 ),
               ),
