@@ -111,6 +111,9 @@ class _EditShopListState extends State<EditShopList> {
       title: const Text(
         "Confirmation ",
       ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
       content: const Text(
         "Delete Shoplist ?",
       ),
@@ -147,6 +150,9 @@ class _EditShopListState extends State<EditShopList> {
     );
 
     AlertDialog alert = AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
       title: const Text(
         "Select Color : ",
       ),
@@ -190,112 +196,138 @@ class _EditShopListState extends State<EditShopList> {
       ),
       body: Column(
         children: [
-          Column(
-            children: [
-              ListTile(
-                contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
-                leading: const Icon(
-                  Icons.notes_outlined,
-                ),
-                title: TextField(
-                  minLines: 1,
-                  maxLength: 30,
-                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  textCapitalization: TextCapitalization.sentences,
-                  controller: customControllerNome,
-                  onChanged: (value) => _updateShopList(),
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    counterText: "",
-                    hintText: "Shoplist Name",
-                  ),
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                trailing: MaterialButton(
-                  minWidth: 30,
-                  height: 30,
-                  shape: const CircleBorder(),
-                  elevation: 0,
-                  color: currentColor,
-                  onPressed: () {
-                    createAlertSelectColor(context);
-                  },
-                ),
+          ListTile(
+            contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
+            leading: const Icon(
+              Icons.notes_outlined,
+            ),
+            title: TextField(
+              minLines: 1,
+              maxLength: 30,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+              textCapitalization: TextCapitalization.sentences,
+              controller: customControllerNome,
+              onChanged: (value) => _updateShopList(),
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                counterText: "",
+                hintText: "Shoplist Name",
               ),
-              const SizedBox(
-                height: 10,
+              style: const TextStyle(
+                fontSize: 16,
               ),
-              ListTile(
-                leading: Icon(
-                  Icons.add_shopping_cart_outlined,
-                  color: _addNewItemTextBrightness == Brightness.dark
-                      ? lightenColor(currentColor, 20)
-                      : darkenColor(currentColor, 20),
-                ),
-                title: TextField(
-                  minLines: 1,
-                  maxLength: 200,
-                  autofocus: false,
-                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  textCapitalization: TextCapitalization.sentences,
-                  controller: customControllerAddNewItem,
-                  onSubmitted: (value) => {
-                    _addItemToShopList(),
-                    getItemsShopList(),
-                    customControllerAddNewItem.text = ""
-                  },
-                  onEditingComplete: () {},
-                  decoration: InputDecoration(
-                      hintText: "Add New Item",
-                      hintStyle: TextStyle(
-                        color: _addNewItemTextBrightness == Brightness.dark
-                            ? lightenColor(currentColor, 20)
-                            : darkenColor(currentColor, 20),
-                      ),
-                      border: InputBorder.none,
-                      counterStyle: const TextStyle(
-                        height: double.minPositive,
-                      ),
-                      counterText: "" // hide maxlength counter
-                      ),
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.headline6.color,
-                  ),
-                ),
-              ),
-            ],
+            ),
+            trailing: MaterialButton(
+              minWidth: 30,
+              height: 30,
+              shape: const CircleBorder(),
+              elevation: 0,
+              color: currentColor,
+              onPressed: () {
+                createAlertSelectColor(context);
+              },
+            ),
           ),
-
+          const SizedBox(
+            height: 10,
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.add_shopping_cart_outlined,
+              color: _addNewItemTextBrightness == Brightness.dark
+                  ? lightenColor(currentColor, 20)
+                  : darkenColor(currentColor, 20),
+            ),
+            title: TextField(
+              minLines: 1,
+              maxLength: 200,
+              autofocus: false,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+              textCapitalization: TextCapitalization.sentences,
+              controller: customControllerAddNewItem,
+              onSubmitted: (value) => {
+                _addItemToShopList(),
+                getItemsShopList(),
+                customControllerAddNewItem.text = ""
+              },
+              onEditingComplete: () {},
+              decoration: InputDecoration(
+                  hintText: "Add New Item",
+                  hintStyle: TextStyle(
+                    color: _addNewItemTextBrightness == Brightness.dark
+                        ? lightenColor(currentColor, 20)
+                        : darkenColor(currentColor, 20),
+                  ),
+                  border: InputBorder.none,
+                  counterStyle: const TextStyle(
+                    height: double.minPositive,
+                  ),
+                  counterText: "" // hide maxlength counter
+                  ),
+              style: TextStyle(
+                fontSize: 16,
+                color: Theme.of(context).textTheme.headline6.color,
+              ),
+            ),
+          ),
           const Padding(
             padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Divider(
-              height: 1,
             ),
           ),
 
           //LIST
           Flexible(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ListView.builder(
+            child: ListView(
+              children: [
+                const SizedBox(
+                  height: 15,
+                ),
+                ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: itemsDo.length,
+                    itemBuilder: (context, index) {
+                      return ItemEditShopList(
+                        key: UniqueKey(),
+                        item: Item(
+                          id: itemsDo[index]['id'],
+                          nome: itemsDo[index]['nome'],
+                          estado: itemsDo[index]['estado'],
+                          idShopList: itemsDo[index]['idShopList'],
+                        ),
+                        getItemsShopList: getItemsShopList,
+                        updateItem: _updateItem,
+                        deleteItem: _deleteItemFromShoplist,
+                        listAccent: currentColor,
+                      );
+                    }),
+                Visibility(
+                  visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
+                  child: const SizedBox(height: 15,),
+                ),
+                Visibility(
+                  visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
+                  child: const Divider(),
+                ),
+                Visibility(
+                  visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
+                  child: const SizedBox(height: 15,),
+                ),
+                Visibility(
+                  visible: itemsDone.isNotEmpty,
+                  child: ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: itemsDo.length,
+                      itemCount: itemsDone.length,
                       itemBuilder: (context, index) {
                         return ItemEditShopList(
                           key: UniqueKey(),
                           item: Item(
-                            id: itemsDo[index]['id'],
-                            nome: itemsDo[index]['nome'],
-                            estado: itemsDo[index]['estado'],
-                            idShopList: itemsDo[index]['idShopList'],
+                            id: itemsDone[index]['id'],
+                            nome: itemsDone[index]['nome'],
+                            estado: itemsDone[index]['estado'],
+                            idShopList: itemsDone[index]['idShopList'],
                           ),
                           getItemsShopList: getItemsShopList,
                           updateItem: _updateItem,
@@ -303,53 +335,11 @@ class _EditShopListState extends State<EditShopList> {
                           listAccent: currentColor,
                         );
                       }),
-                  Visibility(
-                    visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
-                    child: const SizedBox(
-                      height: 30,
-                    ),
-                  ),
-                  Visibility(
-                    visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
-                    child: const Divider(
-                      thickness: 0.5,
-                      indent: 6,
-                      endIndent: 6,
-                    ),
-                  ),
-                  Visibility(
-                    visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
-                    child: const SizedBox(
-                      height: 30,
-                    ),
-                  ),
-                  Visibility(
-                    visible: itemsDone.isNotEmpty,
-                    child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: itemsDone.length,
-                        itemBuilder: (context, index) {
-                          return ItemEditShopList(
-                            key: UniqueKey(),
-                            item: Item(
-                              id: itemsDone[index]['id'],
-                              nome: itemsDone[index]['nome'],
-                              estado: itemsDone[index]['estado'],
-                              idShopList: itemsDone[index]['idShopList'],
-                            ),
-                            getItemsShopList: getItemsShopList,
-                            updateItem: _updateItem,
-                            deleteItem: _deleteItemFromShoplist,
-                            listAccent: currentColor,
-                          );
-                        }),
-                  ),
-                  const SizedBox(
-                    height: 100,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+              ],
             ),
           ),
         ],

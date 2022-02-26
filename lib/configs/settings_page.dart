@@ -32,10 +32,11 @@ class _SettingsPageState extends State<SettingsPage> {
     return theme.replaceFirst(theme[0], theme[0].toUpperCase());
   }
 
-  Color themeColorApp = const Color(0xFFFF5C78);
-
   @override
   Widget build(BuildContext context) {
+
+    Color themeColorApp = Theme.of(context).colorScheme.tertiary;
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("Settings"),

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import '../util/changelog.dart';
 
 class ChangelogPage extends StatelessWidget {
-
-  Color themeColorApp = const Color(0xFFFF5C78);
-
   ChangelogPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    Color themeColorApp = Theme.of(context).colorScheme.tertiary;
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("Changelog"),

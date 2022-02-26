@@ -15,10 +15,11 @@ class AppInfoPage extends StatelessWidget {
     }
   }
 
-  Color themeColorApp = const Color(0xFFFF5C78);
-
   @override
   Widget build(BuildContext context) {
+
+    Color themeColorApp = Theme.of(context).colorScheme.tertiary;
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("App Info"),

@@ -36,9 +36,11 @@ class _ShopListHomeState extends State<ShopListHome> {
   Future<void> getItemsShopList() async {
     final dbItems = ItemDao.instance;
     var resposta = await dbItems.getItemsShopListDoDesc(widget.shopList.id);
-    setState(() {
-      items = resposta;
-    });
+    if(mounted) {
+      setState(() {
+        items = resposta;
+      });
+    }
   }
 
   Future<void> getItemsRefreshShopList(int idShopList) async {

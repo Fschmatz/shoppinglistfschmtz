@@ -5,8 +5,8 @@ ThemeData light = ThemeData(
     primaryColor: const Color(0xFFEFEEEE),
     colorScheme: ColorScheme.light(
         background: const Color(0xFFEFEEEE),
-        primary: Colors.blueAccent,
-        secondary: Colors.blueGrey.shade600,
+        primary: Colors.blueAccent.shade700,
+        secondary: Colors.grey,
         tertiary: const Color(0xFFFF5C78)
     ),
     appBarTheme: const AppBarTheme(
@@ -14,8 +14,8 @@ ThemeData light = ThemeData(
         elevation: 0,
         iconTheme: IconThemeData(color: Color(0xFF000000)),
         titleTextStyle: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
+            fontSize: 22,
+            fontWeight: FontWeight.w400,
             color: Color(0xFF000000))),
     scaffoldBackgroundColor: const Color(0xFFEFEEEE),
     inputDecorationTheme: const InputDecorationTheme(
@@ -40,16 +40,16 @@ ThemeData dark = ThemeData(
     colorScheme: ColorScheme.dark(
         background: const Color(0xFF2B2B2C),
         primary: const Color(0xFF648bd1),
-        secondary: Colors.blueGrey.shade600,
-        tertiary: const Color(0xFFFF5C78)
+        secondary: Colors.grey.shade600,
+        tertiary: const Color(0xFFEA8294)
     ),
     appBarTheme: const AppBarTheme(
         color: Color(0xFF2B2B2C),
         elevation: 0,
         iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
         titleTextStyle: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
+            fontSize: 22,
+            fontWeight: FontWeight.w400,
             color: Color(0xFFFFFFFF))),
     scaffoldBackgroundColor: const Color(0xFF2B2B2C),
     inputDecorationTheme: const InputDecorationTheme(
