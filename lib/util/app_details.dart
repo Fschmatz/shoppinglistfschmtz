@@ -1,10 +1,12 @@
-class Changelog{
+class AppDetails{
 
-  static String appVersion = "1.4.8";
+  static String appVersion = "1.4.9";
   static String appName = "Shoplist Fschmatz";
+  static String repositoryLink = "https://github.com/Fschmatz/shoppinglistfschmtz";
+
 
   static String changelogCurrent = ''' 
-1.4.8
+1.4.9
 - Home Changes
 - Small Fixes
 - Hide AppBar

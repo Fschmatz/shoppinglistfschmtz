@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
     appStart();
   }
 
-  Future<void> appStart() async{
+  Future<void> appStart() async {
     await _loadFromPrefs();
     await getShopLists();
     await getLastId();
@@ -41,7 +41,7 @@ class _HomeState extends State<Home> {
   Future<void> getShopLists() async {
     final dbShopList = ShopListDao.instance;
     var resposta = await dbShopList.queryAllOrderByName();
-    if(mounted) {
+    if (mounted) {
       setState(() {
         shopLists = resposta;
         loading = false;
@@ -76,9 +76,7 @@ class _HomeState extends State<Home> {
                 IconButton(
                     icon: const Icon(
                       Icons.add_outlined,
-                      size: 26,
                     ),
-                    splashRadius: 28,
                     tooltip: "New Shoplist",
                     onPressed: () {
                       Navigator.push(
@@ -97,7 +95,6 @@ class _HomeState extends State<Home> {
                       icon: const Icon(
                         Icons.settings_outlined,
                       ),
-                      splashRadius: 28,
                       tooltip: "Settings",
                       onPressed: () {
                         Navigator.push(
@@ -107,7 +104,8 @@ class _HomeState extends State<Home> {
                                       SettingsPage(),
                                   fullscreenDialog: true,
                                 ))
-                            .then((value) => {_loadFromPrefs(), getShopLists()});
+                            .then(
+                                (value) => {_loadFromPrefs(), getShopLists()});
                       }),
                 ),
               ],

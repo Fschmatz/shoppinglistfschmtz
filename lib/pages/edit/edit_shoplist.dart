@@ -111,9 +111,6 @@ class _EditShopListState extends State<EditShopList> {
       title: const Text(
         "Confirmation ",
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
       content: const Text(
         "Delete Shoplist ?",
       ),
@@ -150,9 +147,6 @@ class _EditShopListState extends State<EditShopList> {
     );
 
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
       title: const Text(
         "Select Color : ",
       ),
@@ -213,9 +207,6 @@ class _EditShopListState extends State<EditShopList> {
                 counterText: "",
                 hintText: "Shoplist Name",
               ),
-              style: const TextStyle(
-                fontSize: 16,
-              ),
             ),
             trailing: MaterialButton(
               minWidth: 30,
@@ -265,15 +256,13 @@ class _EditShopListState extends State<EditShopList> {
                   counterText: "" // hide maxlength counter
                   ),
               style: TextStyle(
-                fontSize: 16,
                 color: Theme.of(context).textTheme.headline6.color,
               ),
             ),
           ),
           const Padding(
             padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Divider(
-            ),
+            child: Divider(),
           ),
 
           //LIST
@@ -304,7 +293,9 @@ class _EditShopListState extends State<EditShopList> {
                     }),
                 Visibility(
                   visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
-                  child: const SizedBox(height: 15,),
+                  child: const SizedBox(
+                    height: 15,
+                  ),
                 ),
                 Visibility(
                   visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
@@ -312,7 +303,9 @@ class _EditShopListState extends State<EditShopList> {
                 ),
                 Visibility(
                   visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
-                  child: const SizedBox(height: 15,),
+                  child: const SizedBox(
+                    height: 15,
+                  ),
                 ),
                 Visibility(
                   visible: itemsDone.isNotEmpty,

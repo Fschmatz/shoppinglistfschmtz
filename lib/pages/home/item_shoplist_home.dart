@@ -61,7 +61,6 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
         ),
         title: Text(
           widget.item.nome,
-          style: const TextStyle(fontSize: 16),
         ),
         trailing: Checkbox(
           splashRadius: 30,

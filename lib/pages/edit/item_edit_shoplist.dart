@@ -77,7 +77,6 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
             counterText: "" // hide maxlength counter
             ),
         style: TextStyle(
-          fontSize: 16,
           color: widget.item.estado == 1
               ? Theme.of(context).disabledColor
               : Theme.of(context).textTheme.headline6.color,

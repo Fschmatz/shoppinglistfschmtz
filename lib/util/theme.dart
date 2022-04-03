@@ -29,6 +29,9 @@ ThemeData light = ThemeData(
     ),
     dialogTheme: const DialogTheme(
       backgroundColor: Color(0xFFEFEEEE),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(28)),
+      ),
     ),
     bottomAppBarColor: const Color(0xFFEFEEEE),
     bottomSheetTheme:
@@ -63,6 +66,9 @@ ThemeData dark = ThemeData(
     ),
     dialogTheme: const DialogTheme(
       backgroundColor: Color(0xFF2B2B2C),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(28)),
+      ),
     ),
     bottomAppBarColor: const Color(0xFF2B2B2C),
     bottomSheetTheme:

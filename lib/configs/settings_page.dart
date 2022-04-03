@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoppinglistfschmtz/util/theme.dart';
-import '../util/changelog.dart';
+import '../util/app_details.dart';
 import 'package:provider/provider.dart';
 import '../util/dialog_select_theme.dart';
 import 'app_info_page.dart';
@@ -51,21 +51,19 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               child: ListTile(
                 title: Text(
-                  Changelog.appName + " " + Changelog.appVersion,
+                  AppDetails.appName + " " + AppDetails.appVersion,
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 17.5, color: Colors.black),
                 ),
               ),
             ),
-            const Divider(),
+
             ListTile(
-              leading: const SizedBox(
-                height: 0.1,
-              ),
-              title: Text("General".toUpperCase(),
+
+              title: Text("General",
                   style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                       color: themeColorApp)),
             ),
             ListTile(
@@ -77,7 +75,6 @@ class _SettingsPageState extends State<SettingsPage> {
               leading: const Icon(Icons.brightness_6_outlined),
               title: const Text(
                 "App Theme",
-                style: TextStyle(fontSize: 16),
               ),
               subtitle: Text(
                 getThemeStringFormatted(),
@@ -90,7 +87,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     return SwitchListTile(
                         title: const Text(
                           "Show Shoplist Item Count",
-                          style: TextStyle(fontSize: 16),
                         ),
                         secondary: const Icon(Icons.format_list_numbered_rtl),
                         activeColor: Colors.blue,
@@ -103,15 +99,13 @@ class _SettingsPageState extends State<SettingsPage> {
                   }
                   return const SizedBox.shrink();
                 }),
-            const Divider(),
+
             ListTile(
-              leading: const SizedBox(
-                height: 0.1,
-              ),
-              title: Text("About".toUpperCase(),
+
+              title: Text("About",
                   style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                       color: themeColorApp)),
             ),
             ListTile(
@@ -120,7 +114,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               title: const Text(
                 "App Info",
-                style: TextStyle(fontSize: 16),
               ),
               onTap: () {
                 Navigator.push(
@@ -137,7 +130,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               title: const Text(
                 "Changelog",
-                style: TextStyle(fontSize: 16),
               ),
               onTap: () {
                 Navigator.push(

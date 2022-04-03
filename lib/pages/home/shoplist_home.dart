@@ -79,7 +79,7 @@ class _ShopListHomeState extends State<ShopListHome> {
           title: Text(
             widget.shopList.nome.toUpperCase(),
             style: TextStyle(
-              fontSize: 14.5,
+              fontSize: 14,
               fontWeight: FontWeight.w700,
               color: _listNameTextBrightness == Brightness.dark
                   ? lightenColor(shopListColor, 20)

@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../util/changelog.dart';
+import '../util/app_details.dart';
 
 class AppInfoPage extends StatelessWidget {
   AppInfoPage({Key key}) : super(key: key);
 
-
-  _launchGithub() async {
-    const url = 'https://github.com/Fschmatz/shoppinglistfschmtz';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Error';
-    }
+  _launchGithub() {
+    String url = AppDetails.repositoryLink;
+    launch(url);
   }
 
   @override
   Widget build(BuildContext context) {
-
     Color themeColorApp = Theme.of(context).colorScheme.tertiary;
 
     return Scaffold(
@@ -36,69 +30,53 @@ class AppInfoPage extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           Center(
-            child: Text(Changelog.appName +" "+ Changelog.appVersion,
+            child: Text(AppDetails.appName + " " + AppDetails.appVersion,
                 style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w700,
                     color: themeColorApp)),
           ),
           const SizedBox(height: 15),
-          const Divider(),
           ListTile(
-            leading: const SizedBox(
-              height: 0.1,
-            ),
-            title: Text("Dev".toUpperCase(),
+            title: Text("Dev",
                 style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                     color: themeColorApp)),
           ),
-
           const ListTile(
-            leading: Icon( Icons.info_outline),
+            leading: Icon(Icons.info_outline),
             title: Text(
               "Application created using Flutter and the Dart language, used for testing and learning.",
-              style: TextStyle(
-                fontSize: 16,
-              ),
             ),
           ),
-          const Divider(),
           ListTile(
-            leading: const SizedBox(
-              height: 0.1,
-            ),
-            title: Text("Source Code".toUpperCase(),
+            title: Text("Source Code",
                 style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                     color: themeColorApp)),
           ),
           ListTile(
-            onTap: () {_launchGithub();},
+            onTap: () {
+              _launchGithub();
+            },
             leading: const Icon(Icons.open_in_new_outlined),
             title: const Text("View on GitHub",
                 style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.blue)),
+                    decoration: TextDecoration.underline, color: Colors.blue)),
           ),
-          const Divider(),
           ListTile(
-            leading: const SizedBox(
-              height: 0.1,
-            ),
-            title: Text("Quote".toUpperCase(),
+            title: Text("Quote",
                 style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                     color: themeColorApp)),
           ),
           const ListTile(
             leading: Icon(Icons.messenger_outline),
             title: Text(
               "The main value in software is not the code produced, but the knowledge accumulated by the people who produced it.",
-              style: TextStyle(fontSize: 16),
             ),
           ),
         ]));

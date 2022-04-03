@@ -106,12 +106,7 @@ class _NewShopListState extends State<NewShopList> {
     );
 
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      title: const Text(
-        "Select Color : "
-      ),
+      title: const Text("Select Color : "),
       content: SingleChildScrollView(
           child: BlockPicker(
         pickerColor: currentColor,
@@ -131,7 +126,6 @@ class _NewShopListState extends State<NewShopList> {
 
   @override
   Widget build(BuildContext context) {
-
     final Brightness _addNewItemTextBrightness = Theme.of(context).brightness;
 
     return Scaffold(
@@ -173,9 +167,6 @@ class _NewShopListState extends State<NewShopList> {
                 counterText: "",
                 hintText: "Shoplist Name",
               ),
-              style: const TextStyle(
-                fontSize: 16,
-              ),
             ),
             trailing: MaterialButton(
               minWidth: 30,
@@ -213,21 +204,21 @@ class _NewShopListState extends State<NewShopList> {
               onEditingComplete: () {},
               decoration: InputDecoration(
                   hintText: "Add New Item",
-                  hintStyle:
-                      TextStyle(color: _addNewItemTextBrightness == Brightness.dark
-                          ? lightenColor(currentColor, 20)
-                          : darkenColor(currentColor, 20),),
+                  hintStyle: TextStyle(
+                    color: _addNewItemTextBrightness == Brightness.dark
+                        ? lightenColor(currentColor, 20)
+                        : darkenColor(currentColor, 20),
+                  ),
                   border: InputBorder.none,
                   counterText: "" // hide maxlength counter
                   ),
               style: TextStyle(
-                fontSize: 16,
                 color: Theme.of(context).textTheme.headline6.color,
               ),
             ),
           ),
 
-          const  Padding(
+          const Padding(
             padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Divider(),
           ),

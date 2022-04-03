@@ -52,9 +52,6 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
             ),
             counterText: "" // hide maxlength counter
         ),
-        style: const TextStyle(
-          fontSize: 16,
-        ),
       ),
     );
 
