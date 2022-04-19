@@ -34,7 +34,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-
     Color themeColorApp = Theme.of(context).colorScheme.tertiary;
 
     return Scaffold(
@@ -46,9 +45,6 @@ class _SettingsPageState extends State<SettingsPage> {
             Card(
               margin: const EdgeInsets.fromLTRB(16, 20, 16, 25),
               color: themeColorApp,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
-              ),
               child: ListTile(
                 title: Text(
                   AppDetails.appName + " " + AppDetails.appVersion,
@@ -57,9 +53,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
-
             ListTile(
-
               title: Text("General",
                   style: TextStyle(
                       fontSize: 14,
@@ -99,9 +93,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   }
                   return const SizedBox.shrink();
                 }),
-
             ListTile(
-
               title: Text("About",
                   style: TextStyle(
                       fontSize: 14,

@@ -124,137 +124,149 @@ class _NewShopListState extends State<NewShopList> {
     );
   }
 
+  void loseFocus() {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Brightness _addNewItemTextBrightness = Theme.of(context).brightness;
 
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-            child: IconButton(
-              icon: const Icon(
-                Icons.save_outlined,
+    return GestureDetector(
+      onTap: () {
+        loseFocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.save_outlined,
+                ),
+                onPressed: () async {
+                  await _saveShopList();
+                  await _saveItemsToShopList();
+                  await widget.refreshShopLists();
+                  Navigator.of(context).pop();
+                },
               ),
-              onPressed: () async {
-                await _saveShopList();
-                await _saveItemsToShopList();
-                await widget.refreshShopLists();
-                Navigator.of(context).pop();
-              },
-            ),
-          )
-        ],
-        title: const Text('New Shoplist'),
-      ),
-      body: Column(
-        children: [
-          ListTile(
-            contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
-            leading: const Icon(
-              Icons.notes_outlined,
-            ),
-            title: TextField(
-              autofocus: false,
-              minLines: 1,
-              maxLength: 30,
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              textCapitalization: TextCapitalization.sentences,
-              controller: customControllerNome,
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                counterText: "",
-                hintText: "Shoplist Name",
+            )
+          ],
+          title: const Text('New Shoplist'),
+        ),
+        body: Column(
+          children: [
+            ListTile(
+              contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
+              leading: const Icon(
+                Icons.notes_outlined,
               ),
-            ),
-            trailing: MaterialButton(
-              minWidth: 30,
-              height: 30,
-              shape: const CircleBorder(),
-              elevation: 0,
-              color: currentColor,
-              onPressed: () {
-                createAlertSelectColor(context);
-              },
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.add_shopping_cart_outlined,
-              color: _addNewItemTextBrightness == Brightness.dark
-                  ? lightenColor(currentColor, 20)
-                  : darkenColor(currentColor, 20),
-            ),
-            title: TextField(
-              minLines: 1,
-              maxLength: 200,
-              autofocus: false,
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              textCapitalization: TextCapitalization.sentences,
-              controller: customControllerAddNewItem,
-              onSubmitted: (value) => {
-                _addItemToShopList(),
-                refreshList(),
-                customControllerAddNewItem.text = ""
-              },
-              onEditingComplete: () {},
-              decoration: InputDecoration(
-                  hintText: "Add New Item",
-                  hintStyle: TextStyle(
-                    color: _addNewItemTextBrightness == Brightness.dark
-                        ? lightenColor(currentColor, 20)
-                        : darkenColor(currentColor, 20),
-                  ),
+              title: TextField(
+                autofocus: false,
+                minLines: 1,
+                maxLength: 30,
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                textCapitalization: TextCapitalization.sentences,
+                controller: customControllerNome,
+                decoration: const InputDecoration(
                   border: InputBorder.none,
-                  counterText: "" // hide maxlength counter
-                  ),
-              style: TextStyle(
-                color: Theme.of(context).textTheme.headline6.color,
+                  counterText: "",
+                  hintText: "Shoplist name",
+                ),
+              ),
+              trailing: MaterialButton(
+                minWidth: 30,
+                height: 30,
+                shape: const CircleBorder(),
+                elevation: 0,
+                color: currentColor,
+                onPressed: () {
+                  createAlertSelectColor(context);
+                },
               ),
             ),
-          ),
-
-          const Padding(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Divider(),
-          ),
-
-          //LIST
-          Flexible(
-            child: ListView(
-              children: [
-                const SizedBox(
-                  height: 15,
-                ),
-                ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: items.length,
-                    reverse: true,
-                    itemBuilder: (context, index) {
-                      return ItemNewShopList(
-                        key: UniqueKey(),
-                        item: Item(
-                          id: items[index].id,
-                          nome: items[index].nome,
-                          estado: items[index].estado,
-                          idShopList: items[index].idShopList,
-                        ),
-                        updateItem: updateItem,
-                        deleteItem: _deleteItem,
-                      );
-                    }),
-                const SizedBox(
-                  height: 50,
-                ),
-              ],
+            const SizedBox(
+              height: 10,
             ),
-          ),
-        ],
+            Card(
+              margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+              child: ListTile(
+                leading: Icon(
+                  Icons.add_shopping_cart_outlined,
+                  color: _addNewItemTextBrightness == Brightness.dark
+                      ? lightenColor(currentColor, 20)
+                      : darkenColor(currentColor, 20),
+                ),
+                title: TextField(
+                  minLines: 1,
+                  maxLength: 200,
+                  autofocus: false,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  textCapitalization: TextCapitalization.sentences,
+                  controller: customControllerAddNewItem,
+                  onSubmitted: (value) => {
+                    _addItemToShopList(),
+                    refreshList(),
+                    customControllerAddNewItem.text = ""
+                  },
+                  onEditingComplete: () {},
+                  decoration: InputDecoration(
+                      hintText: "Add new item",
+                      hintStyle: TextStyle(
+                        color: _addNewItemTextBrightness == Brightness.dark
+                            ? lightenColor(currentColor, 20).withOpacity(0.6)
+                            : darkenColor(currentColor, 20).withOpacity(0.6),
+                      ),
+                      border: InputBorder.none,
+                      counterText: "" // hide maxlength counter
+                      ),
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.headline6.color,
+                  ),
+                ),
+              ),
+            ),
+
+
+
+            //LIST
+            Flexible(
+              child: ListView(
+                children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: items.length,
+                      reverse: true,
+                      itemBuilder: (context, index) {
+                        return ItemNewShopList(
+                          key: UniqueKey(),
+                          item: Item(
+                            id: items[index].id,
+                            nome: items[index].nome,
+                            estado: items[index].estado,
+                            idShopList: items[index].idShopList,
+                          ),
+                          updateItem: updateItem,
+                          deleteItem: _deleteItem,
+                        );
+                      }),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

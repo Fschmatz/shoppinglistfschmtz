@@ -1,20 +1,24 @@
 class AppDetails{
 
-  static String appVersion = "1.4.9";
+  static String appVersion = "1.5.0";
   static String appName = "Shoplist Fschmatz";
   static String repositoryLink = "https://github.com/Fschmatz/shoppinglistfschmtz";
 
 
   static String changelogCurrent = ''' 
+1.5.0
+- New Edit Shoplist Page
+- Small Fixes
+''';
+
+  static String changelogsOld = '''
 1.4.9
 - Home Changes
 - Small Fixes
 - Hide AppBar
 - Lints
 - Added System Theme
-''';
 
-  static String changelogsOld = '''
 1.3.3
 - Tweaked Animations 
 - Show/Hide Item Count Setting

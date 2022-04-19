@@ -90,7 +90,7 @@ class _HomeState extends State<Home> {
                           )).then((value) => getLastId());
                     }),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 5, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
                   child: IconButton(
                       icon: const Icon(
                         Icons.settings_outlined,

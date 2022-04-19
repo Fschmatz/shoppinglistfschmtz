@@ -19,9 +19,9 @@ class EditShopList extends StatefulWidget {
 }
 
 class _EditShopListState extends State<EditShopList> {
-  TextEditingController customControllerNome = TextEditingController();
-  TextEditingController customControllerCor = TextEditingController();
-  TextEditingController customControllerAddNewItem = TextEditingController();
+  TextEditingController controllerNomeShoplist = TextEditingController();
+  TextEditingController controllerCor = TextEditingController();
+  TextEditingController controllerAddNewItem = TextEditingController();
   List<Map<String, dynamic>> itemsDo = [];
   List<Map<String, dynamic>> itemsDone = [];
   String corAtual = "Color(0xFF607D8B)";
@@ -31,7 +31,7 @@ class _EditShopListState extends State<EditShopList> {
     super.initState();
     getItemsShopList();
 
-    customControllerNome.text = widget.shopList.nome;
+    controllerNomeShoplist.text = widget.shopList.nome;
     corAtual = widget.shopList.cor;
     currentColor = Color(int.parse(widget.shopList.cor.substring(6, 16)));
     pickerColor = Color(int.parse(widget.shopList.cor.substring(6, 16)));
@@ -56,9 +56,9 @@ class _EditShopListState extends State<EditShopList> {
     final dbShopList = ShopListDao.instance;
     Map<String, dynamic> row = {
       ShopListDao.columnId: widget.shopList.id,
-      ShopListDao.columnNome: customControllerNome.text.isEmpty
+      ShopListDao.columnNome: controllerNomeShoplist.text.isEmpty
           ? "Shoplist"
-          : customControllerNome.text,
+          : controllerNomeShoplist.text,
       ShopListDao.columnCor: corAtual.toString(),
     };
     final update = await dbShopList.update(row);
@@ -78,7 +78,7 @@ class _EditShopListState extends State<EditShopList> {
   void _addItemToShopList() async {
     final dbItems = ItemDao.instance;
     Map<String, dynamic> row = {
-      ItemDao.columnNome: customControllerAddNewItem.text,
+      ItemDao.columnNome: controllerAddNewItem.text,
       ItemDao.columnEstado: 0,
       ItemDao.columnIdShopList: widget.shopList.id,
     };
@@ -96,34 +96,81 @@ class _EditShopListState extends State<EditShopList> {
   }
 
   showAlertDialogOkDelete(BuildContext context) {
-    Widget okButton = TextButton(
-      child: const Text(
-        "Yes",
-      ),
-      onPressed: () {
-        _deleteShopList();
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
-      },
-    );
-
-    AlertDialog alert = AlertDialog(
-      title: const Text(
-        "Confirmation ",
-      ),
-      content: const Text(
-        "Delete Shoplist ?",
-      ),
-      actions: [
-        okButton,
-      ],
-    );
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alert;
+        return AlertDialog(
+            title: const Text(
+              "Confirmation",
+            ),
+            content: const Text(
+              "Delete shoplist ?",
+            ),
+            actions: [
+              TextButton(
+                child: const Text(
+                  "Yes",
+                ),
+                onPressed: () {
+                  _deleteShopList();
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+              )
+            ]);
       },
     );
+  }
+
+  showDialogRename(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            title: const Text(
+              "Rename shoplist",
+            ),
+            content: Card(
+              elevation: 0,
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: ListTile(
+                contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                title: TextField(
+                  autofocus: true,
+                  minLines: 1,
+                  maxLength: 30,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  textCapitalization: TextCapitalization.sentences,
+                  controller: controllerNomeShoplist,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    counterText: "",
+                    hintText: "Shoplist name",
+                  ),
+                  onSubmitted: (value) => renameShoplistFunction(),
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                child: const Text(
+                  "Ok",
+                ),
+                onPressed: () {
+                  renameShoplistFunction();
+                },
+              )
+            ]);
+      },
+    );
+  }
+
+  void renameShoplistFunction(){
+    _updateShopList();
+    setState(() {
+      controllerNomeShoplist;
+    });
+    Navigator.of(context).pop();
   }
 
   Color pickerColor = const Color(0xFF607D8B);
@@ -133,7 +180,7 @@ class _EditShopListState extends State<EditShopList> {
     setState(() => pickerColor = color);
   }
 
-  createAlertSelectColor(BuildContext context) {
+  dialogSelectColor(BuildContext context) {
     Widget okButton = TextButton(
       child: const Text(
         "Ok",
@@ -148,7 +195,7 @@ class _EditShopListState extends State<EditShopList> {
 
     AlertDialog alert = AlertDialog(
       title: const Text(
-        "Select Color : ",
+        "Select color :",
       ),
       content: SingleChildScrollView(
           child: BlockPicker(
@@ -167,160 +214,107 @@ class _EditShopListState extends State<EditShopList> {
     );
   }
 
+  void loseFocus() {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Brightness _addNewItemTextBrightness = Theme.of(context).brightness;
 
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-            child: IconButton(
-              icon: const Icon(
-                Icons.delete_outline_outlined,
-              ),
-              onPressed: () {
-                showAlertDialogOkDelete(context);
-              },
-            ),
-          ),
-        ],
-        title: const Text('Edit Shoplist'),
-      ),
-      body: Column(
-        children: [
-          ListTile(
-            contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
-            leading: const Icon(
-              Icons.notes_outlined,
-            ),
-            title: TextField(
-              minLines: 1,
-              maxLength: 30,
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              textCapitalization: TextCapitalization.sentences,
-              controller: customControllerNome,
-              onChanged: (value) => _updateShopList(),
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                counterText: "",
-                hintText: "Shoplist Name",
-              ),
-            ),
-            trailing: MaterialButton(
-              minWidth: 30,
-              height: 30,
-              shape: const CircleBorder(),
-              elevation: 0,
-              color: currentColor,
-              onPressed: () {
-                createAlertSelectColor(context);
-              },
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.add_shopping_cart_outlined,
-              color: _addNewItemTextBrightness == Brightness.dark
-                  ? lightenColor(currentColor, 20)
-                  : darkenColor(currentColor, 20),
-            ),
-            title: TextField(
-              minLines: 1,
-              maxLength: 200,
-              autofocus: false,
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              textCapitalization: TextCapitalization.sentences,
-              controller: customControllerAddNewItem,
-              onSubmitted: (value) => {
-                _addItemToShopList(),
-                getItemsShopList(),
-                customControllerAddNewItem.text = ""
-              },
-              onEditingComplete: () {},
-              decoration: InputDecoration(
-                  hintText: "Add New Item",
-                  hintStyle: TextStyle(
-                    color: _addNewItemTextBrightness == Brightness.dark
-                        ? lightenColor(currentColor, 20)
-                        : darkenColor(currentColor, 20),
+    return GestureDetector(
+      onTap: () {
+        loseFocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            PopupMenuButton<int>(
+                icon: const Icon(Icons.more_vert_outlined),
+                itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
+                      const PopupMenuItem<int>(value: 0, child: Text('Rename')),
+                      const PopupMenuItem<int>(
+                          value: 1, child: Text('Change color')),
+                      const PopupMenuItem<int>(value: 2, child: Text('Delete')),
+                    ],
+                onSelected: (int value) {
+                  if (value == 0) {
+                    showDialogRename(context);
+                  } else if (value == 1) {
+                    dialogSelectColor(context);
+                  } else if (value == 2) {
+                    showAlertDialogOkDelete(context);
+                  }
+                })
+          ],
+          title: Text(controllerNomeShoplist.text),
+        ),
+        body: Column(
+          children: [
+            Card(
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: ListTile(
+                leading: Icon(
+                  Icons.add_shopping_cart_outlined,
+                  color: _addNewItemTextBrightness == Brightness.dark
+                      ? lightenColor(currentColor, 20)
+                      : darkenColor(currentColor, 20),
+                ),
+                title: TextField(
+                  minLines: 1,
+                  maxLength: 200,
+                  autofocus: false,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  textCapitalization: TextCapitalization.sentences,
+                  controller: controllerAddNewItem,
+                  onSubmitted: (value) => {
+                    _addItemToShopList(),
+                    getItemsShopList(),
+                    controllerAddNewItem.text = ""
+                  },
+                  onEditingComplete: () {},
+                  decoration: InputDecoration(
+                      hintText: "Add new item",
+                      hintStyle: TextStyle(
+                        color: _addNewItemTextBrightness == Brightness.dark
+                            ? lightenColor(currentColor, 20).withOpacity(0.6)
+                            : darkenColor(currentColor, 20).withOpacity(0.6),
+                      ),
+                      border: InputBorder.none,
+                      counterStyle: const TextStyle(
+                        height: double.minPositive,
+                      ),
+                      counterText: "" // hide maxlength counter
+                      ),
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.headline6.color,
                   ),
-                  border: InputBorder.none,
-                  counterStyle: const TextStyle(
-                    height: double.minPositive,
-                  ),
-                  counterText: "" // hide maxlength counter
-                  ),
-              style: TextStyle(
-                color: Theme.of(context).textTheme.headline6.color,
+                ),
               ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Divider(),
-          ),
 
-          //LIST
-          Flexible(
-            child: ListView(
-              children: [
-                const SizedBox(
-                  height: 15,
-                ),
-                ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: itemsDo.length,
-                    itemBuilder: (context, index) {
-                      return ItemEditShopList(
-                        key: UniqueKey(),
-                        item: Item(
-                          id: itemsDo[index]['id'],
-                          nome: itemsDo[index]['nome'],
-                          estado: itemsDo[index]['estado'],
-                          idShopList: itemsDo[index]['idShopList'],
-                        ),
-                        getItemsShopList: getItemsShopList,
-                        updateItem: _updateItem,
-                        deleteItem: _deleteItemFromShoplist,
-                        listAccent: currentColor,
-                      );
-                    }),
-                Visibility(
-                  visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
-                  child: const SizedBox(
+            //LIST
+            Flexible(
+              child: ListView(
+                children: [
+                  const SizedBox(
                     height: 15,
                   ),
-                ),
-                Visibility(
-                  visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
-                  child: const Divider(),
-                ),
-                Visibility(
-                  visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
-                  child: const SizedBox(
-                    height: 15,
-                  ),
-                ),
-                Visibility(
-                  visible: itemsDone.isNotEmpty,
-                  child: ListView.builder(
+                  ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: itemsDone.length,
+                      itemCount: itemsDo.length,
                       itemBuilder: (context, index) {
                         return ItemEditShopList(
                           key: UniqueKey(),
                           item: Item(
-                            id: itemsDone[index]['id'],
-                            nome: itemsDone[index]['nome'],
-                            estado: itemsDone[index]['estado'],
-                            idShopList: itemsDone[index]['idShopList'],
+                            id: itemsDo[index]['id'],
+                            nome: itemsDo[index]['nome'],
+                            estado: itemsDo[index]['estado'],
+                            idShopList: itemsDo[index]['idShopList'],
                           ),
                           getItemsShopList: getItemsShopList,
                           updateItem: _updateItem,
@@ -328,14 +322,52 @@ class _EditShopListState extends State<EditShopList> {
                           listAccent: currentColor,
                         );
                       }),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-              ],
+                  Visibility(
+                    visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
+                    child: const SizedBox(
+                      height: 15,
+                    ),
+                  ),
+                  Visibility(
+                    visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
+                    child: const Divider(),
+                  ),
+                  Visibility(
+                    visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
+                    child: const SizedBox(
+                      height: 15,
+                    ),
+                  ),
+                  Visibility(
+                    visible: itemsDone.isNotEmpty,
+                    child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: itemsDone.length,
+                        itemBuilder: (context, index) {
+                          return ItemEditShopList(
+                            key: UniqueKey(),
+                            item: Item(
+                              id: itemsDone[index]['id'],
+                              nome: itemsDone[index]['nome'],
+                              estado: itemsDone[index]['estado'],
+                              idShopList: itemsDone[index]['idShopList'],
+                            ),
+                            getItemsShopList: getItemsShopList,
+                            updateItem: _updateItem,
+                            deleteItem: _deleteItemFromShoplist,
+                            listAccent: currentColor,
+                          );
+                        }),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
