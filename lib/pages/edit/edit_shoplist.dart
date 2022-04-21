@@ -295,7 +295,7 @@ class _EditShopListState extends State<EditShopList> {
                       ),
                       hintText: "Add new item",
                       hintStyle: TextStyle(
-                        color: shoplistAccent.withOpacity(0.5),
+                        color: shoplistAccent.withOpacity(0.6),
                       ),
                       counterStyle: const TextStyle(
                         height: double.minPositive,
