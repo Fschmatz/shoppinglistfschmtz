@@ -134,6 +134,9 @@ class _NewShopListState extends State<NewShopList> {
   @override
   Widget build(BuildContext context) {
     final Brightness _addNewItemTextBrightness = Theme.of(context).brightness;
+    Color shoplistAccent = _addNewItemTextBrightness == Brightness.dark
+        ? lightenColor(currentColor, 20)
+        : darkenColor(currentColor, 20);
 
     return GestureDetector(
       onTap: () {
@@ -193,44 +196,58 @@ class _NewShopListState extends State<NewShopList> {
             const SizedBox(
               height: 10,
             ),
-            Card(
-              margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
-              child: ListTile(
-                leading: Icon(
-                  Icons.add_shopping_cart_outlined,
-                  color: _addNewItemTextBrightness == Brightness.dark
-                      ? lightenColor(currentColor, 20)
-                      : darkenColor(currentColor, 20),
-                ),
-                title: TextField(
-                  minLines: 1,
-                  maxLength: 200,
-                  autofocus: false,
-                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  textCapitalization: TextCapitalization.sentences,
-                  controller: customControllerAddNewItem,
-                  onSubmitted: (value) => {
-                    _addItemToShopList(),
-                    refreshList(),
-                    customControllerAddNewItem.text = ""
-                  },
-                  onEditingComplete: () {},
-                  decoration: InputDecoration(
-                      hintText: "Add new item",
-                      hintStyle: TextStyle(
-                        color: _addNewItemTextBrightness == Brightness.dark
-                            ? lightenColor(currentColor, 20).withOpacity(0.6)
-                            : darkenColor(currentColor, 20).withOpacity(0.6),
-                      ),
-                      border: InputBorder.none,
-                      counterText: "" // hide maxlength counter
-                      ),
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.headline6.color,
+            Padding(
+              padding : const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+              child:  Card(
+                child: TextField(
+                    minLines: 1,
+                    maxLength: 200,
+                    autofocus: false,
+                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                    textCapitalization: TextCapitalization.sentences,
+                    controller: customControllerAddNewItem,
+                    onSubmitted: (value) => {
+                      _addItemToShopList(),
+                      refreshList(),
+                      customControllerAddNewItem.text = ""
+                    },
+                    onEditingComplete: () {},
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Theme.of(context).cardTheme.color,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).cardTheme.color,
+                            ),
+                            borderRadius: BorderRadius.circular(10.0)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: shoplistAccent,
+                          ),
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.add_shopping_cart_outlined,
+                          color: shoplistAccent,
+                        ),
+                        hintText: "Add new item",
+                        hintStyle: TextStyle(
+                          color: shoplistAccent.withOpacity(0.5),
+                        ),
+                        counterStyle: const TextStyle(
+                          height: double.minPositive,
+                        ),
+                        counterText: "" // hide maxlength counter
+                    ),
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.headline6.color,
+                    ),
                   ),
-                ),
               ),
-            ),
+              ),
+
 
 
 

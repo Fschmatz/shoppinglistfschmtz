@@ -165,7 +165,7 @@ class _EditShopListState extends State<EditShopList> {
     );
   }
 
-  void renameShoplistFunction(){
+  void renameShoplistFunction() {
     _updateShopList();
     setState(() {
       controllerNomeShoplist;
@@ -224,6 +224,9 @@ class _EditShopListState extends State<EditShopList> {
   @override
   Widget build(BuildContext context) {
     final Brightness _addNewItemTextBrightness = Theme.of(context).brightness;
+    Color shoplistAccent = _addNewItemTextBrightness == Brightness.dark
+        ? lightenColor(currentColor, 20)
+        : darkenColor(currentColor, 20);
 
     return GestureDetector(
       onTap: () {
@@ -254,16 +257,10 @@ class _EditShopListState extends State<EditShopList> {
         ),
         body: Column(
           children: [
-            Card(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              child: ListTile(
-                leading: Icon(
-                  Icons.add_shopping_cart_outlined,
-                  color: _addNewItemTextBrightness == Brightness.dark
-                      ? lightenColor(currentColor, 20)
-                      : darkenColor(currentColor, 20),
-                ),
-                title: TextField(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: Card(
+                child: TextField(
                   minLines: 1,
                   maxLength: 200,
                   autofocus: false,
@@ -277,13 +274,29 @@ class _EditShopListState extends State<EditShopList> {
                   },
                   onEditingComplete: () {},
                   decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Theme.of(context).cardTheme.color,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0)),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).cardTheme.color,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0)),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: shoplistAccent,
+                        ),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.add_shopping_cart_outlined,
+                        color: shoplistAccent,
+                      ),
                       hintText: "Add new item",
                       hintStyle: TextStyle(
-                        color: _addNewItemTextBrightness == Brightness.dark
-                            ? lightenColor(currentColor, 20).withOpacity(0.6)
-                            : darkenColor(currentColor, 20).withOpacity(0.6),
+                        color: shoplistAccent.withOpacity(0.5),
                       ),
-                      border: InputBorder.none,
                       counterStyle: const TextStyle(
                         height: double.minPositive,
                       ),
