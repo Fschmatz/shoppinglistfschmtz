@@ -199,6 +199,13 @@ class _NewShopListState extends State<NewShopList> {
             Padding(
               padding : const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
               child:  Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: BorderSide(
+                    color: shoplistAccent.withOpacity(0.8),
+                  ),
+                ),
                 child: TextField(
                     minLines: 1,
                     maxLength: 200,
@@ -228,14 +235,17 @@ class _NewShopListState extends State<NewShopList> {
                           ),
                           borderRadius: BorderRadius.circular(12.0),
                         ),
-                        prefixIcon: Icon(
-                          Icons.add_shopping_cart_outlined,
-                          color: shoplistAccent,
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Icon(
+                            Icons.add_shopping_cart_outlined,
+                            color: shoplistAccent,
+                          ),
                         ),
-                        hintText: "Add new item",
+                       /* hintText: "Add new item",
                         hintStyle: TextStyle(
                           color: shoplistAccent.withOpacity(0.6),
-                        ),
+                        ),*/
                         counterStyle: const TextStyle(
                           height: double.minPositive,
                         ),

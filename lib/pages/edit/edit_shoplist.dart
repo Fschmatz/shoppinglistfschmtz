@@ -132,6 +132,12 @@ class _EditShopListState extends State<EditShopList> {
             ),
             content: Card(
               elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(
+                  color: Colors.grey.shade800,
+                ),
+              ),
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: ListTile(
                 contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -260,6 +266,13 @@ class _EditShopListState extends State<EditShopList> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: BorderSide(
+                    color: shoplistAccent.withOpacity(0.8),
+                  ),
+                ),
                 child: TextField(
                   minLines: 1,
                   maxLength: 200,
@@ -289,14 +302,17 @@ class _EditShopListState extends State<EditShopList> {
                         ),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      prefixIcon: Icon(
-                        Icons.add_shopping_cart_outlined,
-                        color: shoplistAccent,
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Icon(
+                          Icons.add_shopping_cart_outlined,
+                          color: shoplistAccent,
+                        ),
                       ),
-                      hintText: "Add new item",
-                      hintStyle: TextStyle(
+                      //hintText: "Add new item",
+                      /*hintStyle: TextStyle(
                         color: shoplistAccent.withOpacity(0.6),
-                      ),
+                      ),*/
                       counterStyle: const TextStyle(
                         height: double.minPositive,
                       ),
