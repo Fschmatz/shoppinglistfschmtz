@@ -124,13 +124,6 @@ class _NewShopListState extends State<NewShopList> {
     );
   }
 
-  void loseFocus() {
-    FocusScopeNode currentFocus = FocusScope.of(context);
-    if (!currentFocus.hasPrimaryFocus) {
-      currentFocus.unfocus();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final Brightness _addNewItemTextBrightness = Theme.of(context).brightness;
@@ -139,9 +132,7 @@ class _NewShopListState extends State<NewShopList> {
         : darkenColor(currentColor, 20);
 
     return GestureDetector(
-      onTap: () {
-        loseFocus();
-      },
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
           actions: [
@@ -165,7 +156,7 @@ class _NewShopListState extends State<NewShopList> {
         body: Column(
           children: [
             ListTile(
-              contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
+              contentPadding: const EdgeInsets.fromLTRB(16, 5, 5, 0),
               leading: const Icon(
                 Icons.notes_outlined,
               ),
@@ -197,15 +188,9 @@ class _NewShopListState extends State<NewShopList> {
               height: 10,
             ),
             Padding(
-              padding : const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
-              child:  Card(
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  side: BorderSide(
-                    color: shoplistAccent.withOpacity(0.8),
-                  ),
-                ),
+              padding : const EdgeInsets.symmetric(horizontal: 16,vertical: 5),
+              child: Card(
+                elevation: 1,
                 child: TextField(
                     minLines: 1,
                     maxLength: 200,
@@ -214,9 +199,11 @@ class _NewShopListState extends State<NewShopList> {
                     textCapitalization: TextCapitalization.sentences,
                     controller: customControllerAddNewItem,
                     onSubmitted: (value) => {
-                      _addItemToShopList(),
-                      refreshList(),
-                      customControllerAddNewItem.text = ""
+                      if(customControllerAddNewItem.text.isNotEmpty){
+                        _addItemToShopList(),
+                        refreshList(),
+                        customControllerAddNewItem.text = ""
+                     }
                     },
                     onEditingComplete: () {},
                     decoration: InputDecoration(
@@ -235,17 +222,14 @@ class _NewShopListState extends State<NewShopList> {
                           ),
                           borderRadius: BorderRadius.circular(12.0),
                         ),
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Icon(
-                            Icons.add_shopping_cart_outlined,
-                            color: shoplistAccent,
-                          ),
+                        prefixIcon: Icon(
+                          Icons.add_outlined,
+                          color: shoplistAccent.withOpacity(0.7),
                         ),
-                       /* hintText: "Add new item",
+                        hintText: "New item",
                         hintStyle: TextStyle(
-                          color: shoplistAccent.withOpacity(0.6),
-                        ),*/
+                          color: shoplistAccent.withOpacity(0.6).withOpacity(0.7),
+                        ),
                         counterStyle: const TextStyle(
                           height: double.minPositive,
                         ),

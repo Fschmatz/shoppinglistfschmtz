@@ -1,12 +1,13 @@
 class AppDetails{
 
-  static String appVersion = "1.5.1";
+  static String appVersion = "1.5.2";
   static String appName = "Shoplist Fschmatz";
   static String repositoryLink = "https://github.com/Fschmatz/shoppinglistfschmtz";
 
   static String changelogCurrent = ''' 
-1.5.1
+1.5.2
 - New Edit Shoplist Page
+- UI Changes
 - Small Fixes
 ''';
 
@@ -24,7 +25,7 @@ class AppDetails{
 
 1.3.2
 - Added Animations 
-- Ui Changes
+- UI Changes
 
 1.3.1
 - Only Open Edit List by Tapping the Name 
@@ -50,7 +51,7 @@ class AppDetails{
 
 1.0.4
 - Small Fixes
-- Small Ui Changes
+- Small UI Changes
 
 1.0.0
 - Offline Final
@@ -77,7 +78,7 @@ class AppDetails{
 
 0.5.1
 - Small Fixes Everywhere
-- Ui Changes
+- UI Changes
 - Add Keyboard Visibility
 
 0.5.0
@@ -149,7 +150,7 @@ class AppDetails{
 - Save List
 
 0.0.6
-- Ui Start
+- UI Start
 
 0.0.5
 - Db Fixes

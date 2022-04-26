@@ -81,13 +81,11 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) => NewShopList(
-                              lastId: lastId,
-                              refreshShopLists: getShopLists,
-                            ),
-                            fullscreenDialog: true,
-                          )).then((value) => getLastId());
+                          MaterialPageRoute(
+                              builder: (context) => NewShopList(
+                                    lastId: lastId,
+                                    refreshShopLists: getShopLists,
+                                  ))).then((value) => getLastId());
                     }),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
@@ -98,14 +96,10 @@ class _HomeState extends State<Home> {
                       tooltip: "Settings",
                       onPressed: () {
                         Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                      SettingsPage(),
-                                  fullscreenDialog: true,
-                                ))
-                            .then(
-                                (value) => {_loadFromPrefs(), getShopLists()});
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SettingsPage())).then(
+                            (value) => {_loadFromPrefs(), getShopLists()});
                       }),
                 ),
               ],

@@ -63,11 +63,10 @@ class _ShopListHomeState extends State<ShopListHome> {
           onTap: () {
             Navigator.push(
                 context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => EditShopList(
+                MaterialPageRoute(
+                  builder: (context) => EditShopList(
                     shopList: widget.shopList,
                   ),
-                  fullscreenDialog: true,
                 )).then((value) => widget.refreshShopLists());
           },
           leading: Icon(
@@ -76,6 +75,7 @@ class _ShopListHomeState extends State<ShopListHome> {
                 ? lightenColor(shopListColor, 20)
                 : darkenColor(shopListColor, 20),
           ),
+          minLeadingWidth: 35,
           title: Text(
             widget.shopList.nome.toUpperCase(),
             style: TextStyle(

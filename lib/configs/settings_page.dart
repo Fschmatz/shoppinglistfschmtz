@@ -110,9 +110,8 @@ class _SettingsPageState extends State<SettingsPage> {
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute<void>(
+                    MaterialPageRoute(
                       builder: (BuildContext context) => AppInfoPage(),
-                      fullscreenDialog: true,
                     ));
               },
             ),
@@ -126,9 +125,8 @@ class _SettingsPageState extends State<SettingsPage> {
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute<void>(
+                    MaterialPageRoute(
                       builder: (BuildContext context) => ChangelogPage(),
-                      fullscreenDialog: true,
                     ));
               },
             ),

@@ -3,8 +3,6 @@ import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/db/item_dao.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
-import '../../util/utils_functions.dart';
-
 class ItemShopListHome extends StatefulWidget {
   @override
   _ItemShopListHomeState createState() => _ItemShopListHomeState();
@@ -19,7 +17,6 @@ class ItemShopListHome extends StatefulWidget {
 }
 
 class _ItemShopListHomeState extends State<ItemShopListHome> {
-
   final GlobalKey<InOutAnimationState> inOutAnimation =
       GlobalKey<InOutAnimationState>();
 
@@ -36,33 +33,17 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
 
   @override
   Widget build(BuildContext context) {
-
-    final Brightness _dotIconBrightness = Theme.of(context).brightness;
-
     return InOutAnimation(
       autoPlay: InOutAnimationStatus.None,
       key: inOutAnimation,
       inDefinition: FadeInAnimation(),
       outDefinition: FadeOutAnimation(
-          preferences: const AnimationPreferences(duration: Duration(milliseconds: 450))
-      ),
+          preferences: const AnimationPreferences(
+              duration: Duration(milliseconds: 450))),
       child: ListTile(
-        contentPadding: const EdgeInsets.fromLTRB(16, 0, 5, 0),
-        leading: Padding(
-          padding: const EdgeInsets.fromLTRB(7, 7, 0, 0),
-          child: Icon(
-            Icons.circle,
-            color: _dotIconBrightness == Brightness.dark
-                ? lightenColor(widget.shopListColor, 20)
-                : darkenColor(widget.shopListColor, 20),
-           // color: widget.shopListColor,
-            size: 10,
-          ),
-        ),
-        title: Text(
-          widget.item.nome,
-        ),
-        trailing: Checkbox(
+        contentPadding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+        leading: Checkbox(
+          //fillColor: MaterialStateProperty.all<Color>(widget.shopListColor.withOpacity(0.6)),
           splashRadius: 30,
           value: widget.item.estado == 1 ? true : false,
           onChanged: (bool v) {
@@ -72,6 +53,9 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
               widget.getItemsRefreshShopList(widget.item.idShopList);
             });
           },
+        ),
+        title: Text(
+          widget.item.nome,
         ),
       ),
     );

@@ -220,13 +220,6 @@ class _EditShopListState extends State<EditShopList> {
     );
   }
 
-  void loseFocus() {
-    FocusScopeNode currentFocus = FocusScope.of(context);
-    if (!currentFocus.hasPrimaryFocus) {
-      currentFocus.unfocus();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final Brightness _addNewItemTextBrightness = Theme.of(context).brightness;
@@ -235,9 +228,7 @@ class _EditShopListState extends State<EditShopList> {
         : darkenColor(currentColor, 20);
 
     return GestureDetector(
-      onTap: () {
-        loseFocus();
-      },
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
           actions: [
@@ -266,13 +257,7 @@ class _EditShopListState extends State<EditShopList> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Card(
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  side: BorderSide(
-                    color: shoplistAccent.withOpacity(0.8),
-                  ),
-                ),
+                elevation: 1,
                 child: TextField(
                   minLines: 1,
                   maxLength: 200,
@@ -281,9 +266,12 @@ class _EditShopListState extends State<EditShopList> {
                   textCapitalization: TextCapitalization.sentences,
                   controller: controllerAddNewItem,
                   onSubmitted: (value) => {
-                    _addItemToShopList(),
-                    getItemsShopList(),
-                    controllerAddNewItem.text = ""
+                    if (controllerAddNewItem.text.isNotEmpty)
+                      {
+                        _addItemToShopList(),
+                        getItemsShopList(),
+                        controllerAddNewItem.text = ""
+                      }
                   },
                   onEditingComplete: () {},
                   decoration: InputDecoration(
@@ -302,17 +290,14 @@ class _EditShopListState extends State<EditShopList> {
                         ),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Icon(
-                          Icons.add_shopping_cart_outlined,
-                          color: shoplistAccent,
-                        ),
+                      prefixIcon: Icon(
+                        Icons.add_outlined,
+                        color: shoplistAccent.withOpacity(0.7),
                       ),
-                      //hintText: "Add new item",
-                      /*hintStyle: TextStyle(
-                        color: shoplistAccent.withOpacity(0.6),
-                      ),*/
+                      hintText: "New item",
+                      hintStyle: TextStyle(
+                        color: shoplistAccent.withOpacity(0.7),
+                      ),
                       counterStyle: const TextStyle(
                         height: double.minPositive,
                       ),
