@@ -93,8 +93,8 @@ class _ShopListHomeState extends State<ShopListHome> {
               child: Text(
                 items.length.toString(),
                 style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
                   color: _listNameTextBrightness == Brightness.dark
                       ? lightenColor(shopListColor, 20)
                       : darkenColor(shopListColor, 20),

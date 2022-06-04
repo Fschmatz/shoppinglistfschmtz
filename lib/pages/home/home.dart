@@ -109,10 +109,7 @@ class _HomeState extends State<Home> {
           child: loading
               ? const Center(child: SizedBox.shrink())
               : ListView(children: <Widget>[
-                  ListView.separated(
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 5,
-                    ),
+                  ListView.builder(
                     physics: const ScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: shopLists.length,

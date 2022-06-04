@@ -42,7 +42,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
       inDefinition: FadeInAnimation(),
       outDefinition: FadeOutAnimation(
           preferences: const AnimationPreferences(
-              duration: Duration(milliseconds: 450))),
+              duration: Duration(milliseconds: 400))),
       child: ListTile(
         tileColor: appBrightness == Brightness.dark
             ? widget.shopListColor.withOpacity(0.025)
