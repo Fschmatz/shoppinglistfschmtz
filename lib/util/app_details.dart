@@ -1,159 +1,160 @@
 class AppDetails{
 
-  static String appVersion = "1.5.2";
+  static String appVersion = "1.5.3";
   static String appName = "Shoplist Fschmatz";
   static String repositoryLink = "https://github.com/Fschmatz/shoppinglistfschmtz";
 
   static String changelogCurrent = ''' 
-1.5.2
-- New Edit Shoplist Page
-- UI Changes
-- Small Fixes
+1.5.3
+- New edit shoplist page
+- UI changes
+- Small fixes
+- Flutter 3
 ''';
 
   static String changelogsOld = '''
 1.4.9
-- Home Changes
-- Small Fixes
-- Hide AppBar
+- Home changes
+- Small fixes
+- Hide appbar
 - Lints
-- Added System Theme
+- Added system theme
 
 1.3.3
-- Tweaked Animations 
-- Show/Hide Item Count Setting
+- Tweaked animations 
+- Show/hide item count setting
 
 1.3.2
-- Added Animations 
-- UI Changes
+- Added animations 
+- UI changes
 
 1.3.1
-- Only Open Edit List by Tapping the Name 
-- Small Bug Fix
+- Only open edit list by tapping the name 
+- Small bug fix
 
 1.3.0
-- New Home
-- Removed Cards
-- Changed New/Edit Window Layout
+- New home
+- Removed cards
+- changed new/edit window layout
 
 1.2.2
-- Lists Ordered By Name
-- Small Fixes
-- Changed List Colors
+- Lists ordered by name
+- Small fixes
+- Changed list colors
 
 1.2.0
-- New Settings Page
-- Small Fixes
+- New settings page
+- Small fixes
 
 1.1.0
-- Small Fixes
-- Various Color Changes
+- Small fixes
+- Various color changes
 
 1.0.4
-- Small Fixes
-- Small UI Changes
+- Small fixes
+- Small UI changes
 
 1.0.0
-- Offline Final
-- Theme Changes
+- Offline final
+- Theme changes
 
 0.6.5
-- Small Fixes
+- Small fixes
 
 0.6.4
-- Small Changes
+- Small changes
 
 0.6.3
 - Fixes
 
 0.6.2
-- Changes to add Item
+- Changes to add item
 
 0.6.1
-- Flutter 2.0 Fixes
+- Flutter 2.0 fixes
 
 0.6.0
-- New Add Item Button
-- Plugin Keyboard Visibility
+- New add item button
+- Plugin keyboard visibility
 
 0.5.1
-- Small Fixes Everywhere
-- UI Changes
-- Add Keyboard Visibility
+- Small fixes everywhere
+- UI changes
+- Add keyboard visibility
 
 0.5.0
-- Technically Usable
-- Performance Improvements !
+- Technically usable
+- Performance improvements !
 
 0.4.2
-- Flashing Items on SetState Fixed
+- Flashing items on setstate fixed
 - Fixes
 
 0.4.1
-- Edit only updates ShopList
+- Edit only updates shoplist
 - Fixes
 
 0.4.0
-- Save new ShopList + Items
-- Edit+Save ShopList + Items
+- Save new shoplist + items
+- Edit+save shoplist + items
 - Fixes
 
 0.3.4
-- Home/New/Edit with a package each
+- Home/new/edit with a package each
 - Fixes
 
 0.3.3
-- Visibility for ShopList Items
+- Visibility for shoplist items
 - Fixes
 
 0.3.2
 - Fixes
 
 0.3.1
-- Colors Changes
+- Colors changes
 - Fixes
 
 0.3.0
-- Logic Changes
-- New Classes
+- Logic changes
+- New classes
 
 0.2.0
-- Edit/New Pages Separated
+- Edit/new pages separated
 
 0.1.4
 - Fixes
 
 0.1.3
-- Remake Edit/Delete Logic
+- Remake edit/delete logic
 
 0.1.2
-- Remake Edit/Delete Logic
-- Unique Key for ShopLists
+- Remake edit/delete logic
+- Unique key for shoplists
 
 0.1.1
 - Fixes
-- Db Trigger on Delete
+- Db trigger on delete
 
 0.1.0
-- Edit ShopList
-- Delete ShopList
-- New Card Layout
+- Edit shoplist
+- Delete shoplist
+- New card layout
 - Fixes
 
 0.0.8
-- Home Changes
+- Home changes
 - Fixes
 
 0.0.7
-- Add New List 
-- Color Picker
-- Save List
+- Add new list 
+- Color picker
+- Save list
 
 0.0.6
-- UI Start
+- UI start
 
 0.0.5
-- Db Fixes
+- Db fixes
 
 0.0.4
 - Db 
@@ -165,7 +166,7 @@ class AppDetails{
 - Home
 
 0.0.1
-- Project Start                                  
+- project start                                  
 
       (ಠ‿ಠ)  
 ''';

@@ -59,7 +59,7 @@ class _ShopListHomeState extends State<ShopListHome> {
       children: [
         ListTile(
           tileColor: shopListColor.withOpacity(0.15),
-          contentPadding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+          contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
           onTap: () {
             Navigator.push(
                 context,
@@ -80,7 +80,7 @@ class _ShopListHomeState extends State<ShopListHome> {
             widget.shopList.nome.toUpperCase(),
             style: TextStyle(
               fontSize: 14,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w500,
               color: _listNameTextBrightness == Brightness.dark
                   ? lightenColor(shopListColor, 20)
                   : darkenColor(shopListColor, 20),

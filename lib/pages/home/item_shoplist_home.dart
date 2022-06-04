@@ -33,6 +33,9 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
 
   @override
   Widget build(BuildContext context) {
+
+    final Brightness appBrightness = Theme.of(context).brightness;
+
     return InOutAnimation(
       autoPlay: InOutAnimationStatus.None,
       key: inOutAnimation,
@@ -41,10 +44,11 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
           preferences: const AnimationPreferences(
               duration: Duration(milliseconds: 450))),
       child: ListTile(
+        tileColor: appBrightness == Brightness.dark
+            ? widget.shopListColor.withOpacity(0.025)
+            : widget.shopListColor.withOpacity(0.05),
         contentPadding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
         leading: Checkbox(
-          //fillColor: MaterialStateProperty.all<Color>(widget.shopListColor.withOpacity(0.6)),
-          splashRadius: 30,
           value: widget.item.estado == 1 ? true : false,
           onChanged: (bool v) {
             inOutAnimation.currentState.animateOut();

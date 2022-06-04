@@ -15,7 +15,6 @@ Future<void> main() async {
       child: const StartAppTheme(),
     ),
   );
-
 }
 
 

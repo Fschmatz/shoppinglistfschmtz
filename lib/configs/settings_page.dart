@@ -68,7 +68,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   }),
               leading: const Icon(Icons.brightness_6_outlined),
               title: const Text(
-                "App Theme",
+                "App theme",
               ),
               subtitle: Text(
                 getThemeStringFormatted(),
@@ -80,7 +80,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   if (snapshot.hasData) {
                     return SwitchListTile(
                         title: const Text(
-                          "Show Shoplist Item Count",
+                          "Show shoplist item count",
                         ),
                         secondary: const Icon(Icons.format_list_numbered_rtl),
                         activeColor: Colors.blue,
@@ -105,7 +105,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Icons.info_outline,
               ),
               title: const Text(
-                "App Info",
+                "App info",
               ),
               onTap: () {
                 Navigator.push(

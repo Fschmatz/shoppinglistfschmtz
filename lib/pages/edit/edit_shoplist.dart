@@ -292,11 +292,11 @@ class _EditShopListState extends State<EditShopList> {
                       ),
                       prefixIcon: Icon(
                         Icons.add_outlined,
-                        color: shoplistAccent.withOpacity(0.7),
+                        color: shoplistAccent
                       ),
-                      hintText: "New item",
-                      hintStyle: TextStyle(
-                        color: shoplistAccent.withOpacity(0.7),
+                      labelText: "New item",
+                      labelStyle:  TextStyle(
+                        color: shoplistAccent
                       ),
                       counterStyle: const TextStyle(
                         height: double.minPositive,

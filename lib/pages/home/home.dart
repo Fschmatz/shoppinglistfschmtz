@@ -87,21 +87,19 @@ class _HomeState extends State<Home> {
                                     refreshShopLists: getShopLists,
                                   ))).then((value) => getLastId());
                     }),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
-                  child: IconButton(
-                      icon: const Icon(
-                        Icons.settings_outlined,
-                      ),
-                      tooltip: "Settings",
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SettingsPage())).then(
-                            (value) => {_loadFromPrefs(), getShopLists()});
-                      }),
-                ),
+                const SizedBox(width: 10,),
+                IconButton(
+                    icon: const Icon(
+                      Icons.settings_outlined,
+                    ),
+                    tooltip: "Settings",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SettingsPage())).then(
+                          (value) => {_loadFromPrefs(), getShopLists()});
+                    }),
               ],
             ),
           ];
