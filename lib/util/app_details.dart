@@ -1,11 +1,11 @@
 class AppDetails{
 
-  static String appVersion = "1.5.3";
+  static String appVersion = "1.5.4";
   static String appName = "Shoplist Fschmatz";
   static String repositoryLink = "https://github.com/Fschmatz/shoppinglistfschmtz";
 
   static String changelogCurrent = ''' 
-1.5.3
+1.5.4
 - New edit shoplist page
 - UI changes
 - Small fixes

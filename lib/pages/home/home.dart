@@ -87,7 +87,6 @@ class _HomeState extends State<Home> {
                                     refreshShopLists: getShopLists,
                                   ))).then((value) => getLastId());
                     }),
-                const SizedBox(width: 10,),
                 IconButton(
                     icon: const Icon(
                       Icons.settings_outlined,
@@ -95,10 +94,10 @@ class _HomeState extends State<Home> {
                     tooltip: "Settings",
                     onPressed: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SettingsPage())).then(
-                          (value) => {_loadFromPrefs(), getShopLists()});
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SettingsPage()))
+                          .then((value) => {_loadFromPrefs(), getShopLists()});
                     }),
               ],
             ),

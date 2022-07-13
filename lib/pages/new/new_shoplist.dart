@@ -243,8 +243,6 @@ class _NewShopListState extends State<NewShopList> {
               ),
 
 
-
-
             //LIST
             Flexible(
               child: ListView(

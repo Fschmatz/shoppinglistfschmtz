@@ -34,25 +34,20 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
   @override
   Widget build(BuildContext context) {
 
-    final Brightness appBrightness = Theme.of(context).brightness;
-
     return InOutAnimation(
       autoPlay: InOutAnimationStatus.None,
       key: inOutAnimation,
       inDefinition: FadeInAnimation(),
-      outDefinition: FadeOutAnimation(
+      outDefinition: SlideOutRightAnimation(
           preferences: const AnimationPreferences(
-              duration: Duration(milliseconds: 400))),
+              duration: Duration(milliseconds: 800))),
       child: ListTile(
-        tileColor: appBrightness == Brightness.dark
-            ? widget.shopListColor.withOpacity(0.025)
-            : widget.shopListColor.withOpacity(0.05),
-        contentPadding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+        contentPadding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
         leading: Checkbox(
           value: widget.item.estado == 1 ? true : false,
           onChanged: (bool v) {
             inOutAnimation.currentState.animateOut();
-            Future.delayed(const Duration(milliseconds: 250), () {
+            Future.delayed(const Duration(milliseconds: 300), () {
               _updateEstadoItem(v);
               widget.getItemsRefreshShopList(widget.item.idShopList);
             });
