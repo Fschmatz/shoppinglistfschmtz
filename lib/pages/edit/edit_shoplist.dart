@@ -232,23 +232,26 @@ class _EditShopListState extends State<EditShopList> {
       child: Scaffold(
         appBar: AppBar(
           actions: [
-            PopupMenuButton<int>(
-                icon: const Icon(Icons.more_vert_outlined),
-                itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
-                      const PopupMenuItem<int>(value: 0, child: Text('Rename')),
-                      const PopupMenuItem<int>(
-                          value: 1, child: Text('Change color')),
-                      const PopupMenuItem<int>(value: 2, child: Text('Delete')),
-                    ],
-                onSelected: (int value) {
-                  if (value == 0) {
-                    showDialogRename(context);
-                  } else if (value == 1) {
-                    dialogSelectColor(context);
-                  } else if (value == 2) {
-                    showAlertDialogOkDelete(context);
-                  }
-                })
+            Theme(
+              data: Theme.of(context).copyWith(useMaterial3: false),
+              child: PopupMenuButton<int>(
+                  icon: const Icon(Icons.more_vert_outlined),
+                  itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
+                        const PopupMenuItem<int>(value: 0, child: Text('Rename')),
+                        const PopupMenuItem<int>(
+                            value: 1, child: Text('Change color')),
+                        const PopupMenuItem<int>(value: 2, child: Text('Delete')),
+                      ],
+                  onSelected: (int value) {
+                    if (value == 0) {
+                      showDialogRename(context);
+                    } else if (value == 1) {
+                      dialogSelectColor(context);
+                    } else if (value == 2) {
+                      showAlertDialogOkDelete(context);
+                    }
+                  }),
+            )
           ],
           title: Text(controllerNomeShoplist.text),
         ),
@@ -256,56 +259,52 @@ class _EditShopListState extends State<EditShopList> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              child: Card(
-                elevation: 1,
-                child: TextField(
-                  minLines: 1,
-                  maxLength: 200,
-                  autofocus: false,
-                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  textCapitalization: TextCapitalization.sentences,
-                  controller: controllerAddNewItem,
-                  onSubmitted: (value) => {
-                    if (controllerAddNewItem.text.isNotEmpty)
-                      {
-                        _addItemToShopList(),
-                        getItemsShopList(),
-                        controllerAddNewItem.text = ""
-                      }
-                  },
-                  onEditingComplete: () {},
-                  decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Theme.of(context).cardTheme.color,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0)),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Theme.of(context).cardTheme.color,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0)),
-                      focusedBorder: OutlineInputBorder(
+              child: TextField(
+                minLines: 1,
+                maxLength: 200,
+                autofocus: false,
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                textCapitalization: TextCapitalization.sentences,
+                controller: controllerAddNewItem,
+                onSubmitted: (value) => {
+                  if (controllerAddNewItem.text.isNotEmpty)
+                    {
+                      _addItemToShopList(),
+                      getItemsShopList(),
+                      controllerAddNewItem.text = ""
+                    }
+                },
+                onEditingComplete: () {},
+                decoration: InputDecoration(
+                    fillColor: Theme.of(context).cardTheme.color,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                    enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: shoplistAccent,
+                          color: shoplistAccent.withOpacity(0.4),
                         ),
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(8.0)),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: shoplistAccent,
                       ),
-                      prefixIcon: Icon(
-                        Icons.add_outlined,
-                        color: shoplistAccent
-                      ),
-                      labelText: "New item",
-                      labelStyle:  TextStyle(
-                        color: shoplistAccent
-                      ),
-                      counterStyle: const TextStyle(
-                        height: double.minPositive,
-                      ),
-                      counterText: "" // hide maxlength counter
-                      ),
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.headline6.color,
-                  ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.add_outlined,
+                      color: shoplistAccent
+                    ),
+                    hintText: "New item",
+                    labelStyle:  TextStyle(
+                      color: shoplistAccent
+                    ),
+                    counterStyle: const TextStyle(
+                      height: double.minPositive,
+                    ),
+                    counterText: "" // hide maxlength counter
+                    ),
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.headline6.color,
                 ),
               ),
             ),

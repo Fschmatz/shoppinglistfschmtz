@@ -18,11 +18,10 @@ ThemeData light = ThemeData(
     ),
     scaffoldBackgroundColor: const Color(0xFFF4F0F4),
     inputDecorationTheme: const InputDecorationTheme(
-      fillColor: Color(0xFFF4F0F4),
+    //  fillColor: Color(0xFFF4F0F4),
     ),
     popupMenuTheme: const PopupMenuThemeData(
-      color: Color(0xFFF9F9F9),
-      elevation: 1,
+      color: Color(0xFFFBFBFB),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(4)),
       ),
@@ -56,7 +55,7 @@ ThemeData dark = ThemeData(
         surfaceTintColor: Color(0xFF272728), color: Color(0xFF272728)),
     scaffoldBackgroundColor: const Color(0xFF272728),
     inputDecorationTheme: const InputDecorationTheme(
-      fillColor: Color(0xFF272728),
+     //fillColor: Color(0xFF272728),
     ),
     cardTheme: const CardTheme(
       surfaceTintColor: Color(0xFF343435),
@@ -64,7 +63,6 @@ ThemeData dark = ThemeData(
     ),
     popupMenuTheme: const PopupMenuThemeData(
       color: Color(0xFF383839),
-      elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(4)),
       ),

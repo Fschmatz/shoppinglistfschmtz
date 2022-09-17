@@ -1,15 +1,15 @@
 class AppDetails{
 
-  static String appVersion = "1.5.4";
+  static String appVersion = "1.5.5";
   static String appName = "Shoplist Fschmatz";
   static String repositoryLink = "https://github.com/Fschmatz/shoppinglistfschmtz";
 
   static String changelogCurrent = ''' 
-1.5.4
+1.5.5
 - New edit shoplist page
 - UI changes
 - Small fixes
-- Flutter 3
+- Flutter 3.3
 ''';
 
   static String changelogsOld = '''
