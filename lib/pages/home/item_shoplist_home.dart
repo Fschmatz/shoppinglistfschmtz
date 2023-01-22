@@ -40,7 +40,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
       inDefinition: FadeInAnimation(),
       outDefinition: SlideOutRightAnimation(
           preferences: const AnimationPreferences(
-              duration: Duration(milliseconds: 800))),
+              duration: Duration(milliseconds: 700))),
       child: ListTile(
         contentPadding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
         leading: Checkbox(

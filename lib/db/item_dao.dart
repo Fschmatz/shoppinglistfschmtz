@@ -58,31 +58,31 @@ class ItemDao {
     
         SELECT * FROM $table 
         WHERE idShopList=$idShopLista     
-        
+        ORDER BY $columnNome COLLATE NOCASE
         ''');
   }
 
-  Future<List<Map<String, dynamic>>> getItemsShopListDo(int idShopLista) async {
+  Future<List<Map<String, dynamic>>> getItemsShopListDoOrderName(int idShopLista) async {
     Database db = await instance.database;
     return await db.rawQuery('''
     
         SELECT * FROM $table 
         WHERE idShopList=$idShopLista AND estado=0    
-        
+        ORDER BY $columnNome COLLATE NOCASE
         ''');
   }
 
-  Future<List<Map<String, dynamic>>> getItemsShopListDone(int idShopLista) async {
+  Future<List<Map<String, dynamic>>> getItemsShopListDoneOrderName(int idShopLista) async {
     Database db = await instance.database;
     return await db.rawQuery('''
     
         SELECT * FROM $table 
         WHERE idShopList=$idShopLista AND estado=1      
-        
+        ORDER BY $columnNome COLLATE NOCASE
         ''');
   }
 
-  Future<List<Map<String, dynamic>>> getItemsShopListDoDesc(int idShopLista) async {
+  /*Future<List<Map<String, dynamic>>> getItemsShopListDoDesc(int idShopLista) async {
     Database db = await instance.database;
     return await db.rawQuery('''
     
@@ -100,6 +100,6 @@ class ItemDao {
         WHERE idShopList=$idShopLista AND estado=1      
         ORDER BY id DESC
         ''');
-  }
+  }*/
 
 }

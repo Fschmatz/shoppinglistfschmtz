@@ -45,17 +45,17 @@ ThemeData dark = ThemeData(
       titleMedium: TextStyle(fontWeight: FontWeight.w400),
     ),
     brightness: Brightness.dark,
-    primaryColor: const Color(0xFF272728),
+    primaryColor: const Color(0xFF252525),
     colorScheme: ColorScheme.dark(
-        background: const Color(0xFF272728),
+        background: const Color(0xFF252525),
         primary: const Color(0xFF648bd1),
         secondary: Colors.grey.shade600,
         tertiary: const Color(0xFFEA8294)),
     appBarTheme: const AppBarTheme(
-        surfaceTintColor: Color(0xFF272728), color: Color(0xFF272728)),
-    scaffoldBackgroundColor: const Color(0xFF272728),
+        surfaceTintColor: Color(0xFF252525), color: Color(0xFF252525)),
+    scaffoldBackgroundColor: const Color(0xFF252525),
     inputDecorationTheme: const InputDecorationTheme(
-     //fillColor: Color(0xFF272728),
+     //fillColor: Color(0xFF252525),
     ),
     cardTheme: const CardTheme(
       surfaceTintColor: Color(0xFF343435),
@@ -71,8 +71,8 @@ ThemeData dark = ThemeData(
       backgroundColor: Color(0xFF202022),
     ),
     dialogTheme: const DialogTheme(
-      backgroundColor: Color(0xFF272728),
+      backgroundColor: Color(0xFF252525),
     ),
-    bottomAppBarColor: const Color(0xFF272728),
+    bottomAppBarColor: const Color(0xFF252525),
     bottomSheetTheme:
-        const BottomSheetThemeData(modalBackgroundColor: Color(0xFF272728)));
+        const BottomSheetThemeData(modalBackgroundColor: Color(0xFF252525)));

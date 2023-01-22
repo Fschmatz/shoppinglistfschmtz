@@ -39,8 +39,8 @@ class _EditShopListState extends State<EditShopList> {
 
   Future<void> getItemsShopList() async {
     final dbItems = ItemDao.instance;
-    var listDo = await dbItems.getItemsShopListDoDesc(widget.shopList.id);
-    var listDone = await dbItems.getItemsShopListDoneDesc(widget.shopList.id);
+    var listDo = await dbItems.getItemsShopListDoOrderName(widget.shopList.id);
+    var listDone = await dbItems.getItemsShopListDoneOrderName(widget.shopList.id);
 
     //SetState error call, use if mounted
     if (mounted) {
