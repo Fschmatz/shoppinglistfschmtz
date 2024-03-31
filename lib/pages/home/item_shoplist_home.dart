@@ -37,8 +37,8 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
     return InOutAnimation(
       autoPlay: InOutAnimationStatus.None,
       key: inOutAnimation,
-      inDefinition: FadeInAnimation(),
-      outDefinition: SlideOutRightAnimation(preferences: const AnimationPreferences(duration: Duration(milliseconds: 700))),
+      inDefinition: FadeInAnimation(preferences: const AnimationPreferences(duration: Duration(milliseconds: 650))),
+      outDefinition: SlideOutRightAnimation(preferences: const AnimationPreferences(duration: Duration(milliseconds: 650))),
       child: ListTile(
         tileColor: widget.tileColor,
         shape: widget.cardBorderRadius,

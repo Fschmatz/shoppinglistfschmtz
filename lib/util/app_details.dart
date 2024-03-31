@@ -1,12 +1,12 @@
 class AppDetails{
 
-  static String appVersion = "2.0.0";
+  static String appVersion = "2.0.1";
   static String appName = "Shoplist Fschmatz";
   static String appNameHomePage = "Shoplist";
   static String repositoryLink = "https://github.com/Fschmatz/shoppinglistfschmtz";
 
   static String changelogCurrent = '''
-2.0.0
+2.0.1
 - Monet 
 - UI changes
 - Flutter 3.19

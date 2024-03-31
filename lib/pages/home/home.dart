@@ -35,17 +35,17 @@ class _HomeState extends State<Home> {
   Future<void> getShopLists() async {
     final dbShopList = ShopListDao.instance;
     var resposta = await dbShopList.queryAllOrderByName();
-    if (mounted) {
-      setState(() {
-        shopLists = resposta;
-        loading = false;
-      });
-    }
+    shopLists = resposta;
+
+    setState(() {
+      loading = false;
+    });
   }
 
   Future<void> getLastId() async {
     final dbShopList = ShopListDao.instance;
     var resposta = await dbShopList.getLastId();
+
     setState(() {
       if (resposta.isEmpty) {
         lastId = 0;

@@ -63,7 +63,7 @@ class _EditShopListState extends State<EditShopList> {
 
   Future<void> _deleteShopList() async {
     final dbShopList = ShopListDao.instance;
-    var resp = await dbShopList.delete(widget.shopList.id);
+    await dbShopList.delete(widget.shopList.id);
   }
 
   void _deleteItemFromShoplist(int idItem) async {
