@@ -37,9 +37,11 @@ class _HomeState extends State<Home> {
     var resposta = await dbShopList.queryAllOrderByName();
     shopLists = resposta;
 
-    setState(() {
-      loading = false;
-    });
+    if(mounted) {
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   Future<void> getLastId() async {

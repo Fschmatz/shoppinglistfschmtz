@@ -37,9 +37,11 @@ class _ShopListHomeState extends State<ShopListHome> with AutomaticKeepAliveClie
     final dbItems = ItemDao.instance;
     items = await dbItems.getItemsShopListDoOrderName(widget.shopList.id);
 
-    setState(() {
-      loading = false;
-    });
+    if (mounted) {
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   Future<void> getItemsRefreshShopList(int idShopList) async {
