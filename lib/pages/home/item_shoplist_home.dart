@@ -9,16 +9,15 @@ class ItemShopListHome extends StatefulWidget {
 
   Item item;
   Function(int) getItemsRefreshShopList;
-  Color shopListColor;
+  Color tileColor;
 
-  ItemShopListHome(
-      {Key key, this.item, this.getItemsRefreshShopList, this.shopListColor})
-      : super(key: key);
+  RoundedRectangleBorder cardBorderRadius;
+
+  ItemShopListHome({Key? key, required this.item, required this.getItemsRefreshShopList, required this.tileColor, required this.cardBorderRadius}) : super(key: key);
 }
 
 class _ItemShopListHomeState extends State<ItemShopListHome> {
-  final GlobalKey<InOutAnimationState> inOutAnimation =
-      GlobalKey<InOutAnimationState>();
+  final GlobalKey<InOutAnimationState> inOutAnimation = GlobalKey<InOutAnimationState>();
 
   bool value = false;
 
@@ -28,7 +27,8 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
       ItemDao.columnId: widget.item.id,
       ItemDao.columnEstado: state ? 1 : 0,
     };
-    final update = await dbShopList.update(row);
+
+    await dbShopList.update(row);
   }
 
   @override
@@ -38,17 +38,17 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
       autoPlay: InOutAnimationStatus.None,
       key: inOutAnimation,
       inDefinition: FadeInAnimation(),
-      outDefinition: SlideOutRightAnimation(
-          preferences: const AnimationPreferences(
-              duration: Duration(milliseconds: 700))),
+      outDefinition: SlideOutRightAnimation(preferences: const AnimationPreferences(duration: Duration(milliseconds: 700))),
       child: ListTile(
+        tileColor: widget.tileColor,
+        shape: widget.cardBorderRadius,
         contentPadding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
         leading: Checkbox(
           value: widget.item.estado == 1 ? true : false,
-          onChanged: (bool v) {
-            inOutAnimation.currentState.animateOut();
+          onChanged: (bool? v) {
+            inOutAnimation.currentState?.animateOut();
             Future.delayed(const Duration(milliseconds: 300), () {
-              _updateEstadoItem(v);
+              _updateEstadoItem(v!);
               widget.getItemsRefreshShopList(widget.item.idShopList);
             });
           },

@@ -2,7 +2,7 @@ import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 
 class DialogSelectTheme extends StatefulWidget {
-  const DialogSelectTheme({Key key}) : super(key: key);
+  const DialogSelectTheme({Key? key}) : super(key: key);
 
   @override
   _DialogSelectThemeState createState() => _DialogSelectThemeState();
@@ -17,7 +17,7 @@ class _DialogSelectThemeState extends State<DialogSelectTheme> {
   @override
   Widget build(BuildContext context) {
 
-    ThemeMode currentTheme = EasyDynamicTheme.of(context).themeMode;
+    ThemeMode? currentTheme = EasyDynamicTheme.of(context).themeMode;
     Color appAccent = Theme.of(context).colorScheme.primary;
 
     return AlertDialog(

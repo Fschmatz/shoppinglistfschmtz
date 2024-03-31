@@ -16,13 +16,9 @@ class ItemDao {
 
   ItemDao._privateConstructor();
   static final ItemDao instance = ItemDao._privateConstructor();
-  static Database _database;
-
-  Future<Database> get database async {
-    if (_database != null) return _database;
-    _database = await _initDatabase();
-    return _database;
-  }
+  static Database? _database;
+  Future<Database> get database async =>
+      _database ??= await _initDatabase();
 
   _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();

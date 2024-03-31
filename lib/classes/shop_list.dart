@@ -3,5 +3,5 @@ class ShopList{
   final String nome;
   final String cor;
 
-  ShopList({this.id,this.nome,this.cor});
+  ShopList({required this.id,required this.nome,required this.cor});
 }

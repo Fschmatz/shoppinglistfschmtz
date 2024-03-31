@@ -14,19 +14,19 @@ class ItemEditShopList extends StatefulWidget {
   Color listAccent;
 
   ItemEditShopList(
-      {Key key,
-      this.item,
-      this.getItemsShopList,
-      this.updateItem,
-      this.deleteItem,
-      this.listAccent})
+      {Key? key,
+      required this.item,
+      required this.getItemsShopList,
+      required this.updateItem,
+      required this.deleteItem,
+      required this.listAccent})
       : super(key: key);
 }
 
 class _ItemEditShopListState extends State<ItemEditShopList> {
   bool value = false;
   bool showDelete = false;
-  FocusNode myFocusNode;
+  late FocusNode myFocusNode;
   TextEditingController customControllerNome = TextEditingController();
 
 
@@ -62,11 +62,10 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
           contentPadding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
           leading: Checkbox(
             splashRadius: 30,
-            activeColor: widget.listAccent.withOpacity(0.4),
             value: widget.item.estado == 0 ? false : true,
-            onChanged: (bool v) {
+            onChanged: (bool? v) {
               setState(() {
-                _updateEstadoItem(v);
+                _updateEstadoItem(v!);
                 widget.getItemsShopList();
               });
             },
@@ -92,7 +91,7 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
             style: TextStyle(
               color: widget.item.estado == 1
                   ? Theme.of(context).disabledColor
-                  : Theme.of(context).textTheme.headline6.color,
+                  : Theme.of(context).textTheme.headline6?.color,
             ),
           ),
           trailing: myFocusNode.hasFocus //showDelete
@@ -102,7 +101,7 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
                 size: 18,
                 color: widget.item.estado == 1
                     ? Theme.of(context).disabledColor
-                    : Theme.of(context).textTheme.headline6.color,
+                    : Theme.of(context).textTheme.headline6?.color,
               ),
               onPressed: () {
                 widget.deleteItem(widget.item.id);

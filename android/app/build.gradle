@@ -47,6 +47,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    namespace 'com.fschmtz.shoppinglistfschmtz'
 }
 
 flutter {

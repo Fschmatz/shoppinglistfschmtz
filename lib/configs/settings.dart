@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:shoppinglistfschmtz/util/theme.dart';
 import '../util/app_details.dart';
-import 'package:provider/provider.dart';
 import '../util/dialog_select_theme.dart';
-import 'app_info_page.dart';
-import 'changelog_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'app_info.dart';
+import 'changelog.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 
-class SettingsPage extends StatefulWidget {
+class Settings extends StatefulWidget {
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  _SettingsState createState() => _SettingsState();
 
-  SettingsPage({Key key}) : super(key: key);
+  Settings({Key? key}) : super(key: key);
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsState extends State<Settings> {
+
   @override
   void initState() {
     super.initState();
@@ -47,7 +45,7 @@ class _SettingsPageState extends State<SettingsPage> {
               color: themeColorApp,
               child: ListTile(
                 title: Text(
-                  AppDetails.appName + " " + AppDetails.appVersion,
+                  "${AppDetails.appName} ${AppDetails.appVersion}",
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 17.5, color: Colors.black),
                 ),
@@ -74,25 +72,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 getThemeStringFormatted(),
               ),
             ),
-            FutureBuilder(
-                future: ShowCount()._loadFromPrefs(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return SwitchListTile(
-                        title: const Text(
-                          "Show shoplist item count",
-                        ),
-                        secondary: const Icon(Icons.format_list_numbered_rtl),
-                        activeColor: Colors.blue,
-                        value: snapshot.data,
-                        onChanged: (value) {
-                          setState(() {
-                            ShowCount().toggleShowCount(value);
-                          });
-                        });
-                  }
-                  return const SizedBox.shrink();
-                }),
             ListTile(
               title: Text("About",
                   style: TextStyle(
@@ -111,7 +90,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => AppInfoPage(),
+                      builder: (BuildContext context) => AppInfo(),
                     ));
               },
             ),
@@ -126,36 +105,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => ChangelogPage(),
+                      builder: (BuildContext context) => Changelog(),
                     ));
               },
             ),
           ],
         ));
-  }
-}
-
-class ShowCount {
-  final String key = 'showItemCount';
-  SharedPreferences prefs;
-  bool _showItemCount;
-
-  _initPrefs() async {
-    prefs ??= await SharedPreferences.getInstance();
-  }
-
-  toggleShowCount(bool value) {
-    _showItemCount = value;
-    _saveToPrefs();
-  }
-
-  _loadFromPrefs() async {
-    await _initPrefs();
-    return prefs.getBool(key) ?? true;
-  }
-
-  _saveToPrefs() async {
-    await _initPrefs();
-    prefs.setBool(key, _showItemCount);
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:shoppinglistfschmtz/pages/home/home.dart';
 
 class App extends StatefulWidget {
-  const App({Key key}) : super(key: key);
+  App({Key? key}) : super(key: key);
 
   @override
   _AppState createState() => _AppState();
@@ -14,28 +14,28 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
+
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
 
   @override
   Widget build(BuildContext context) {
 
-    final Color topOverlayColor =
-    Theme.of(context).appBarTheme.backgroundColor;
-    final Brightness iconBrightness =
-    Theme.of(context).brightness == Brightness.light
+    final theme = Theme.of(context);
+    final Color topOverlayColor = theme.appBarTheme.backgroundColor!;
+    final Brightness iconBrightness = theme.brightness == Brightness.light
         ? Brightness.dark
         : Brightness.light;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.transparent,
           statusBarIconBrightness: iconBrightness,
-          systemNavigationBarColor: topOverlayColor,
           statusBarColor: topOverlayColor,
           systemStatusBarContrastEnforced: false,
           systemNavigationBarIconBrightness: iconBrightness,
         ),
-        child: const SafeArea(child: Home())
+        child: const Home()
     );
   }
 }

@@ -4,9 +4,8 @@ import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/classes/shop_list.dart';
 import 'package:shoppinglistfschmtz/db/shoplist_dao.dart';
 import 'package:shoppinglistfschmtz/pages/edit/item_edit_shoplist.dart';
-import '../../util/block_pickerAlt.dart';
+import '../../util/block_picker_alt.dart';
 import 'package:shoppinglistfschmtz/db/item_dao.dart';
-
 import '../../util/utils_functions.dart';
 
 class EditShopList extends StatefulWidget {
@@ -15,7 +14,7 @@ class EditShopList extends StatefulWidget {
 
   ShopList shopList;
 
-  EditShopList({Key key, this.shopList}) : super(key: key);
+  EditShopList({Key? key, required this.shopList}) : super(key: key);
 }
 
 class _EditShopListState extends State<EditShopList> {
@@ -42,7 +41,6 @@ class _EditShopListState extends State<EditShopList> {
     var listDo = await dbItems.getItemsShopListDoOrderName(widget.shopList.id);
     var listDone = await dbItems.getItemsShopListDoneOrderName(widget.shopList.id);
 
-    //SetState error call, use if mounted
     if (mounted) {
       setState(() {
         itemsDo = listDo;
@@ -56,12 +54,11 @@ class _EditShopListState extends State<EditShopList> {
     final dbShopList = ShopListDao.instance;
     Map<String, dynamic> row = {
       ShopListDao.columnId: widget.shopList.id,
-      ShopListDao.columnNome: controllerNomeShoplist.text.isEmpty
-          ? "Shoplist"
-          : controllerNomeShoplist.text,
+      ShopListDao.columnNome: controllerNomeShoplist.text.isEmpty ? "Shoplist" : controllerNomeShoplist.text,
       ShopListDao.columnCor: corAtual.toString(),
     };
-    final update = await dbShopList.update(row);
+
+    await dbShopList.update(row);
   }
 
   Future<void> _deleteShopList() async {
@@ -71,7 +68,7 @@ class _EditShopListState extends State<EditShopList> {
 
   void _deleteItemFromShoplist(int idItem) async {
     final dbItem = ItemDao.instance;
-    final deletado = await dbItem.delete(idItem);
+    await dbItem.delete(idItem);
   }
 
   //DAO ITEMS
@@ -82,7 +79,8 @@ class _EditShopListState extends State<EditShopList> {
       ItemDao.columnEstado: 0,
       ItemDao.columnIdShopList: widget.shopList.id,
     };
-    final id = await dbItems.insert(row);
+
+    await dbItems.insert(row);
   }
 
   void _updateItem(int id, String nome, int estado) async {
@@ -92,7 +90,8 @@ class _EditShopListState extends State<EditShopList> {
       ItemDao.columnNome: nome,
       ItemDao.columnEstado: estado,
     };
-    final update = await dbItems.update(row);
+
+    await dbItems.update(row);
   }
 
   showAlertDialogOkDelete(BuildContext context) {
@@ -192,8 +191,10 @@ class _EditShopListState extends State<EditShopList> {
         "Ok",
       ),
       onPressed: () {
-        setState(() =>
-            {currentColor = pickerColor, corAtual = pickerColor.toString()});
+        setState(() {
+          currentColor = pickerColor;
+          corAtual = pickerColor.toString();
+        });
         _updateShopList();
         Navigator.of(context).pop();
       },
@@ -222,149 +223,87 @@ class _EditShopListState extends State<EditShopList> {
 
   @override
   Widget build(BuildContext context) {
-    final Brightness _addNewItemTextBrightness = Theme.of(context).brightness;
-    Color shoplistAccent = _addNewItemTextBrightness == Brightness.dark
-        ? lightenColor(currentColor, 20)
-        : darkenColor(currentColor, 20);
+    final currentScheme = Theme.of(context).brightness == Brightness.light
+        ? ColorScheme.fromSeed(seedColor: currentColor)
+        : ColorScheme.fromSeed(seedColor: currentColor, brightness: Brightness.dark);
 
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            Theme(
-              data: Theme.of(context).copyWith(useMaterial3: false),
-              child: PopupMenuButton<int>(
-                  icon: const Icon(Icons.more_vert_outlined),
-                  itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
-                        const PopupMenuItem<int>(value: 0, child: Text('Rename')),
-                        const PopupMenuItem<int>(
-                            value: 1, child: Text('Change color')),
-                        const PopupMenuItem<int>(value: 2, child: Text('Delete')),
-                      ],
-                  onSelected: (int value) {
-                    if (value == 0) {
-                      showDialogRename(context);
-                    } else if (value == 1) {
-                      dialogSelectColor(context);
-                    } else if (value == 2) {
-                      showAlertDialogOkDelete(context);
-                    }
-                  }),
-            )
-          ],
-          title: Text(controllerNomeShoplist.text),
-        ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              child: TextField(
-                minLines: 1,
-                maxLength: 200,
-                autofocus: false,
-                maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                textCapitalization: TextCapitalization.sentences,
-                controller: controllerAddNewItem,
-                onSubmitted: (value) => {
-                  if (controllerAddNewItem.text.isNotEmpty)
-                    {
-                      _addItemToShopList(),
-                      getItemsShopList(),
-                      controllerAddNewItem.text = ""
-                    }
-                },
-                onEditingComplete: () {},
-                decoration: InputDecoration(
-                    fillColor: Theme.of(context).cardTheme.color,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0)),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: shoplistAccent.withOpacity(0.4),
-                        ),
-                        borderRadius: BorderRadius.circular(8.0)),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: shoplistAccent,
+    return Theme(
+      data: ThemeData(
+        colorScheme: currentScheme,
+        useMaterial3: true,
+      ),
+      child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+          appBar: AppBar(
+            actions: [
+              Theme(
+                data: Theme.of(context).copyWith(useMaterial3: false),
+                child: PopupMenuButton<int>(
+                    icon: const Icon(Icons.more_vert_outlined),
+                    itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
+                          const PopupMenuItem<int>(value: 0, child: Text('Rename')),
+                          const PopupMenuItem<int>(value: 1, child: Text('Change color')),
+                          const PopupMenuItem<int>(value: 2, child: Text('Delete')),
+                        ],
+                    onSelected: (int value) {
+                      if (value == 0) {
+                        showDialogRename(context);
+                      } else if (value == 1) {
+                        dialogSelectColor(context);
+                      } else if (value == 2) {
+                        showAlertDialogOkDelete(context);
+                      }
+                    }),
+              )
+            ],
+            title: Text(controllerNomeShoplist.text),
+          ),
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                child: TextField(
+                  minLines: 1,
+                  maxLength: 200,
+                  autofocus: false,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  textCapitalization: TextCapitalization.sentences,
+                  controller: controllerAddNewItem,
+                  onSubmitted: (value) => {
+                    if (controllerAddNewItem.text.isNotEmpty) {_addItemToShopList(), getItemsShopList(), controllerAddNewItem.text = ""}
+                  },
+                  onEditingComplete: () {},
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.add_outlined),
+                      hintText: "New item",
+                      counterStyle: TextStyle(
+                        height: double.minPositive,
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    prefixIcon: Icon(
-                      Icons.add_outlined,
-                      color: shoplistAccent
-                    ),
-                    hintText: "New item",
-                    labelStyle:  TextStyle(
-                      color: shoplistAccent
-                    ),
-                    counterStyle: const TextStyle(
-                      height: double.minPositive,
-                    ),
-                    counterText: "" // hide maxlength counter
-                    ),
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.headline6.color,
+                      counterText: ""),
                 ),
               ),
-            ),
 
-            //LIST
-            Flexible(
-              child: ListView(
-                children: [
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: itemsDo.length,
-                      itemBuilder: (context, index) {
-                        return ItemEditShopList(
-                          key: UniqueKey(),
-                          item: Item(
-                            id: itemsDo[index]['id'],
-                            nome: itemsDo[index]['nome'],
-                            estado: itemsDo[index]['estado'],
-                            idShopList: itemsDo[index]['idShopList'],
-                          ),
-                          getItemsShopList: getItemsShopList,
-                          updateItem: _updateItem,
-                          deleteItem: _deleteItemFromShoplist,
-                          listAccent: currentColor,
-                        );
-                      }),
-                  Visibility(
-                    visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
-                    child: const SizedBox(
+              //LIST
+              Flexible(
+                child: ListView(
+                  children: [
+                    const SizedBox(
                       height: 15,
                     ),
-                  ),
-                  Visibility(
-                    visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
-                    child: const Divider(),
-                  ),
-                  Visibility(
-                    visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
-                    child: const SizedBox(
-                      height: 15,
-                    ),
-                  ),
-                  Visibility(
-                    visible: itemsDone.isNotEmpty,
-                    child: ListView.builder(
+                    ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: itemsDone.length,
+                        itemCount: itemsDo.length,
                         itemBuilder: (context, index) {
                           return ItemEditShopList(
                             key: UniqueKey(),
                             item: Item(
-                              id: itemsDone[index]['id'],
-                              nome: itemsDone[index]['nome'],
-                              estado: itemsDone[index]['estado'],
-                              idShopList: itemsDone[index]['idShopList'],
+                              id: itemsDo[index]['id'],
+                              nome: itemsDo[index]['nome'],
+                              estado: itemsDo[index]['estado'],
+                              idShopList: itemsDo[index]['idShopList'],
                             ),
                             getItemsShopList: getItemsShopList,
                             updateItem: _updateItem,
@@ -372,14 +311,52 @@ class _EditShopListState extends State<EditShopList> {
                             listAccent: currentColor,
                           );
                         }),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                ],
+                    Visibility(
+                      visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
+                      child: const SizedBox(
+                        height: 15,
+                      ),
+                    ),
+                    Visibility(
+                      visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
+                      child: const Divider(),
+                    ),
+                    Visibility(
+                      visible: itemsDone.isNotEmpty && itemsDo.isNotEmpty,
+                      child: const SizedBox(
+                        height: 15,
+                      ),
+                    ),
+                    Visibility(
+                      visible: itemsDone.isNotEmpty,
+                      child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: itemsDone.length,
+                          itemBuilder: (context, index) {
+                            return ItemEditShopList(
+                              key: UniqueKey(),
+                              item: Item(
+                                id: itemsDone[index]['id'],
+                                nome: itemsDone[index]['nome'],
+                                estado: itemsDone[index]['estado'],
+                                idShopList: itemsDone[index]['idShopList'],
+                              ),
+                              getItemsShopList: getItemsShopList,
+                              updateItem: _updateItem,
+                              deleteItem: _deleteItemFromShoplist,
+                              listAccent: currentColor,
+                            );
+                          }),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

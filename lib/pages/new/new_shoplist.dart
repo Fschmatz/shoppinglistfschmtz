@@ -4,7 +4,7 @@ import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/db/shoplist_dao.dart';
 import 'package:shoppinglistfschmtz/db/item_dao.dart';
 import 'package:shoppinglistfschmtz/pages/new/item_new_shoplist.dart';
-import '../../util/block_pickerAlt.dart';
+import '../../util/block_picker_alt.dart';
 import '../../util/utils_functions.dart';
 
 class NewShopList extends StatefulWidget {
@@ -14,7 +14,7 @@ class NewShopList extends StatefulWidget {
   int lastId;
   Function() refreshShopLists;
 
-  NewShopList({Key key, this.lastId, this.refreshShopLists}) : super(key: key);
+  NewShopList({Key? key, required this.lastId, required this.refreshShopLists}) : super(key: key);
 }
 
 class _NewShopListState extends State<NewShopList> {
@@ -23,7 +23,6 @@ class _NewShopListState extends State<NewShopList> {
   TextEditingController customControllerAddNewItem = TextEditingController();
   bool editingItem = false;
   List<Item> items = [];
-
   String corAtual = "Color(0xFFFF5252)";
 
   @override
@@ -52,13 +51,7 @@ class _NewShopListState extends State<NewShopList> {
   }
 
   void _addItemToShopList() async {
-    items.insert(
-        items.length,
-        Item(
-            id: items.length,
-            nome: customControllerAddNewItem.text,
-            estado: 0,
-            idShopList: widget.lastId + 1));
+    items.insert(items.length, Item(id: items.length, nome: customControllerAddNewItem.text, estado: 0, idShopList: widget.lastId + 1));
   }
 
   //DAO SHOPLIST
@@ -66,12 +59,11 @@ class _NewShopListState extends State<NewShopList> {
     final dbShopList = ShopListDao.instance;
     Map<String, dynamic> row = {
       ShopListDao.columnId: widget.lastId + 1,
-      ShopListDao.columnNome: customControllerNome.text.isEmpty
-          ? "Shoplist"
-          : customControllerNome.text,
+      ShopListDao.columnNome: customControllerNome.text.isEmpty ? "Shoplist" : customControllerNome.text,
       ShopListDao.columnCor: corAtual.toString(),
     };
-    final id = await dbShopList.insert(row);
+
+    await dbShopList.insert(row);
   }
 
   Future<void> _saveItemsToShopList() async {
@@ -82,7 +74,8 @@ class _NewShopListState extends State<NewShopList> {
         ItemDao.columnEstado: 0,
         ItemDao.columnIdShopList: widget.lastId + 1,
       };
-      final id = await dbItems.insert(row);
+
+      await dbItems.insert(row);
     }
   }
 
@@ -99,8 +92,10 @@ class _NewShopListState extends State<NewShopList> {
         "Ok",
       ),
       onPressed: () {
-        setState(() =>
-            {currentColor = pickerColor, corAtual = pickerColor.toString()});
+        setState(() {
+          currentColor = pickerColor;
+          corAtual = pickerColor.toString();
+        });
         Navigator.of(context).pop();
       },
     );
@@ -126,70 +121,74 @@ class _NewShopListState extends State<NewShopList> {
 
   @override
   Widget build(BuildContext context) {
-    final Brightness _addNewItemTextBrightness = Theme.of(context).brightness;
-    Color shoplistAccent = _addNewItemTextBrightness == Brightness.dark
-        ? lightenColor(currentColor, 20)
-        : darkenColor(currentColor, 20);
+    final currentScheme = Theme.of(context).brightness == Brightness.light
+        ? ColorScheme.fromSeed(seedColor: currentColor)
+        : ColorScheme.fromSeed(seedColor: currentColor, brightness: Brightness.dark);
 
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.save_outlined,
+    return Theme(
+      data: ThemeData(
+        colorScheme: currentScheme,
+        useMaterial3: true,
+      ),
+      child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+          appBar: AppBar(
+            actions: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.save_outlined,
+                  ),
+                  onPressed: () async {
+                    await _saveShopList();
+                    await _saveItemsToShopList();
+                    await widget.refreshShopLists();
+                    Navigator.of(context).pop();
+                  },
                 ),
-                onPressed: () async {
-                  await _saveShopList();
-                  await _saveItemsToShopList();
-                  await widget.refreshShopLists();
-                  Navigator.of(context).pop();
-                },
-              ),
-            )
-          ],
-          title: const Text('New Shoplist'),
-        ),
-        body: Column(
-          children: [
-            ListTile(
-              contentPadding: const EdgeInsets.fromLTRB(16, 5, 5, 0),
-              leading: const Icon(
-                Icons.notes_outlined,
-              ),
-              title: TextField(
-                autofocus: false,
-                minLines: 1,
-                maxLength: 30,
-                maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                textCapitalization: TextCapitalization.sentences,
-                controller: customControllerNome,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  counterText: "",
-                  hintText: "Shoplist name",
+              )
+            ],
+            title: const Text('New Shoplist'),
+          ),
+          body: Column(
+            children: [
+              ListTile(
+                contentPadding: const EdgeInsets.fromLTRB(16, 5, 5, 0),
+                leading: const Icon(
+                  Icons.notes_outlined,
+                ),
+                title: TextField(
+                  autofocus: false,
+                  minLines: 1,
+                  maxLength: 30,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  textCapitalization: TextCapitalization.sentences,
+                  controller: customControllerNome,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    counterText: "",
+                    hintText: "Shoplist name",
+                  ),
+                ),
+                trailing: MaterialButton(
+                  minWidth: 30,
+                  height: 30,
+                  shape: const CircleBorder(),
+                  elevation: 0,
+                  color: currentColor,
+                  onPressed: () {
+                    createAlertSelectColor(context);
+                  },
                 ),
               ),
-              trailing: MaterialButton(
-                minWidth: 30,
-                height: 30,
-                shape: const CircleBorder(),
-                elevation: 0,
-                color: currentColor,
-                onPressed: () {
-                  createAlertSelectColor(context);
-                },
+              const SizedBox(
+                height: 10,
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding : const EdgeInsets.symmetric(horizontal: 16,vertical: 5),
-              child: TextField(
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                child: TextField(
                   minLines: 1,
                   maxLength: 200,
                   autofocus: false,
@@ -197,80 +196,54 @@ class _NewShopListState extends State<NewShopList> {
                   textCapitalization: TextCapitalization.sentences,
                   controller: customControllerAddNewItem,
                   onSubmitted: (value) => {
-                    if(customControllerAddNewItem.text.isNotEmpty){
-                      _addItemToShopList(),
-                      refreshList(),
-                      customControllerAddNewItem.text = ""
-                   }
+                    if (customControllerAddNewItem.text.isNotEmpty) {_addItemToShopList(), refreshList(), customControllerAddNewItem.text = ""}
                   },
                   onEditingComplete: () {},
-                  decoration: InputDecoration(
-                      fillColor: Theme.of(context).cardTheme.color,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0)),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: shoplistAccent.withOpacity(0.4)
-                          ),
-                          borderRadius: BorderRadius.circular(8.0)),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: shoplistAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      prefixIcon: Icon(
-                          Icons.add_outlined,
-                          color: shoplistAccent
-                      ),
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.add_outlined),
                       hintText: "New item",
-                      labelStyle:  TextStyle(
-                          color: shoplistAccent
-                      ),
-                      counterStyle: const TextStyle(
+                      counterStyle: TextStyle(
                         height: double.minPositive,
                       ),
-                      counterText: "" // hide maxlength counter
-                  ),
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.headline6.color,
-                  ),
+                      counterText: ""),
                 ),
               ),
 
-
-            //LIST
-            Flexible(
-              child: ListView(
-                children: [
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: items.length,
-                      reverse: true,
-                      itemBuilder: (context, index) {
-                        return ItemNewShopList(
-                          key: UniqueKey(),
-                          item: Item(
-                            id: items[index].id,
-                            nome: items[index].nome,
-                            estado: items[index].estado,
-                            idShopList: items[index].idShopList,
-                          ),
-                          updateItem: updateItem,
-                          deleteItem: _deleteItem,
-                        );
-                      }),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                ],
+              //LIST
+              Flexible(
+                child: ListView(
+                  children: [
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: items.length,
+                        reverse: true,
+                        itemBuilder: (context, index) {
+                          return ItemNewShopList(
+                            key: UniqueKey(),
+                            item: Item(
+                              id: items[index].id,
+                              nome: items[index].nome,
+                              estado: items[index].estado,
+                              idShopList: items[index].idShopList,
+                            ),
+                            updateItem: updateItem,
+                            deleteItem: _deleteItem,
+                          );
+                        }),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

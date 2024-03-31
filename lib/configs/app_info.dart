@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../util/app_details.dart';
 
-class AppInfoPage extends StatelessWidget {
-  AppInfoPage({Key key}) : super(key: key);
+class AppInfo extends StatelessWidget {
+  AppInfo({Key? key}) : super(key: key);
 
   _launchGithub() {
     launchUrl(

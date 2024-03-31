@@ -10,13 +10,9 @@ class CriadorDb {
 
   CriadorDb._privateConstructor();
   static final CriadorDb instance = CriadorDb._privateConstructor();
-  static Database _database;
-
-  Future<Database> get database async {
-    if (_database != null) return _database;
-    _database = await initDatabase();
-    return _database;
-  }
+  static Database? _database;
+  Future<Database> get database async =>
+      _database ??= await initDatabase();
 
   initDatabase() async { //_initDatabase();
     Directory documentsDirectory = await getApplicationDocumentsDirectory();

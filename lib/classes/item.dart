@@ -4,5 +4,5 @@ class Item{
    int estado;  // 0 or 1
    int idShopList;
 
-  Item({this.id,this.nome,this.estado,this.idShopList});
+  Item({required this.id,required this.nome,required this.estado,required this.idShopList});
 }

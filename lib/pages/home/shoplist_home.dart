@@ -14,29 +14,26 @@ class ShopListHome extends StatefulWidget {
 
   ShopList shopList;
   Function() refreshShopLists;
-  bool showItemCount;
 
-  ShopListHome(
-      {Key key, this.shopList, this.refreshShopLists, this.showItemCount})
-      : super(key: key);
+  ShopListHome({Key? key, required this.shopList, required this.refreshShopLists}) : super(key: key);
 }
 
 class _ShopListHomeState extends State<ShopListHome> {
   List<Map<String, dynamic>> items = [];
-  Color shopListColor;
+  late Color shopListColor;
 
   @override
   void initState() {
+    super.initState();
+
     getItemsShopList();
     shopListColor = Color(int.parse(widget.shopList.cor.substring(6, 16)));
-    super.initState();
   }
 
-  // ONLY DO ITEMS
   Future<void> getItemsShopList() async {
     final dbItems = ItemDao.instance;
     var resposta = await dbItems.getItemsShopListDoOrderName(widget.shopList.id);
-    if(mounted) {
+    if (mounted) {
       setState(() {
         items = resposta;
       });
@@ -53,75 +50,92 @@ class _ShopListHomeState extends State<ShopListHome> {
 
   @override
   Widget build(BuildContext context) {
-    final Brightness _listNameTextBrightness = Theme.of(context).brightness;
+    final currentScheme =
+    Theme.of(context).brightness == Brightness.light ? ColorScheme.fromSeed(seedColor: shopListColor) : ColorScheme.fromSeed(seedColor: shopListColor, brightness: Brightness.dark);
+    Color tileColor = currentScheme.surfaceVariant;
 
-    return Column(
-      children: [
-        ListTile(
-          tileColor: shopListColor.withOpacity(0.2),
-          contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EditShopList(
-                    shopList: widget.shopList,
+    return Theme(
+      data: ThemeData(
+        colorScheme: currentScheme,
+        useMaterial3: true,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Card(
+          child: Column(
+            children: [
+              ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditShopList(
+                          shopList: widget.shopList,
+                        ),
+                      )).then((value) => widget.refreshShopLists());
+                },
+                leading: const Icon(
+                  Icons.shopping_cart_outlined,
+                ),
+                minLeadingWidth: 35,
+                title: Text(
+                  widget.shopList.nome.toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                   ),
-                )).then((value) => widget.refreshShopLists());
-          },
-          leading: Icon(
-            Icons.shopping_cart_outlined,
-            color: _listNameTextBrightness == Brightness.dark
-                ? lightenColor(shopListColor, 20)
-                : darkenColor(shopListColor, 20),
-          ),
-          minLeadingWidth: 35,
-          title: Text(
-            widget.shopList.nome.toUpperCase(),
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: _listNameTextBrightness == Brightness.dark
-                  ? lightenColor(shopListColor, 20)
-                  : darkenColor(shopListColor, 20),
-            ),
-          ),
-          trailing: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-            child: Visibility(
-              visible: widget.showItemCount,
-              child: Text(
-                items.length.toString(),
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: _listNameTextBrightness == Brightness.dark
-                      ? lightenColor(shopListColor, 20)
-                      : darkenColor(shopListColor, 20),
                 ),
               ),
-            ),
+              ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) => const SizedBox(
+                        height: 2,
+                      ),                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    bool isFirst = index == 0 && items.length > 1;
+                    bool isLast = index == items.length - 1;
+                    bool isOnly = items.length == 1;
+
+                    RoundedRectangleBorder border = RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    );
+
+                    if (isFirst) {
+                      border = const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+                      );
+                    } else if (isOnly) {
+                      border = RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      );
+                    } else if (isLast) {
+                      border = const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
+                      );
+                    }
+
+                    return ItemShopListHome(
+                      key: UniqueKey(),
+                      item: Item(
+                        id: items[index]['id'],
+                        nome: items[index]['nome'],
+                        estado: items[index]['estado'],
+                        idShopList: items[index]['idShopList'],
+                      ),
+                      tileColor: tileColor,
+                      getItemsRefreshShopList: getItemsRefreshShopList,
+                      cardBorderRadius: border,
+                    );
+                  }),
+            ],
           ),
         ),
-        ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return ItemShopListHome(
-                item: Item(
-                  id: items[index]['id'],
-                  nome: items[index]['nome'],
-                  estado: items[index]['estado'],
-                  idShopList: items[index]['idShopList'],
-                ),
-                shopListColor: shopListColor,
-                getItemsRefreshShopList: getItemsRefreshShopList,
-                key: UniqueKey(),
-              );
-            }),
-      ],
+      ),
     );
   }
 }
-

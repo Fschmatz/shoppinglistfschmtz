@@ -10,12 +10,12 @@ class ItemNewShopList extends StatefulWidget {
   Function(int, String) updateItem;
   Function(int) deleteItem;
 
-  ItemNewShopList({Key key, this.item, this.updateItem, this.deleteItem})
+  ItemNewShopList({Key? key, required this.item, required this.updateItem, required this.deleteItem})
       : super(key: key);
 }
 
 class _ItemNewShopListState extends State<ItemNewShopList> {
-  FocusNode myFocusNode;
+  late FocusNode myFocusNode;
   bool showDelete = false;
   TextEditingController customControllerNome = TextEditingController();
 
