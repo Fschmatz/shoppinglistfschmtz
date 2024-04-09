@@ -5,4 +5,13 @@ class Item{
    int idShopList;
 
   Item({required this.id,required this.nome,required this.estado,required this.idShopList});
+
+   factory Item.fromMap(Map<String, dynamic> map) {
+     return Item(
+       id: map['id'],
+       nome: map['nome'],
+       estado : map['estado'],
+       idShopList: map['idShopList'],
+     );
+   }
 }

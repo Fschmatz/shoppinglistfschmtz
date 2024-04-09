@@ -134,6 +134,7 @@ class _NewShopListState extends State<NewShopList> {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
           appBar: AppBar(
+            surfaceTintColor: currentScheme.background,
             actions: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
@@ -150,7 +151,7 @@ class _NewShopListState extends State<NewShopList> {
                 ),
               )
             ],
-            title: const Text('New Shoplist'),
+            title: const Text('New'),
           ),
           body: Column(
             children: [
@@ -202,8 +203,7 @@ class _NewShopListState extends State<NewShopList> {
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.add_outlined),
-                      hintText: "New item",
+                      labelText: "Item",
                       counterStyle: TextStyle(
                         height: double.minPositive,
                       ),

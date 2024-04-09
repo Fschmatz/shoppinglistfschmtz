@@ -8,7 +8,7 @@ class ItemShopListHome extends StatefulWidget {
   _ItemShopListHomeState createState() => _ItemShopListHomeState();
 
   Item item;
-  Function(int) getItemsRefreshShopList;
+  Function() getItemsRefreshShopList;
   Color tileColor;
 
   RoundedRectangleBorder cardBorderRadius;
@@ -49,7 +49,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
             inOutAnimation.currentState?.animateOut();
             Future.delayed(const Duration(milliseconds: 300), () {
               _updateEstadoItem(v!);
-              widget.getItemsRefreshShopList(widget.item.idShopList);
+              widget.getItemsRefreshShopList();
             });
           },
         ),

@@ -6,8 +6,11 @@ import 'package:shoppinglistfschmtz/db/shoplist_dao.dart';
 import 'package:shoppinglistfschmtz/pages/home/shoplist_home.dart';
 import 'package:shoppinglistfschmtz/pages/new/new_shoplist.dart';
 import 'package:shoppinglistfschmtz/util/app_details.dart';
+import '../../classes/item.dart';
 import '../../configs/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../db/item_dao.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -17,7 +20,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Map<String, dynamic>> shopLists = [];
+  List<ShopList> shopLists = [];
   late int lastId;
   bool loading = true;
 
@@ -34,25 +37,41 @@ class _HomeState extends State<Home> {
 
   Future<void> getShopLists() async {
     final dbShopList = ShopListDao.instance;
+    List<ShopList> shoplistsConvertedAndWithItems = [];
     var resposta = await dbShopList.queryAllOrderByName();
-    shopLists = resposta;
 
-    if(mounted) {
-      setState(() {
-        loading = false;
-      });
+    if (resposta.isNotEmpty) {
+      final dbItems = ItemDao.instance;
+      shoplistsConvertedAndWithItems = resposta.map((map) => ShopList.fromMap(map)).toList();
+
+      for (var shoplist in shoplistsConvertedAndWithItems) {
+        List<Item> items = [];
+        var respItems = await dbItems.getItemsShopListDoOrderName(shoplist.id);
+
+        if (respItems.isNotEmpty) {
+          items = respItems.map((map) => Item.fromMap(map)).toList();
+        }
+
+        shoplist.items = items;
+      }
     }
+
+    shopLists = shoplistsConvertedAndWithItems;
+
+    setState(() {
+      loading = false;
+    });
   }
 
   Future<void> getLastId() async {
     final dbShopList = ShopListDao.instance;
-    var resposta = await dbShopList.getLastId();
+    var resp = await dbShopList.getLastId();
 
     setState(() {
-      if (resposta.isEmpty) {
+      if (resp.isEmpty) {
         lastId = 0;
       } else {
-        lastId = resposta[0]['id'];
+        lastId = resp[0]['id'];
       }
     });
   }
@@ -110,11 +129,7 @@ class _HomeState extends State<Home> {
                         return ShopListHome(
                           key: UniqueKey(),
                           refreshShopLists: getShopLists,
-                          shopList: ShopList(
-                            id: shopLists[index]['id'],
-                            nome: shopLists[index]['nome'],
-                            cor: shopLists[index]['cor'],
-                          ),
+                          shopList: shopLists[index],
                         );
                       },
                     ),

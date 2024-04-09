@@ -21,37 +21,17 @@ class _ShopListHomeState extends State<ShopListHome> with AutomaticKeepAliveClie
   @override
   bool get wantKeepAlive => true;
 
-  bool loading = true;
-  List<Map<String, dynamic>> items = [];
+  List<Item> items = [];
   late Color shopListColor;
 
   @override
   void initState() {
     super.initState();
 
-    getItemsShopList();
+    items = widget.shopList.items!;
     shopListColor = Color(int.parse(widget.shopList.cor.substring(6, 16)));
   }
 
-  Future<void> getItemsShopList() async {
-    final dbItems = ItemDao.instance;
-    items = await dbItems.getItemsShopListDoOrderName(widget.shopList.id);
-
-    if (mounted) {
-      setState(() {
-        loading = false;
-      });
-    }
-  }
-
-  Future<void> getItemsRefreshShopList(int idShopList) async {
-    final dbItems = ItemDao.instance;
-    var resposta = await dbItems.getItemsShopListDoOrderName(idShopList);
-
-    setState(() {
-      items = resposta;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,11 +81,7 @@ class _ShopListHomeState extends State<ShopListHome> with AutomaticKeepAliveClie
               ),
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 600),
-                child: loading
-                    ? const SizedBox(
-                        height: 50,
-                      )
-                    : ListView.separated(
+                child:  ListView.separated(
                         separatorBuilder: (BuildContext context, int index) => const SizedBox(
                               height: 2,
                             ),
@@ -137,14 +113,9 @@ class _ShopListHomeState extends State<ShopListHome> with AutomaticKeepAliveClie
 
                           return ItemShopListHome(
                             key: UniqueKey(),
-                            item: Item(
-                              id: items[index]['id'],
-                              nome: items[index]['nome'],
-                              estado: items[index]['estado'],
-                              idShopList: items[index]['idShopList'],
-                            ),
+                            item: items[index],
                             tileColor: tileColor,
-                            getItemsRefreshShopList: getItemsRefreshShopList,
+                            getItemsRefreshShopList: widget.refreshShopLists,
                             cardBorderRadius: border,
                           );
                         }),

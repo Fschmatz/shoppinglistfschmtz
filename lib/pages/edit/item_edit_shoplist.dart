@@ -14,12 +14,7 @@ class ItemEditShopList extends StatefulWidget {
   Color listAccent;
 
   ItemEditShopList(
-      {Key? key,
-      required this.item,
-      required this.getItemsShopList,
-      required this.updateItem,
-      required this.deleteItem,
-      required this.listAccent})
+      {Key? key, required this.item, required this.getItemsShopList, required this.updateItem, required this.deleteItem, required this.listAccent})
       : super(key: key);
 }
 
@@ -28,7 +23,6 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
   bool showDelete = false;
   late FocusNode myFocusNode;
   TextEditingController customControllerNome = TextEditingController();
-
 
   @override
   void initState() {
@@ -54,60 +48,50 @@ class _ItemEditShopListState extends State<ItemEditShopList> {
 
   @override
   Widget build(BuildContext context) {
-
     return FocusScope(
       child: Focus(
         onFocusChange: (focus) => controlFocus(),
-        child: ListTile(
-          contentPadding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-          leading: Checkbox(
-            splashRadius: 30,
-            value: widget.item.estado == 0 ? false : true,
-            onChanged: (bool? v) {
-              setState(() {
-                _updateEstadoItem(v!);
-                widget.getItemsShopList();
-              });
-            },
-          ),
-          title: TextField(
-            focusNode: myFocusNode,
-            onChanged: (value) => widget.updateItem(
-                widget.item.id, customControllerNome.text, widget.item.estado),
-            minLines: 1,
-            maxLines: 4,
-            maxLength: 200,
-            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-            textCapitalization: TextCapitalization.sentences,
-            controller: customControllerNome,
-            decoration: const InputDecoration(
-                hintText: "Item name",
-                border: InputBorder.none,
-                counterStyle: TextStyle(
-                  height: double.minPositive,
-                ),
-                counterText: ""
-                ),
-            style: TextStyle(
-              color: widget.item.estado == 1
-                  ? Theme.of(context).disabledColor
-                  : Theme.of(context).textTheme.headline6?.color,
+        child: Card(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+          child: ListTile(
+            contentPadding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+            leading: Checkbox(
+              splashRadius: 30,
+              value: widget.item.estado == 0 ? false : true,
+              onChanged: (bool? v) {
+                setState(() {
+                  _updateEstadoItem(v!);
+                  widget.getItemsShopList();
+                });
+              },
             ),
+            title: TextField(
+              focusNode: myFocusNode,
+              onChanged: (value) => widget.updateItem(widget.item.id, customControllerNome.text, widget.item.estado),
+              minLines: 1,
+              maxLines: 4,
+              maxLength: 200,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+              textCapitalization: TextCapitalization.sentences,
+              controller: customControllerNome,
+              decoration: const InputDecoration(
+                  hintText: "Item name",
+                  border: InputBorder.none,
+                  counterStyle: TextStyle(
+                    height: double.minPositive,
+                  ),
+                  counterText: ""),
+            ),
+            trailing: IconButton(
+                icon: const Icon(
+                  Icons.clear,
+                  size: 18,
+                ),
+                onPressed: () {
+                  widget.deleteItem(widget.item.id);
+                  widget.getItemsShopList();
+                }),
           ),
-          trailing: myFocusNode.hasFocus //showDelete
-              ? IconButton(
-              icon: Icon(
-                Icons.clear,
-                size: 18,
-                color: widget.item.estado == 1
-                    ? Theme.of(context).disabledColor
-                    : Theme.of(context).textTheme.headline6?.color,
-              ),
-              onPressed: () {
-                widget.deleteItem(widget.item.id);
-                widget.getItemsShopList();
-              })
-          : null,
         ),
       ),
     );

@@ -10,8 +10,7 @@ class ItemNewShopList extends StatefulWidget {
   Function(int, String) updateItem;
   Function(int) deleteItem;
 
-  ItemNewShopList({Key? key, required this.item, required this.updateItem, required this.deleteItem})
-      : super(key: key);
+  ItemNewShopList({Key? key, required this.item, required this.updateItem, required this.deleteItem}) : super(key: key);
 }
 
 class _ItemNewShopListState extends State<ItemNewShopList> {
@@ -37,39 +36,37 @@ class _ItemNewShopListState extends State<ItemNewShopList> {
     return FocusScope(
         child: Focus(
       onFocusChange: (focus) => controlFocus(),
-      child: ListTile(
-        contentPadding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-        title: TextField(
-          focusNode: myFocusNode,
-          onChanged: (value) =>
-              widget.updateItem(widget.item.id, customControllerNome.text),
-          minLines: 1,
-          maxLines: 4,
-          maxLength: 200,
-          maxLengthEnforcement: MaxLengthEnforcement.enforced,
-          textCapitalization: TextCapitalization.sentences,
-          controller: customControllerNome,
-          decoration: const InputDecoration(
-              hintText: "Item name",
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-              border: InputBorder.none,
-              counterStyle: TextStyle(
-                height: double.minPositive,
-              ),
-              counterText: "" // hide maxlength counter
-              ),
-        ),
-        trailing: myFocusNode.hasFocus //showDelete
-            ? IconButton(
-                icon: const Icon(
-                  Icons.clear,
-                  size: 18,
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+        child: ListTile(
+          contentPadding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+          title: TextField(
+            focusNode: myFocusNode,
+            onChanged: (value) => widget.updateItem(widget.item.id, customControllerNome.text),
+            minLines: 1,
+            maxLines: 4,
+            maxLength: 200,
+            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+            textCapitalization: TextCapitalization.sentences,
+            controller: customControllerNome,
+            decoration: const InputDecoration(
+                hintText: "Item name",
+                contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                border: InputBorder.none,
+                counterStyle: TextStyle(
+                  height: double.minPositive,
                 ),
-                onPressed: () {
-                  widget.deleteItem(widget.item.id);
-                })
-            : null,
+                counterText: ""),
+          ),
+          trailing: IconButton(
+              icon: const Icon(
+                Icons.clear,
+                size: 18,
+              ),
+              onPressed: () {
+                widget.deleteItem(widget.item.id);
+              }),
+        ),
       ),
     ));
   }

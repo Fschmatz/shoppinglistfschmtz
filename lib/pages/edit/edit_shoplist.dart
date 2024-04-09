@@ -236,26 +236,24 @@ class _EditShopListState extends State<EditShopList> {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
           appBar: AppBar(
+            surfaceTintColor: currentScheme.background,
             actions: [
-              Theme(
-                data: Theme.of(context).copyWith(useMaterial3: false),
-                child: PopupMenuButton<int>(
-                    icon: const Icon(Icons.more_vert_outlined),
-                    itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
-                          const PopupMenuItem<int>(value: 0, child: Text('Rename')),
-                          const PopupMenuItem<int>(value: 1, child: Text('Change color')),
-                          const PopupMenuItem<int>(value: 2, child: Text('Delete')),
-                        ],
-                    onSelected: (int value) {
-                      if (value == 0) {
-                        showDialogRename(context);
-                      } else if (value == 1) {
-                        dialogSelectColor(context);
-                      } else if (value == 2) {
-                        showAlertDialogOkDelete(context);
-                      }
-                    }),
-              )
+              PopupMenuButton<int>(
+                  icon: const Icon(Icons.more_vert_outlined),
+                  itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
+                        const PopupMenuItem<int>(value: 0, child: Text('Rename')),
+                        const PopupMenuItem<int>(value: 1, child: Text('Change color')),
+                        const PopupMenuItem<int>(value: 2, child: Text('Delete')),
+                      ],
+                  onSelected: (int value) {
+                    if (value == 0) {
+                      showDialogRename(context);
+                    } else if (value == 1) {
+                      dialogSelectColor(context);
+                    } else if (value == 2) {
+                      showAlertDialogOkDelete(context);
+                    }
+                  })
             ],
             title: Text(controllerNomeShoplist.text),
           ),
@@ -276,8 +274,7 @@ class _EditShopListState extends State<EditShopList> {
                   onEditingComplete: () {},
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.add_outlined),
-                      hintText: "New item",
+                      labelText: "Item",
                       counterStyle: TextStyle(
                         height: double.minPositive,
                       ),
