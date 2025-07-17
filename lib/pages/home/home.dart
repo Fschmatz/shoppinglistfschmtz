@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoppinglistfschmtz/redux/build_context_extension.dart';
 import 'package:shoppinglistfschmtz/redux/selectors.dart';
 import 'package:shoppinglistfschmtz/util/app_details.dart';
 import 'package:shoppinglistfschmtz/widgets/shoplist_home.dart';
@@ -32,7 +33,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    _shopLists = selectShopLists();
+    _shopLists = selectShopLists(context.state);
 
     return Scaffold(
       body: SafeArea(

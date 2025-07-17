@@ -17,7 +17,6 @@ class DialogStoreShopList extends StatefulWidget {
 class _DialogStoreShopListState extends State<DialogStoreShopList> {
   final TextEditingController _controllerName = TextEditingController();
   bool _validName = true;
-  Color _pickerColor = const Color(0xFF8a63c6);
   Color _selectedColor = const Color(0xFF8a63c6);
   bool _isUpdate = true;
 
@@ -28,7 +27,6 @@ class _DialogStoreShopListState extends State<DialogStoreShopList> {
     _isUpdate = widget.shopList != null;
 
     if (_isUpdate) {
-      _pickerColor = Color(int.parse(widget.shopList!.color));
       _selectedColor = Color(int.parse(widget.shopList!.color));
       _controllerName.text = widget.shopList!.name;
     }
@@ -70,8 +68,8 @@ class _DialogStoreShopListState extends State<DialogStoreShopList> {
     return true;
   }
 
-  void changeColor(Color color) {
-    setState(() => _pickerColor = color);
+  void selectColor(Color color) {
+    _selectedColor = color;
   }
 
   @override
@@ -103,7 +101,7 @@ class _DialogStoreShopListState extends State<DialogStoreShopList> {
           ),
           BlockPicker(
             pickerColor: _selectedColor,
-            onColorChanged: changeColor,
+            onColorChanged: selectColor,
           ),
         ],
       )),
