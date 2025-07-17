@@ -1,7 +1,7 @@
 name: shoppinglistfschmtz
 description: ShopList Fschmatz
 publish_to: 'none'
-version: 2.0.2
+version: 3.0.0
 
 environment:
   sdk: '>=3.2.6 <4.0.0'
@@ -9,20 +9,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.0
+  cupertino_icons: ^1.0.2
+  path_provider: ^2.1.5
+  shared_preferences: ^2.5.3
+  sqflite: ^2.4.2
+  url_launcher: ^6.3.1
+  easy_dynamic_theme: ^2.3.1
+  dynamic_color: ^1.7.0
+  async_redux: ^25.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  path_provider:
-  provider:
-  shared_preferences:
-  sqflite:
-  url_launcher:
-  flutter_animator:
   flutter_lints:
-  easy_dynamic_theme:
-  dynamic_color: ^1.6.9
 
 flutter:
   uses-material-design: true

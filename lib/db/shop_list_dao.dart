@@ -10,8 +10,8 @@ class ShopListDao {
 
   static const table = 'shoplists';
   static const columnId = 'id';
-  static const columnNome = 'nome';
-  static const columnCor = 'cor';
+  static const columnName = 'name';
+  static const columnColor = 'color';
 
   ShopListDao._privateConstructor();
   static final ShopListDao instance = ShopListDao._privateConstructor();
@@ -51,7 +51,7 @@ class ShopListDao {
 
   Future<List<Map<String, dynamic>>> queryAllOrderByName() async {
     Database db = await instance.database;
-    return await db.rawQuery('SELECT * FROM $table ORDER BY $columnNome COLLATE NOCASE');
+    return await db.rawQuery('SELECT * FROM $table ORDER BY $columnName COLLATE NOCASE');
   }
 
   Future<List<Map<String, dynamic>>> getLastId() async {
@@ -61,5 +61,18 @@ class ShopListDao {
         ''');
   }
 
+  Future<List<Map<String, dynamic>>> queryAllShopListsWithItemsJoined() async {
+    Database db = await instance.database;
 
+    return await db.rawQuery('''
+                  SELECT sl.*
+                  ,      i.id as item_id 
+                  ,      i.name as item_name                  
+                  ,      i.idShopList 
+                  FROM shoplists sl
+                  LEFT JOIN items i ON sl.id = i.idShopList
+                  ORDER BY sl.name COLLATE NOCASE 
+                  ,        i.name COLLATE NOCASE
+          ''');
+  }
 }

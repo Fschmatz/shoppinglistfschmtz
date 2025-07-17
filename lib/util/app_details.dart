@@ -1,21 +1,27 @@
-class AppDetails{
-
-  static String appVersion = "2.0.2";
-  static String appName = "Shoplist Fschmatz";
-  static String appNameHomePage = "Shoplist";
+class AppDetails {
+  static String appVersion = "3.0.0";
+  static String appName = "ShopList Fschmatz";
+  static String appNameHomePage = "ShopList";
   static String repositoryLink = "https://github.com/Fschmatz/shoppinglistfschmtz";
 
   static String changelogCurrent = '''
+$appVersion
+- Async Redux
+- Update Flutter 3.32
+- Themed icon
+- UI changes
+- Bug fixes
+''';
+
+  static String changelogsOld = '''
 2.0.2
 - Monet 
 - UI changes
 - Flutter 3.19
 - Bug fixes
-''';
 
-  static String changelogsOld = '''
 1.5.6
-- New edit shoplist page
+- New edit page
 - UI changes
 - Small fixes
 - Flutter 3.3
@@ -177,5 +183,4 @@ class AppDetails{
 
       (ಠ‿ಠ)  
 ''';
-
 }

@@ -1,83 +1,40 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:shoppinglistfschmtz/classes/shop_list.dart';
-import 'package:shoppinglistfschmtz/db/shoplist_dao.dart';
-import 'package:shoppinglistfschmtz/pages/home/shoplist_home.dart';
-import 'package:shoppinglistfschmtz/pages/new/new_shoplist.dart';
+import 'package:shoppinglistfschmtz/redux/build_context_extension.dart';
+import 'package:shoppinglistfschmtz/redux/selectors.dart';
 import 'package:shoppinglistfschmtz/util/app_details.dart';
-import '../../classes/item.dart';
-import '../../configs/settings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shoppinglistfschmtz/widgets/shoplist_home.dart';
 
-import '../../db/item_dao.dart';
+import '../../classes/shop_list.dart';
+import '../../widgets/dialog_store_shop_list.dart';
+import '../settings/settings.dart';
 
 class Home extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  State<Home> createState() => _HomeState();
 
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 }
 
 class _HomeState extends State<Home> {
   List<ShopList> shopLists = [];
-  late int lastId;
-  bool loading = true;
 
   @override
   void initState() {
     super.initState();
-    appStart();
   }
 
-  Future<void> appStart() async {
-    await getShopLists();
-    await getLastId();
-  }
-
-  Future<void> getShopLists() async {
-    final dbShopList = ShopListDao.instance;
-    List<ShopList> shoplistsConvertedAndWithItems = [];
-    var resposta = await dbShopList.queryAllOrderByName();
-
-    if (resposta.isNotEmpty) {
-      final dbItems = ItemDao.instance;
-      shoplistsConvertedAndWithItems = resposta.map((map) => ShopList.fromMap(map)).toList();
-
-      for (var shoplist in shoplistsConvertedAndWithItems) {
-        List<Item> items = [];
-        var respItems = await dbItems.getItemsShopListDoOrderName(shoplist.id);
-
-        if (respItems.isNotEmpty) {
-          items = respItems.map((map) => Item.fromMap(map)).toList();
-        }
-
-        shoplist.items = items;
-      }
-    }
-
-    shopLists = shoplistsConvertedAndWithItems;
-
-    setState(() {
-      loading = false;
-    });
-  }
-
-  Future<void> getLastId() async {
-    final dbShopList = ShopListDao.instance;
-    var resp = await dbShopList.getLastId();
-
-    setState(() {
-      if (resp.isEmpty) {
-        lastId = 0;
-      } else {
-        lastId = resp[0]['id'];
-      }
-    });
+  void _openDialogStoreShopList() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return DialogStoreShopList();
+        });
   }
 
   @override
   Widget build(BuildContext context) {
+    shopLists = selectShopLists(context.state);
+
     return Scaffold(
       body: SafeArea(
         child: NestedScrollView(
@@ -94,13 +51,7 @@ class _HomeState extends State<Home> {
                         Icons.add_outlined,
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => NewShopList(
-                                      lastId: lastId,
-                                      refreshShopLists: getShopLists,
-                                    ))).then((value) => getLastId());
+                        _openDialogStoreShopList();
                       }),
                   IconButton(
                       icon: const Icon(
@@ -113,31 +64,25 @@ class _HomeState extends State<Home> {
               ),
             ];
           },
-          body: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 600),
-            child: loading
-                ? const Center(child: SizedBox.shrink())
-                : ListView(children: <Widget>[
-                    ListView.separated(
-                      separatorBuilder: (BuildContext context, int index) => const SizedBox(
-                        height: 6,
-                      ),
-                      physics: const ScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: shopLists.length,
-                      itemBuilder: (context, index) {
-                        return ShopListHome(
-                          key: UniqueKey(),
-                          refreshShopLists: getShopLists,
-                          shopList: shopLists[index],
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                  ]),
-          ),
+          body: ListView(children: <Widget>[
+            ListView.separated(
+              separatorBuilder: (BuildContext context, int index) => const SizedBox(
+                height: 6,
+              ),
+              physics: const ScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: shopLists.length,
+              itemBuilder: (context, index) {
+                return ShopListHome(
+                  key: UniqueKey(),
+                  shopList: shopLists[index],
+                );
+              },
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+          ]),
         ),
       ),
     );

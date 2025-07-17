@@ -1,19 +1,22 @@
 import 'item.dart';
 
-class ShopList{
+class ShopList {
   final int id;
-  final String nome;
-  final String cor;
+  final String name;
+  final String color;
   List<Item>? items;
 
-  ShopList({required this.id,required this.nome,required this.cor});
-
+  ShopList({required this.id, required this.name, required this.color});
 
   factory ShopList.fromMap(Map<String, dynamic> map) {
     return ShopList(
       id: map['id'],
-      nome: map['nome'],
-      cor : map['cor'],
+      name: map['name'],
+      color: map['color'],
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {'id': id, 'name': name, 'color': color};
   }
 }

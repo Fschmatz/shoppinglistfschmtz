@@ -58,14 +58,14 @@ Widget _defaultItemBuilder(Color color, bool isCurrentColor, void Function() cha
 
 class BlockPicker extends StatefulWidget {
   const BlockPicker({
-    Key? key,
+    super.key,
     required this.pickerColor,
     required this.onColorChanged,
     this.availableColors = _defaultColors,
     this.useInShowDialog = true,
     this.layoutBuilder = _defaultLayoutBuilder,
     this.itemBuilder = _defaultItemBuilder,
-  }) : super(key: key);
+  });
 
   final Color? pickerColor;
   final ValueChanged<Color> onColorChanged;
