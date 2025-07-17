@@ -17,8 +17,8 @@ class DialogStoreShopList extends StatefulWidget {
 class _DialogStoreShopListState extends State<DialogStoreShopList> {
   final TextEditingController _controllerName = TextEditingController();
   bool _validName = true;
-  Color _pickerColor = const Color(0xFFFF5252);
-  Color _selectedColor = const Color(0xFFFF5252);
+  Color _pickerColor = const Color(0xFF8a63c6);
+  Color _selectedColor = const Color(0xFF8a63c6);
   bool _isUpdate = true;
 
   @override
@@ -70,38 +70,6 @@ class _DialogStoreShopListState extends State<DialogStoreShopList> {
     return true;
   }
 
-  void _openDialogSelectColor(BuildContext context) {
-    Widget okButton = TextButton(
-      child: const Text(
-        "Ok",
-      ),
-      onPressed: () {
-        setState(() {
-          _selectedColor = _pickerColor;
-        });
-        Navigator.of(context).pop();
-      },
-    );
-
-    AlertDialog alert = AlertDialog(
-      title: const Text("Select color: "),
-      content: SingleChildScrollView(
-          child: BlockPicker(
-        pickerColor: _selectedColor,
-        onColorChanged: changeColor,
-      )),
-      actions: [
-        okButton,
-      ],
-    );
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
   void changeColor(Color color) {
     setState(() => _pickerColor = color);
   }
@@ -117,7 +85,7 @@ class _DialogStoreShopListState extends State<DialogStoreShopList> {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
-            autofocus: true,
+            autofocus: !_isUpdate,
             maxLength: 50,
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             textCapitalization: TextCapitalization.sentences,
@@ -130,20 +98,13 @@ class _DialogStoreShopListState extends State<DialogStoreShopList> {
               errorText: (_validName) ? null : "Name is empty",
             ),
           ),
-          ListTile(
-            contentPadding: EdgeInsetsGeometry.all(0),
-            title: Text("Color:"),
-            trailing: MaterialButton(
-              minWidth: 30,
-              height: 30,
-              shape: const CircleBorder(),
-              elevation: 0,
-              color: _selectedColor,
-              onPressed: () {
-                _openDialogSelectColor(context);
-              },
-            ),
-          )
+          SizedBox(
+            height: 5,
+          ),
+          BlockPicker(
+            pickerColor: _selectedColor,
+            onColorChanged: changeColor,
+          ),
         ],
       )),
       actions: [

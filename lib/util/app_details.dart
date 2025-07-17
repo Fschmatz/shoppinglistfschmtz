@@ -1,5 +1,5 @@
 class AppDetails {
-  static String appVersion = "3.0.2";
+  static String appVersion = "3.0.3";
   static String appName = "ShopList Fschmatz";
   static String appNameHomePage = "ShopList";
   static String repositoryLink = "https://github.com/Fschmatz/shoppinglistfschmtz";

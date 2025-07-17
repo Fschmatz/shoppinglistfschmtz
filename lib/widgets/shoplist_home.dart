@@ -23,6 +23,8 @@ class _ShopListHomeState extends State<ShopListHome> {
   final double _radius = 16;
   final TextEditingController _controllerName = TextEditingController();
   FocusNode _itemNameFocusNode = FocusNode();
+  bool _isUpdateItem = false;
+  late Item _itemForUpdate;
 
   @override
   void initState() {
@@ -33,25 +35,33 @@ class _ShopListHomeState extends State<ShopListHome> {
     _shopListColor = Color(int.parse(widget.shopList.color));
   }
 
-  @override
-  void dispose() {
-    _itemNameFocusNode.dispose();
-    super.dispose();
-  }
-
   Future<void> _deleteShopList() async {
     ShopListService().delete(widget.shopList.id);
+  }
+
+  Future<void> _storeItem() async {
+    if (_isUpdateItem) {
+      _updateItem();
+      Navigator.of(context).pop();
+    } else {
+      _insertItem();
+    }
   }
 
   Future<void> _insertItem() async {
     ItemService().insert(widget.shopList.id, _controllerName.text);
   }
 
+  Future<void> _updateItem() async {
+    ItemService().update(_itemForUpdate, _controllerName.text);
+  }
+
   void _executeSaveItem() {
     if (_controllerName.text.isNotEmpty) {
-      _insertItem();
+      _storeItem();
       _controllerName.clear();
       _itemNameFocusNode.requestFocus();
+      _isUpdateItem = false;
     }
   }
 
@@ -109,7 +119,20 @@ class _ShopListHomeState extends State<ShopListHome> {
         });
   }
 
+  void openBottomMenuEditItem(Item item) {
+    _isUpdateItem = true;
+    _itemForUpdate = item;
+    _controllerName.text = item.name;
+
+    _openBottomMenuItem();
+  }
+
   void _openBottomMenuAddItem() {
+    _controllerName.clear();
+    _openBottomMenuItem();
+  }
+
+  void _openBottomMenuItem() {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -121,7 +144,7 @@ class _ShopListHomeState extends State<ShopListHome> {
                   ListTile(
                     minVerticalPadding: 0,
                     title: Text(
-                      'New Item',
+                      '${widget.shopList.name}${_isUpdateItem ? '' : ' - new item'}',
                     ),
                   ),
                   Padding(
@@ -161,7 +184,7 @@ class _ShopListHomeState extends State<ShopListHome> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_radius),
           ),
-          color: currentScheme.surfaceContainer,
+          color: currentScheme.surfaceContainerHigh,
           child: Column(
             children: [
               ListTile(
@@ -222,6 +245,7 @@ class _ShopListHomeState extends State<ShopListHome> {
                         colorScheme: currentScheme,
                         getItemsRefreshShopList: () => {},
                         cardBorderRadius: border,
+                        onEditItem: openBottomMenuEditItem,
                       );
                     }),
               ),

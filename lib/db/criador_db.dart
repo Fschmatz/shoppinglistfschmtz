@@ -55,7 +55,7 @@ class CriadorDb {
     batch.insert('items', {'id': 1, 'name': 'Steel', 'idShopList': '1'});
     batch.insert('items', {'id': 2, 'name': 'Silver', 'idShopList': '1'});
 
-    batch.insert('shoplists', {'id': 2, 'name': 'Steam', 'color': '0XFFFF5252'});
+    batch.insert('shoplists', {'id': 2, 'name': 'Steam', 'color': '0xFFE91E63'});
     batch.insert('items', {'id': 3, 'name': 'Bloodborne', 'idShopList': '2'});
 
     await batch.commit(noResult: true);
