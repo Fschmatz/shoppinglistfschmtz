@@ -25,7 +25,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
     return ListTile(
       tileColor: widget.colorScheme.primaryContainer,
       shape: widget.cardBorderRadius,
-      contentPadding: const EdgeInsets.fromLTRB(16, 4, 8, 4),
+      contentPadding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
       title: Text(
         widget.item.name,
         style: TextStyle(color: widget.colorScheme.onPrimaryContainer),
@@ -35,7 +35,7 @@ class _ItemShopListHomeState extends State<ItemShopListHome> {
         icon: Icon(Icons.check_outlined),
         color: widget.colorScheme.onPrimaryContainer,
         highlightColor: Colors.red,
-        style: IconButton.styleFrom(backgroundColor: widget.colorScheme.surfaceContainerHigh),
+        style: IconButton.styleFrom(backgroundColor: widget.colorScheme.surfaceContainer),
       ),
     );
   }

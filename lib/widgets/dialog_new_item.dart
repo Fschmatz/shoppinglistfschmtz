@@ -43,7 +43,7 @@ class _DialogNewItemState extends State<DialogNewItem> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('New'),
+      title: const Text('New Item'),
       content: SizedBox(
           width: 280.0,
           child: Column(
@@ -60,11 +60,11 @@ class _DialogNewItemState extends State<DialogNewItem> {
                   textCapitalization: TextCapitalization.sentences,
                   controller: controllerName,
                   decoration: InputDecoration(
-                      labelText: "Title",
+                      labelText: "Name",
                       helperText: "* Required",
                       counterText: "",
                       border: const OutlineInputBorder(),
-                      errorText: (_validName) ? null : "Title is empty"),
+                      errorText: (_validName) ? null : "Name is empty"),
                 ),
               ),
             ],

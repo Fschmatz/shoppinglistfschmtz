@@ -19,7 +19,7 @@ class ShopListHome extends StatefulWidget {
 class _ShopListHomeState extends State<ShopListHome> {
   List<Item> items = [];
   late Color shopListColor;
-  final double _radius = 12;
+  final double _radius = 16;
 
   @override
   void initState() {
@@ -111,13 +111,17 @@ class _ShopListHomeState extends State<ShopListHome> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(_radius),
+          ),
+          color: currentScheme.surfaceContainer,
           child: Column(
             children: [
               ListTile(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(_radius),
                 ),
-                contentPadding: const EdgeInsets.fromLTRB(16, 4, 8, 4),
+                contentPadding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
                 onTap: () {},
                 onLongPress: _openBottomMenu,
                 title: Text(
@@ -128,7 +132,10 @@ class _ShopListHomeState extends State<ShopListHome> {
                     color: currentScheme.onPrimaryContainer,
                   ),
                 ),
-                trailing: IconButton.filledTonal(onPressed: _openDialogNewItem, icon: Icon(Icons.add_outlined)),
+                trailing: IconButton.filledTonal(
+                  onPressed: _openDialogNewItem,
+                  icon: Icon(Icons.add_outlined),
+                ),
               ),
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 600),

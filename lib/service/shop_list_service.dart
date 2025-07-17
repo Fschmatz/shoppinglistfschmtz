@@ -1,19 +1,14 @@
 import 'dart:ui';
 
 import 'package:shoppinglistfschmtz/classes/shop_list.dart';
+import 'package:shoppinglistfschmtz/service/store_service.dart';
 
 import '../classes/item.dart';
 import '../db/shop_list_dao.dart';
-import '../main.dart';
-import '../redux/actions.dart';
 import '../util/utils.dart';
 
-class ShopListService {
+class ShopListService extends StoreService {
   final dbShopList = ShopListDao.instance;
-
-  Future<void> _reloadShopLists() async {
-    await store.dispatch(LoadShopListsAction());
-  }
 
   Future<List<ShopList>> queryAllWithItems() async {
     final data = await dbShopList.queryAllShopListsWithItemsJoined();
@@ -47,12 +42,12 @@ class ShopListService {
     Map<String, dynamic> row = {ShopListDao.columnName: name, ShopListDao.columnColor: Utils().parseColorStringFromPicker(selectedColor)};
 
     await dbShopList.insert(row);
-    await _reloadShopLists();
+    loadShopLists();
   }
 
   Future<void> delete(int id) async {
     await dbShopList.delete(id);
-    await _reloadShopLists();
+    loadShopLists();
   }
 
   Future<void> update(int id, String name, Color selectedColor) async {
@@ -63,6 +58,6 @@ class ShopListService {
     };
 
     await dbShopList.update(row);
-    await _reloadShopLists();
+    loadShopLists();
   }
 }

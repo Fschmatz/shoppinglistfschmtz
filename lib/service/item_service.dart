@@ -1,24 +1,19 @@
 import 'package:shoppinglistfschmtz/db/item_dao.dart';
+import 'package:shoppinglistfschmtz/service/store_service.dart';
 
-import '../main.dart';
-import '../redux/actions.dart';
-
-class ItemService {
+class ItemService extends StoreService {
   final dbItem = ItemDao.instance;
-
-  Future<void> _reloadShopLists() async {
-    await store.dispatch(LoadShopListsAction());
-  }
 
   Future<void> insert(int idShopList, String name) async {
     Map<String, dynamic> row = {ItemDao.columnName: name, ItemDao.columnIdShopList: idShopList};
 
     await dbItem.insert(row);
-    await _reloadShopLists();
+    loadShopLists();
   }
 
   Future<void> delete(int id) async {
     await dbItem.delete(id);
-    await _reloadShopLists();
+
+    loadShopLists();
   }
 }

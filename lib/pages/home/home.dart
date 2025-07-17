@@ -67,7 +67,7 @@ class _HomeState extends State<Home> {
           body: ListView(children: <Widget>[
             ListView.separated(
               separatorBuilder: (BuildContext context, int index) => const SizedBox(
-                height: 6,
+                height: 4,
               ),
               physics: const ScrollPhysics(),
               shrinkWrap: true,
