@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shoppinglistfschmtz/classes/item.dart';
 import 'package:shoppinglistfschmtz/classes/shop_list.dart';
-import 'package:shoppinglistfschmtz/widgets/dialog_new_item.dart';
 import 'package:shoppinglistfschmtz/widgets/item_shoplist_home.dart';
 
+import '../service/item_service.dart';
 import '../service/shop_list_service.dart';
 import 'dialog_store_shop_list.dart';
 
@@ -17,20 +18,41 @@ class ShopListHome extends StatefulWidget {
 }
 
 class _ShopListHomeState extends State<ShopListHome> {
-  List<Item> items = [];
-  late Color shopListColor;
+  List<Item> _items = [];
+  late Color _shopListColor;
   final double _radius = 16;
+  final TextEditingController _controllerName = TextEditingController();
+  FocusNode _itemNameFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
 
-    items = widget.shopList.items!;
-    shopListColor = Color(int.parse(widget.shopList.color));
+    _itemNameFocusNode = FocusNode();
+    _items = widget.shopList.items!;
+    _shopListColor = Color(int.parse(widget.shopList.color));
   }
 
-  Future<void> _delete() async {
+  @override
+  void dispose() {
+    _itemNameFocusNode.dispose();
+    super.dispose();
+  }
+
+  Future<void> _deleteShopList() async {
     ShopListService().delete(widget.shopList.id);
+  }
+
+  Future<void> _insertItem() async {
+    ItemService().insert(widget.shopList.id, _controllerName.text);
+  }
+
+  void _executeSaveItem() {
+    if (_controllerName.text.isNotEmpty) {
+      _insertItem();
+      _controllerName.clear();
+      _itemNameFocusNode.requestFocus();
+    }
   }
 
   void _openDialogStoreShopList() {
@@ -43,17 +65,7 @@ class _ShopListHomeState extends State<ShopListHome> {
         });
   }
 
-  void _openDialogNewItem() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return DialogNewItem(
-            idShopList: widget.shopList.id,
-          );
-        });
-  }
-
-  void _openBottomMenu() {
+  void _openShopListBottomMenu() {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -86,9 +98,44 @@ class _ShopListHomeState extends State<ShopListHome> {
                       "Delete",
                     ),
                     onTap: () {
-                      _delete();
+                      _deleteShopList();
                       Navigator.of(context).pop();
                     },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  void _openBottomMenuAddItem() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Wrap(
+                children: <Widget>[
+                  ListTile(
+                    minVerticalPadding: 0,
+                    title: Text(
+                      'New Item',
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+                    child: TextField(
+                      focusNode: _itemNameFocusNode,
+                      autofocus: true,
+                      maxLength: 50,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      textCapitalization: TextCapitalization.sentences,
+                      controller: _controllerName,
+                      onSubmitted: (_) => _executeSaveItem(),
+                      decoration: InputDecoration(labelText: "Name", helperText: "* Required", counterText: "", border: const OutlineInputBorder()),
+                    ),
                   ),
                 ],
               ),
@@ -100,8 +147,8 @@ class _ShopListHomeState extends State<ShopListHome> {
   @override
   Widget build(BuildContext context) {
     final currentScheme = Theme.of(context).brightness == Brightness.light
-        ? ColorScheme.fromSeed(seedColor: shopListColor)
-        : ColorScheme.fromSeed(seedColor: shopListColor, brightness: Brightness.dark);
+        ? ColorScheme.fromSeed(seedColor: _shopListColor)
+        : ColorScheme.fromSeed(seedColor: _shopListColor, brightness: Brightness.dark);
 
     return Theme(
       data: ThemeData(
@@ -123,7 +170,7 @@ class _ShopListHomeState extends State<ShopListHome> {
                 ),
                 contentPadding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
                 onTap: () {},
-                onLongPress: _openBottomMenu,
+                onLongPress: _openShopListBottomMenu,
                 title: Text(
                   widget.shopList.name.toUpperCase(),
                   style: TextStyle(
@@ -133,7 +180,7 @@ class _ShopListHomeState extends State<ShopListHome> {
                   ),
                 ),
                 trailing: IconButton.filledTonal(
-                  onPressed: _openDialogNewItem,
+                  onPressed: _openBottomMenuAddItem,
                   icon: Icon(Icons.add_outlined),
                 ),
               ),
@@ -145,11 +192,11 @@ class _ShopListHomeState extends State<ShopListHome> {
                         ),
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: items.length,
+                    itemCount: _items.length,
                     itemBuilder: (context, index) {
-                      bool isFirst = index == 0 && items.length > 1;
-                      bool isLast = index == items.length - 1;
-                      bool isOnlyOneItem = items.length == 1;
+                      bool isFirst = index == 0 && _items.length > 1;
+                      bool isLast = index == _items.length - 1;
+                      bool isOnlyOneItem = _items.length == 1;
 
                       RoundedRectangleBorder border = RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0),
@@ -171,7 +218,7 @@ class _ShopListHomeState extends State<ShopListHome> {
 
                       return ItemShopListHome(
                         key: UniqueKey(),
-                        item: items[index],
+                        item: _items[index],
                         colorScheme: currentScheme,
                         getItemsRefreshShopList: () => {},
                         cardBorderRadius: border,

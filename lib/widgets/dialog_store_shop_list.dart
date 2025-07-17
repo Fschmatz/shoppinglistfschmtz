@@ -15,10 +15,10 @@ class DialogStoreShopList extends StatefulWidget {
 }
 
 class _DialogStoreShopListState extends State<DialogStoreShopList> {
-  TextEditingController controllerName = TextEditingController();
+  final TextEditingController _controllerName = TextEditingController();
   bool _validName = true;
-  Color pickerColor = const Color(0xFFFF5252);
-  Color selectedColor = const Color(0xFFFF5252);
+  Color _pickerColor = const Color(0xFFFF5252);
+  Color _selectedColor = const Color(0xFFFF5252);
   bool _isUpdate = true;
 
   @override
@@ -28,9 +28,9 @@ class _DialogStoreShopListState extends State<DialogStoreShopList> {
     _isUpdate = widget.shopList != null;
 
     if (_isUpdate) {
-      pickerColor = Color(int.parse(widget.shopList!.color));
-      selectedColor = Color(int.parse(widget.shopList!.color));
-      controllerName.text = widget.shopList!.name;
+      _pickerColor = Color(int.parse(widget.shopList!.color));
+      _selectedColor = Color(int.parse(widget.shopList!.color));
+      _controllerName.text = widget.shopList!.name;
     }
   }
 
@@ -43,11 +43,11 @@ class _DialogStoreShopListState extends State<DialogStoreShopList> {
   }
 
   Future<void> _insert() async {
-    ShopListService().insert(controllerName.text, selectedColor);
+    ShopListService().insert(_controllerName.text, _selectedColor);
   }
 
   Future<void> _update() async {
-    ShopListService().update(widget.shopList!.id, controllerName.text, selectedColor);
+    ShopListService().update(widget.shopList!.id, _controllerName.text, _selectedColor);
   }
 
   void _executeSaveShopList() {
@@ -62,7 +62,7 @@ class _DialogStoreShopListState extends State<DialogStoreShopList> {
   }
 
   bool _validateTextFields() {
-    if (controllerName.text.isEmpty) {
+    if (_controllerName.text.isEmpty) {
       _validName = false;
       return false;
     }
@@ -77,18 +77,17 @@ class _DialogStoreShopListState extends State<DialogStoreShopList> {
       ),
       onPressed: () {
         setState(() {
-          selectedColor = pickerColor;
-          //currentColorAsString = pickerColor.toString();
+          _selectedColor = _pickerColor;
         });
         Navigator.of(context).pop();
       },
     );
 
     AlertDialog alert = AlertDialog(
-      title: const Text("Select Color : "),
+      title: const Text("Select color: "),
       content: SingleChildScrollView(
           child: BlockPicker(
-        pickerColor: selectedColor,
+        pickerColor: _selectedColor,
         onColorChanged: changeColor,
       )),
       actions: [
@@ -104,7 +103,7 @@ class _DialogStoreShopListState extends State<DialogStoreShopList> {
   }
 
   void changeColor(Color color) {
-    setState(() => pickerColor = color);
+    setState(() => _pickerColor = color);
   }
 
   @override
@@ -112,43 +111,41 @@ class _DialogStoreShopListState extends State<DialogStoreShopList> {
     return AlertDialog(
       title: const Text('New Shop List'),
       content: SizedBox(
-          width: 300,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: TextField(
-                  autofocus: true,
-                  minLines: 1,
-                  maxLines: 1,
-                  maxLength: 50,
-                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  textCapitalization: TextCapitalization.sentences,
-                  controller: controllerName,
-                  decoration: InputDecoration(
-                    labelText: "Name",
-                    helperText: "* Required",
-                    counterText: "",
-                    border: const OutlineInputBorder(),
-                    errorText: (_validName) ? null : "Name is empty",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(4, 4, 0, 0),
-                child: MaterialButton(
-                  minWidth: 30,
-                  height: 50,
-                  shape: const CircleBorder(),
-                  elevation: 0,
-                  color: selectedColor,
-                  onPressed: () {
-                    _openDialogSelectColor(context);
-                  },
-                ),
-              ),
-            ],
-          )),
+          // width: 300,
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            autofocus: true,
+            maxLength: 50,
+            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+            textCapitalization: TextCapitalization.sentences,
+            controller: _controllerName,
+            decoration: InputDecoration(
+              labelText: "Name",
+              helperText: "* Required",
+              counterText: "",
+              border: const OutlineInputBorder(),
+              errorText: (_validName) ? null : "Name is empty",
+            ),
+          ),
+          ListTile(
+            contentPadding: EdgeInsetsGeometry.all(0),
+            title: Text("Color:"),
+            trailing: MaterialButton(
+              minWidth: 30,
+              height: 30,
+              shape: const CircleBorder(),
+              elevation: 0,
+              color: _selectedColor,
+              onPressed: () {
+                _openDialogSelectColor(context);
+              },
+            ),
+          )
+        ],
+      )),
       actions: [
         TextButton(
             onPressed: () {

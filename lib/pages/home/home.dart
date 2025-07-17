@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<ShopList> shopLists = [];
+  List<ShopList> _shopLists = [];
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    shopLists = selectShopLists(context.state);
+    _shopLists = selectShopLists(context.state);
 
     return Scaffold(
       body: SafeArea(
@@ -71,11 +71,11 @@ class _HomeState extends State<Home> {
               ),
               physics: const ScrollPhysics(),
               shrinkWrap: true,
-              itemCount: shopLists.length,
+              itemCount: _shopLists.length,
               itemBuilder: (context, index) {
                 return ShopListHome(
                   key: UniqueKey(),
-                  shopList: shopLists[index],
+                  shopList: _shopLists[index],
                 );
               },
             ),
