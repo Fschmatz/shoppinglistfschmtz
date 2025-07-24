@@ -199,7 +199,7 @@ class _ShopListHomeState extends State<ShopListHome> {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: currentScheme.onPrimaryContainer,
+                    color: currentScheme.onSecondaryContainer,
                   ),
                 ),
                 trailing: IconButton.filledTonal(

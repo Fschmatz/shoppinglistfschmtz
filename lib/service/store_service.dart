@@ -6,9 +6,3 @@ abstract class StoreService {
     await store.dispatch(LoadShopListsAction());
   }
 }
-
-/*class StoreService {
-  Future<void> reloadShopLists() async {
-    await store.dispatch(LoadShopListsAction());
-  }
-}*/

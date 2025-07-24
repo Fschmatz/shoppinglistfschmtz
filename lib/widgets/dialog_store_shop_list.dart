@@ -77,7 +77,6 @@ class _DialogStoreShopListState extends State<DialogStoreShopList> {
     return AlertDialog(
       title: const Text('New Shop List'),
       content: SizedBox(
-          // width: 300,
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

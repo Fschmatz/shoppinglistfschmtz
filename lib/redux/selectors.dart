@@ -1,5 +1,5 @@
 import 'package:shoppinglistfschmtz/classes/shop_list.dart';
 
-import 'app_state.dart';
+import '../main.dart';
 
-List<ShopList> selectShopLists(AppState state) => state.shopLists;
+List<ShopList> selectShopLists() => store.state.shopLists;
